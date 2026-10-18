@@ -1,0 +1,104 @@
+{
+  "date": "2026-10-18",
+  "host": "Windows 11 Home x64 build 26300",
+  "upstream_revision": "3c71aeacdb296402e41fb2084b13e797d1770642",
+  "upstream_tag": "FIREFOX_158_0_RELEASE",
+  "version": "158.0",
+  "build_id": "20261018141426",
+  "qualification": "Unsigned development artifacts built from Firefox Release source; not a supported Lumen release.",
+  "native_build_seconds": 4149.933,
+  "package_seconds": 116.439,
+  "artifacts": [
+    {
+      "name": "lumen-158.0.en-US.win64.zip",
+      "sha256": "0946a35eedebf9829f5ab7920d1b5d4dc08a50e9c605dc74366ace612d498dc2",
+      "bytes": 135726681
+    },
+    {
+      "name": "lumen-158.0.en-US.win64.installer.exe",
+      "sha256": "c393badd594f7165b07add1c129e3fdf8ec9555aaf2bc3f15dcc0b1761bb4089",
+      "bytes": 89967084
+    }
+  ],
+  "zip_crc_verified": true,
+  "installer_signature": "NotSigned",
+  "public_metadata": {
+    "ProductName": "Lumen Browser",
+    "FileDescription": "Lumen Browser Setup",
+    "CompanyName": "Lumen Project"
+  },
+  "zip_launch": {
+    "version": "158.0",
+    "build_id": "20261018141426",
+    "name": "Lumen",
+    "vendor": "Lumen",
+    "profile_leaf": "Lumen",
+    "profile_vendor": "Lumen",
+    "rows": 57,
+    "pane_visible": true,
+    "https_only_default": true,
+    "quick_suggest_default": false,
+    "sponsored_default": false,
+    "application_updates_allowed": false,
+    "welcome_url": "about:preferences#lumen",
+    "result_count": 57,
+    "initial_local_tabs": [
+      "about:preferences#lumen"
+    ],
+    "public_controls_title": "Lumen Browser controls"
+  },
+  "installer": {
+    "help_exit": 0,
+    "help_did_not_install": true,
+    "foreign_guard_exit": 2,
+    "foreign_files_preserved": true,
+    "path_with_spaces": true,
+    "installed_apps_display_names": [
+      "Lumen Browser (x64 en-US)"
+    ],
+    "silent_install_exit": 0,
+    "no_shortcuts_override": true,
+    "payload_files_hash_verified": 61,
+    "repeat_install_exit": 0,
+    "desktop_shortcut_created": true,
+    "dedicated_start_menu_folder": true,
+    "root_start_menu_shortcut_absent": true,
+    "default_browser_choices_unchanged": true,
+    "owned_uninstall_entry_removed": true,
+    "uninstall_exit": 0,
+    "core_files_removed": true,
+    "owned_shortcuts_removed": true,
+    "profile_sentinel_preserved": true,
+    "default_choices_unchanged_after_uninstall": true
+  },
+  "installed_icon_test": {
+    "locations": [
+      "Desktop",
+      "Programs"
+    ],
+    "slot_taken": false,
+    "selection_and_revert": true
+  },
+  "installation_telemetry_file_absent": true,
+  "native_tests": {
+    "suite_total_checks": 68,
+    "unexpected_results": 0,
+    "defaults_reported_passes": 35,
+    "controls_reported_passes": 30,
+    "benchmark_reported_passes_each_adapter": 4
+  },
+  "selected_native_lint": {
+    "errors": 0,
+    "warnings": 0,
+    "fixed": 0
+  },
+  "limitations": [
+    "Windows 10 and ARM64 runtime unverified",
+    "No clean VM dependency qualification",
+    "No full process-attributed network/privacy capture",
+    "No supported signing/update/recovery infrastructure",
+    "No protected destination/elevated or interrupted-upgrade qualification",
+    "No complete screen-reader/high-contrast/scaling matrix",
+    "Compiler warnings include unmodified SDK/upstream code; NSIS 6010 unused removed-page handler and 9000 setup.exe compatibility-shim warning remain"
+  ]
+}

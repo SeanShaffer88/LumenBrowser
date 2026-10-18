@@ -2,7 +2,11 @@
 
 This document records performed work and explicitly separates it from release requirements. It is not a release announcement.
 
-**Current target: Firefox Release 158.0**, selected by the owner. All 91 snapshots match exact Git commit `3c71aeacdb296402e41fb2084b13e797d1770642`; overlay fixture tests pass. Native build/package/performance results below remain historical evidence for 160.0a1 until the Release qualification pass completes.
+**Current target: Firefox Release 158.0**, selected by the owner. All 91 snapshots match exact Git commit `3c71aeacdb296402e41fb2084b13e797d1770642`. Native configure/build, browser tests, selected native lint, matched settings benchmark, ZIP startup and full installer postconditions pass on the Windows 11 host. [Release artifact evidence](lumen-release-artifacts-2026-10-18.json) and [baseline decisions](RELEASE_BASELINE.md) record the exact scope.
+
+## Historical 160.0a1 verification
+
+The table and branding-batch notes below identify the earlier validated development build. They are retained history, not measurements of the Release 158.0 binary.
 
 | Check | Evidence / state |
 |---|---|
@@ -44,3 +48,11 @@ The final ZIP passes CRC and fresh-profile/system-only-PATH startup. The full un
 [Exact artifact hashes and sanitized verification evidence](lumen-artifacts-2026-10-18.json) identify the tested development build. The earlier NSIS component probe in installer-probe-2026-10-18.json is historical and separate. Signing, supported baseline selection, Windows 10 execution, full privacy/accessibility qualification and authenticated updates/recovery remain release blockers.
 
 Repository change whitespace checks pass excluding byte-preserved audit inputs. A full staged check reports the upstream SFX source’s existing CRLF lines as trailing whitespace (596 lines); those reference bytes remain unchanged and hash-verified. NSIS packaging also retains upstream warning 9000 for the internal setup.exe compatibility-shim filename. Neither is reported as a clean full-tree lint result.
+
+## Release 158.0 qualification
+
+Fresh native compilation passed in 69m 10s with eight workers. The browser suite recorded 68 total checks, zero unexpected results; its per-test summaries reported 35 defaults passes and 30 controls passes across both layouts. Selected native lint reports zero errors/warnings/fixes. Each performance adapter reported four product assertions; exact same-binary medians are update 0.581→0.339 ms, edit 1.119→0.480 ms and filtering 0.066→0.017 ms, with conditions and hashes in PERFORMANCE.md. No cross-channel or whole-browser gain is claimed.
+
+The final 61-file ZIP passes CRC and fresh-profile/system-only-PATH launch, renders 57 controls and opens the local welcome page. Its full unsigned installer passes help/no-install, guard exit 2/sentinel preservation, a path with spaces, shortcut flags, all 61 payload hashes, repeat install, dedicated Start Menu placement, native icon selection/revert, unchanged default-browser choices and uninstall/profile retention. Installed Apps now displays **Lumen Browser (x64 en-US)**, and its owned uninstall entry is removed on uninstall. The registry identity itself remains stable. The settings screenshot was inspected; complete accessibility/scaling/Windows 10 execution remains open.
+
+The build is not warning-free: sampled compiler warnings reference unmodified SDK/upstream code. NSIS reports 6010 for the removed wizard page’s unused handler (zeroed from output) and 9000 for the upstream internal setup.exe compatibility-shim filename. Existing signed-update, privacy/network, Windows 10/ARM64 and recovery gates remain unfulfilled.

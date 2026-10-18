@@ -1,6 +1,6 @@
 # Performance investigation
 
-Current source target is Firefox Release 158.0. All native timing reports below identify prior 160.0a1 binaries; they are not Release performance evidence. A matched Release run is required after its native build.
+Current source target is Firefox Release 158.0. Earlier native timing reports identify prior 160.0a1 binaries. The Release 158.0 comparison below identifies the new exact binaries; cross-version timing differences are not attributed to the channel or to new optimizations.
 
 Status: native Windows x64 compilation, settings correctness tests and paired Gecko benchmarks passed. A development ZIP also passed extracted startup/settings checks on Windows 11. No browser startup, page-rendering, scrolling or memory improvement is claimed.
 
@@ -103,3 +103,15 @@ Repeated the adapter-only native comparison on the final public-name build `2026
 | Filtering | 0.090 (0.079–0.106) | 0.023 (0.019–0.031) |
 
 [Final samples and source/binary hashes](benchmarks/results/settings-gecko-final-2026-10-18.json) identify this comparison. Earlier reports above are historical measurements, not measurements of this final binary. The tested improvement retains targeted preference refresh, coalesced notifications and cached localized search text with the QoL controls. No additional improvement over earlier optimized adapters is claimed. Deferred Fluent work, layout, paint, startup, content loading, memory and idle CPU are outside this benchmark.
+
+## Firefox Release 158.0 comparison
+
+Build `20261018141426`, Windows 11 Home x64 build 26300, 16 hardware threads. Native compilation and lint finished before measurement. Candidate ran first, baseline `c455485` second, with fresh headless mochitest profiles, 20 warmups and nine batches of 100 operations. Both adapters used identical native binaries, model, catalog, stylesheet and test; each reported four passing product assertions. The candidate was restored, frontend-rebuilt and the entire generated overlay reverse-checked. Other host activity and fixed ordering remain limitations.
+
+| Scenario | Baseline median ms/op (range) | Release candidate median ms/op (range) |
+|---|---:|---:|
+| External preference update | 0.581 (0.559–0.658) | 0.339 (0.321–0.398) |
+| Interactive setting change | 1.119 (1.093–1.158) | 0.480 (0.450–0.576) |
+| Filtering | 0.066 (0.060–0.080) | 0.017 (0.016–0.024) |
+
+[Release samples and source/binary hashes](benchmarks/results/settings-gecko-release-2026-10-18.json) support retaining targeted refresh, notification coalescing and search caching on this baseline. This is an adapter-only comparison, not a measured gain from switching channels. Deferred Fluent/layout/paint, startup, content workloads, memory and idle CPU remain unmeasured. Native build time was 69m 10s on this host; sampled compiler warnings concern unmodified SDK/upstream code, so the build is not described as warning-free. No build-time optimization is claimed.

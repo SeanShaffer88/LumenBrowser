@@ -1,6 +1,6 @@
 # Lumen Browser development installation
 
-No supported or signed release exists. The final native Windows ZIP and full offline self-extracting installer were built and tested on Windows 11 x64. `/Help`, exit-code propagation, foreign-browser rejection, a path containing spaces, `/NoShortcuts`, 62 payload hashes, repeat installation, both shortcut locations, custom-icon selection/revert, default-choice preservation and uninstall/profile retention passed. [Exact artifacts and evidence](lumen-artifacts-2026-10-18.json) identify the build. UI-only previews were canceled before installation; their visual checks are separate from the final silent full-payload tests. Failed/interrupted upgrades, protected destinations, Windows 10 and complete accessibility/network qualification remain open.
+No supported or signed release exists. The final native Windows ZIP and full offline self-extracting installer were built and tested on Windows 11 x64. `/Help`, exit-code propagation, foreign-browser rejection, a path containing spaces, `/NoShortcuts`, 61 payload hashes, repeat installation, both shortcut locations, custom-icon selection/revert, default-choice preservation and uninstall/profile retention passed. [Exact artifacts and evidence](lumen-release-artifacts-2026-10-18.json) identify the build. UI-only previews were canceled before installation; their visual checks are separate from the final silent full-payload tests. Failed/interrupted upgrades, protected destinations, Windows 10 and complete accessibility/network qualification remain open.
 
 ## Identity and visual design
 
@@ -56,3 +56,5 @@ The build requires local MSVC Hostx64/x86 tools, x86 VC/UCRT/Windows libraries a
 [Recorded component-probe evidence](installer-probe-2026-10-18.json) distinguishes these checks from the final packaged-artifact pass. The first uninstall check stopped as soon as the main executable disappeared and raced later file deletion; the corrected check waits for both core files and owned shortcuts before asserting completion.
 
 Native custom-icon discovery now includes the dedicated Start Menu folder while preserving legacy root-link discovery and existing executable/AUMID ownership checks. The default/private artwork is original Lumen design; optional upstream icon resources retain their matching previews. Windows metadata uses Lumen Browser/Lumen Project and preserves upstream notices.
+
+The current tested source baseline is Firefox Release 158.0. Windows Installed Apps displays Lumen Browser (x64 en-US); the internal registry key remains stable, and the owned uninstall entry is verified removed. Previous 160.0a1 artifacts and the component probe remain historical. The current installer is unsigned and is not a supported Lumen release.

@@ -1,0 +1,140 @@
+{
+  "environment": {
+    "os": "Windows 11 Home x64 build 26300",
+    "hardware_threads": 16,
+    "native_build_active": false,
+    "order": [
+      "candidate",
+      "baseline"
+    ],
+    "profiles": "fresh disposable headless mochitest profiles",
+    "timing_boundary": "synchronous DOM/adapter and awaited actions; deferred Fluent/layout/paint excluded",
+    "baseline_commit": "c455485",
+    "same_model_catalog_stylesheet_and_binaries": true
+  },
+  "baseline": {
+    "runtime": "158.0",
+    "build_id": "20261018141426",
+    "services": "Native Gecko preferences and Fluent; headless browser-chrome test",
+    "batches": 9,
+    "iterations_per_batch": 100,
+    "warmup_iterations": 20,
+    "external_preference_update": {
+      "median_ms": 0.5806790000000001,
+      "min_ms": 0.5590830000000006,
+      "max_ms": 0.6582469999999989,
+      "samples_ms": [
+        0.6238940000000003,
+        0.572698999999999,
+        0.5806790000000001,
+        0.5816939999999988,
+        0.5673120000000017,
+        0.5590830000000006,
+        0.5607420000000002,
+        0.5980919999999992,
+        0.6582469999999989
+      ]
+    },
+    "interactive_change": {
+      "median_ms": 1.1191100000000005,
+      "min_ms": 1.0926880000000028,
+      "max_ms": 1.1577390000000014,
+      "samples_ms": [
+        1.1191100000000005,
+        1.1577390000000014,
+        1.1308730000000013,
+        1.1123749999999994,
+        1.1052410000000008,
+        1.134677999999999,
+        1.1013160000000015,
+        1.141334999999999,
+        1.0926880000000028
+      ]
+    },
+    "filtering": {
+      "median_ms": 0.06585299999999733,
+      "min_ms": 0.05996900000000096,
+      "max_ms": 0.07950999999999567,
+      "samples_ms": [
+        0.07950999999999567,
+        0.06084599999999682,
+        0.07247999999999592,
+        0.06585299999999733,
+        0.07571300000000519,
+        0.06105800000000272,
+        0.05996900000000096,
+        0.07415299999999661,
+        0.06243199999999888
+      ]
+    }
+  },
+  "candidate": {
+    "runtime": "158.0",
+    "build_id": "20261018141426",
+    "services": "Native Gecko preferences and Fluent; headless browser-chrome test",
+    "batches": 9,
+    "iterations_per_batch": 100,
+    "warmup_iterations": 20,
+    "external_preference_update": {
+      "median_ms": 0.3391740000000004,
+      "min_ms": 0.32137799999999744,
+      "max_ms": 0.3980219999999997,
+      "samples_ms": [
+        0.3980219999999997,
+        0.33047600000000105,
+        0.3347000000000003,
+        0.3391740000000004,
+        0.3441250000000025,
+        0.3705910000000017,
+        0.36492799999999986,
+        0.3351469999999995,
+        0.32137799999999744
+      ]
+    },
+    "interactive_change": {
+      "median_ms": 0.4804110000000014,
+      "min_ms": 0.44998700000000097,
+      "max_ms": 0.576398999999999,
+      "samples_ms": [
+        0.576398999999999,
+        0.521726000000001,
+        0.47957799999999906,
+        0.4725610000000006,
+        0.5576089999999977,
+        0.4804110000000014,
+        0.44998700000000097,
+        0.514339,
+        0.47585399999999933
+      ]
+    },
+    "filtering": {
+      "median_ms": 0.016944999999998343,
+      "min_ms": 0.016196999999999663,
+      "max_ms": 0.02416400000000067,
+      "samples_ms": [
+        0.02416400000000067,
+        0.016944999999998343,
+        0.016361999999996896,
+        0.01715999999999667,
+        0.01649199999999837,
+        0.01622200000000248,
+        0.016196999999999663,
+        0.020027000000000045,
+        0.01994000000000142
+      ]
+    }
+  },
+  "source_hashes": {
+    "browser/settings.js": "ee5c765208e5c471e02d359d01c6888770f82c2ce84587446a74260dc0e1d260",
+    "browser/settings-model.mjs": "90c8f6fd6f1dfd74a2bdaa770c1c588270170ae172d840f7590d35912d4b2a6b",
+    "browser/settings.css": "66f64b2c43a39195af43e185416955c6fb6421d6df6192fa01d16de63250a8fb",
+    "browser/lumen.ftl": "1386604f6db1bf6e5b0a38ee3afabdda23d263f01bd618f83eadd4189bc3b5b4",
+    "browser/browser_lumen_performance.js": "66b1d33b60574616f0091b0af1ca8e443a80633ee2d4530fd11471bee4eab14c",
+    "config/customization.json": "f74fa762e80f617adea9585a071fa5f0d677d9b491f9c75f0cbbf0841b33c1c2",
+    "baseline/settings.js": "6e6b5034113ae1696c48c05f5ce5fd4f2f133c6f79fe060bf95c04bf7b0ee601"
+  },
+  "binary_hashes": {
+    "lumen.exe": "63a4d8b0ff0611794f3fe8b3150067a6b94e5f42017070a2eb685a5b0f677c35",
+    "xul.dll": "45de7fd07183e83adec50bc56ae32e1a6200e44ab2378547c84f3292228a24cf"
+  }
+}

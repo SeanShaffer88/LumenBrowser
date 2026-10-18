@@ -1,6 +1,6 @@
 # Scope and architecture decisions
 
-Initial scope: Windows 10 and newer, x64, local development channel, current Firefox main pinned by commit. No public release baseline or support lifecycle has been selected. Main satisfies current-source investigation; a production release must instead pin a supported, security-maintained release and revalidate every patch. Branding is the user-supplied product name Lumen; name clearance, icons, application identity, profile roots, and update identity remain unresolved.
+Scope: Windows 10 and newer, initially x64. The owner-selected Firefox Release channel is pinned by exact tag/commit; current source is 158.0. Native build/browser/package/installer checks pass on Windows 11, while a supported product lifecycle and the complete release matrix remain open. Public branding is Lumen Browser, with original artwork and stable internal Lumen/lumen application/profile/install identifiers. Name clearance and trusted update identity/infrastructure remain unresolved; original artwork does not establish trademark clearance.
 
 ## Dependency sequence
 
@@ -18,7 +18,7 @@ The patch stays within Mozilla's build and preferences architecture. No wrapper 
 | Tracking protection and cookie partitioning | Reduce cross-site correlation while retaining persistent logins | Site regressions possible; use upstream shield and cookie controls | Candidate defaults; per-site tests pending |
 | Remote suggestion removal | Avoid transmitting partial queries by default | Less convenience; native search settings preserve control | Candidate defaults |
 | Blank new tab | Avoid remote recommendations and promotion surface | Less discovery; small patch but background services need audit | Temporary lean default; polished local page later |
-| Searchable settings | Easier discovery, bounded choices and recovery | Existing preferences page, native widgets and Fluent; 57 allowlisted controls | Implemented; model and prior native browser tests pass; refreshed QoL checks pending |
+| Searchable settings | Easier discovery, bounded choices and recovery | Existing preferences page, native widgets and Fluent; 57 allowlisted controls | Implemented; model and Release 158.0 native controls/defaults tests pass; full accessibility qualification open |
 | Containers/private windows | Optional browsing separation | Retain upstream architecture and extension compatibility; cannot imply anonymity | Existing functions retained; integrated container UI evaluation pending |
 | Import/export | User ownership and portability | Allowlisted settings only, size/version/type validation, preview and rollback | Settings transfer implemented/model-tested; bookmarks/passwords retain upstream tools |
 | AI/sidebar/extra tools | Possible convenience | Remote inference/model downloads and ongoing audit increase scope | No additional implementation; upstream services still need inventory |

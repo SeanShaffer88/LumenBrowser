@@ -8,7 +8,7 @@ Project repository: [SeanShaffer88/LumenBrowser](https://github.com/SeanShaffer8
 
 [Product goals and release criteria](PRODUCT_GOALS.md): security updates first, measured resource use, simple and advanced settings, Windows 10/11 compatibility and recovery, and verified background-network behavior.
 
-[Current build and verification status](docs/BUILD_STATUS.md) distinguishes completed checks from remaining work. Native Windows 11 x64 builds, default/settings tests, measured settings optimizations, and extracted development ZIP startup have passed. [Artifact evidence](docs/lumen-artifacts-2026-10-18.json) records the prior 160.0a1 build; Release 158.0 native qualification is in progress.
+[Current build and verification status](docs/BUILD_STATUS.md) distinguishes completed checks from release gates. Firefox Release 158.0 native Windows 11 x64 build, browser tests, settings benchmark, ZIP startup and full installer verification pass. [Current artifact evidence](docs/lumen-release-artifacts-2026-10-18.json) records exact hashes and limitations; earlier 160.0a1 evidence remains historical.
 
 [Performance investigation](PERFORMANCE.md) records measured bottlenecks, test conditions and the limits of the current evidence.
 

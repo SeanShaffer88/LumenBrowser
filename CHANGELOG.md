@@ -48,4 +48,6 @@ Entries record each development stage; current implementation and verification a
 
 ## Firefox Release baseline — 2026-10-18
 
-- Apply the owner’s selection of Firefox Release, pinning 158.0 / FIREFOX_158_0_RELEASE / 3c71aeacdb296402e41fb2084b13e797d1770642. Refresh all 91 byte-verified audit snapshots; overlay fixture/model tests pass without removing features. Native Release qualification is in progress; previous artifact and benchmark reports remain identified as 160.0a1 evidence.
+- Apply the owner’s selection of Firefox Release, pinning 158.0 / FIREFOX_158_0_RELEASE / 3c71aeacdb296402e41fb2084b13e797d1770642. Refresh all 91 byte-verified audit snapshots; overlay fixture/model tests pass without removing features. Native Release build, browser tests, selected lint, matched benchmark, ZIP startup and full installer checks pass on Windows 11; previous artifact and benchmark reports remain identified as 160.0a1 evidence.
+
+- Correct the Installed Apps public display label without changing registry identity; verify the actual name and removal of its owned uninstall entry. Record Release artifact hashes, all 61 payload hashes, shortcuts/icon behavior, default preservation and profile retention in docs/lumen-release-artifacts-2026-10-18.json.

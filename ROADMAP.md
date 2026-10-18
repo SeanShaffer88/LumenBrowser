@@ -5,7 +5,7 @@
 | P0 | Pinned upstream investigation and minimal defaults patch | Implemented; snapshots verified against full checkout and real patch application |
 | P0 | Complete network consumer inventory, Glean/DAP/deletion behavior | Preliminary categories documented; source tracing and captures pending |
 | P0 | Windows x64 compile and browser integration | Native/frontend builds and extracted ZIP startup succeeded on Windows 11 x64; defaults, both settings layouts and native benchmarks pass |
-| P0 | Supported release baseline and security intake | Not selected/published; main pin is development only |
+| P0 | Supported release baseline and security intake | Firefox Release selected; 158.0 source/native/package checks pass; supported product release and security intake remain open |
 | P0 | Independent branding/install/profile/update identities | Lumen Browser original branding, separate internal identity and native offline installer implemented; native and full-payload checks pass on Windows 11; signing/updates blocked |
 | P0 | Signed updates and recoverable profile migrations | Pending; no infrastructure, keys, or service endpoints supplied |
 | P1 | Safe searchable customization/onboarding | 57-control pane, model, import/export and recovery implemented; prior native controls tests pass; refreshed QoL/defaults tests pass and local first-launch controls are verified in the extracted ZIP |
@@ -18,4 +18,4 @@ No public release date or performance/memory target is promised. Linux/macOS sup
 
 Follow [DELIVERY_PLAN.md](DELIVERY_PLAN.md) for the applied critical path and [PRODUCT_GOALS.md](PRODUCT_GOALS.md) for accepted quality/security/compatibility requirements. Discretionary feature expansion is deferred until the current build and settings pass their gates.
 
-The source lock now targets Firefox Release 158.0. Source fixture/model checks pass; native Release qualification is in progress. Prior native binaries and performance reports remain 160.0a1 evidence.
+The source lock now targets Firefox Release 158.0. Source fixture/model checks pass; native Release build/browser/package/installer checks pass on the Windows 11 host. Prior native binaries and performance reports remain 160.0a1 evidence.

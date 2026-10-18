@@ -443,6 +443,11 @@ def render(root, snapshot, diff):
     shared = start_menu_folder(original(path))
     shared = once(
         shared,
+        '"DisplayName" "${BrandFullNameInternal}$3 (${ARCH} ${AB_CD})"',
+        '"DisplayName" "${BrandFullName}$3 (${ARCH} ${AB_CD})"',
+    )
+    shared = once(
+        shared,
         '"DisplayName" "${BrandFullNameInternal}$1"',
         '"DisplayName" "${BrandFullName}$1"',
     )
