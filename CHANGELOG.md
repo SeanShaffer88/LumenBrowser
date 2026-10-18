@@ -17,3 +17,8 @@
 - Generate Health Reporter/Normandy configure changes and a registered browser default-preference test.
 - Add candidate Windows x64 full-build configuration, privacy inventory, failure-injection tooling tests, and release procedures.
 - No binary, installer, browser test result, complete telemetry-removal guarantee, finished branding, update service, migration implementation, or supported platform release.
+
+## Settings responsiveness investigation — 2026-10-18
+
+- Refresh changed preferences and their dependent controls, reconcile busy notifications once, and cache search text with localization invalidation. Preserve model validation and recovery.
+- Retain a paired DOM benchmark report and nine UI correctness checks; reduce simulated preference reads from 373 to 7 per external update and 764 to 26 per edit. This is not a Gecko or whole-browser speed claim; see PERFORMANCE.md.

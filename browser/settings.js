@@ -14,6 +14,19 @@ var gLumenPane = {
     this.rows = new Map();
     this.groups = [];
     this.observed = [];
+    this.states = new Map();
+    this.dirty = new Set();
+    this.dependents = new Map();
+    this.allNames = new Set(this.catalog.map(item => item.pref));
+    for (const item of this.catalog) {
+      if (item.dependsOn) {
+        const parent = item.dependsOn.pref;
+        if (!this.dependents.has(parent)) {
+          this.dependents.set(parent, new Set());
+        }
+        this.dependents.get(parent).add(item.pref);
+      }
+    }
     this.busy = false;
     const defaults = Services.prefs.getDefaultBranch("");
     const methods = { bool: "Bool", int: "Int", string: "String" };
@@ -52,6 +65,27 @@ var gLumenPane = {
       }
     }
     window.addEventListener("unload", () => this.cleanup(), { once: true });
+    this.searchObserver = new MutationObserver(records => {
+      const names = new Set();
+      for (const record of records) {
+        const element = record.target.nodeType === Node.ELEMENT_NODE ? record.target : record.target.parentElement;
+        const pref = element?.closest(".lumen-row")?.dataset.pref;
+        if (pref) {
+          names.add(pref);
+        }
+      }
+      for (const pref of names) {
+        this.cacheSearchText(pref);
+      }
+      if (this.node("lumen-filter").value) {
+        this.filter();
+      }
+    });
+    for (const { label, description } of this.rows.values()) {
+      for (const element of [label, description]) {
+        this.searchObserver.observe(element, { childList: true, characterData: true, subtree: true });
+      }
+    }
     for (const item of this.catalog) {
       Services.prefs.addObserver(item.pref, this);
       this.observed.push(item.pref);
@@ -65,10 +99,10 @@ var gLumenPane = {
       if (Services.prompt.confirm(window, title, message)) {
         this.status("lumen-reset-complete", { count: this.model.restoreDefaults() });
       }
-    }));
+    }, this.allNames));
     this.node("lumen-export").addEventListener("click", () => this.action(() => this.exportSettings()));
     this.node("lumen-import").addEventListener("click", () => this.node("lumen-import-file").click());
-    this.node("lumen-import-file").addEventListener("change", () => this.action(() => this.importSettings()));
+    this.node("lumen-import-file").addEventListener("change", () => this.action(() => this.importSettings(), this.allNames));
     this.refresh();
   },
 
@@ -119,22 +153,22 @@ var gLumenPane = {
     reset.addEventListener("click", () => this.action(() => {
       this.model.reset(item.pref);
       this.status("lumen-reset-one");
-    }));
+    }, [item.pref]));
     input.addEventListener("change", () => {
       const value = item.type === "bool" ? input.checked : JSON.parse(input.value);
       this.action(async () => {
-      let confirmed = false;
-      if (this.model.needsConfirmation(item.pref, value)) {
-        const title = await document.l10n.formatValue("lumen-change-confirm");
-        const warning = await document.l10n.formatValue(`${prefix}-warning`);
-        confirmed = Services.prompt.confirm(window, title, warning);
-        if (!confirmed) {
-          return;
+        let confirmed = false;
+        if (this.model.needsConfirmation(item.pref, value)) {
+          const title = await document.l10n.formatValue("lumen-change-confirm");
+          const warning = await document.l10n.formatValue(`${prefix}-warning`);
+          confirmed = Services.prompt.confirm(window, title, warning);
+          if (!confirmed) {
+            return;
+          }
         }
-      }
-      this.model.set(item.pref, value, confirmed);
-      this.status("lumen-saved");
-      });
+        this.model.set(item.pref, value, confirmed);
+        this.status("lumen-saved");
+      }, [item.pref]);
     });
     line.append(label, input, reset);
     row.append(line, description, hint);
@@ -142,13 +176,36 @@ var gLumenPane = {
       row.append(this.element("p", "lumen-restart"));
     }
     group.append(row);
-    this.rows.set(item.pref, { row, input, hint, reset });
+    this.rows.set(item.pref, { row, input, hint, reset, label, description });
+    this.cacheSearchText(item.pref);
     return row;
   },
 
-  refresh() {
-    for (const item of this.catalog) {
+  cacheSearchText(pref) {
+    const entry = this.rows.get(pref);
+    const item = this.model.definition(pref);
+    entry.searchText = `${item.title} ${item.description} ${pref} ${entry.label.textContent} ${entry.description.textContent}`.toLocaleLowerCase();
+  },
+
+  relatedNames(names) {
+    const related = new Set([...names].filter(name => this.allNames.has(name)));
+    const queue = [...related];
+    while (queue.length) {
+      for (const dependent of this.dependents.get(queue.pop()) ?? []) {
+        if (!related.has(dependent)) {
+          related.add(dependent);
+          queue.push(dependent);
+        }
+      }
+    }
+    return related;
+  },
+
+  refresh(names = null) {
+    const items = names ? [...names].map(name => this.model.definition(name)) : this.catalog;
+    for (const item of items) {
       const state = this.model.state(item.pref);
+      this.states.set(item.pref, state);
       const { row, input, hint, reset } = this.rows.get(item.pref);
       input.disabled = this.busy || !state.available || state.locked || !state.dependencyMet;
       reset.disabled = this.busy || !state.available || state.locked || !state.modified;
@@ -181,10 +238,9 @@ var gLumenPane = {
         document.l10n.setAttributes(hint, "lumen-default-choice", { value: option?.label ?? String(state.defaultValue) });
       }
     }
-    for (const id of ["lumen-import", "lumen-export", "lumen-reset-all"]) {
-      this.node(id).disabled = this.busy;
+    if (!names || this.node("lumen-modified-only").checked) {
+      this.filter();
     }
-    this.filter();
   },
 
   filter() {
@@ -194,11 +250,13 @@ var gLumenPane = {
     let count = 0;
     let advancedMatch = false;
     for (const item of this.catalog) {
-      const { row } = this.rows.get(item.pref);
-      const text = `${item.title} ${item.description} ${item.pref} ${row.textContent}`.toLocaleLowerCase();
-      row.hidden = !((!query || text.includes(query)) &&
+      const { row, searchText } = this.rows.get(item.pref);
+      const hidden = !((!query || searchText.includes(query)) &&
         (category === "all" || item.category === category) &&
-        (!modifiedOnly || row.dataset.modified === "true"));
+        (!modifiedOnly || this.states.get(item.pref)?.modified));
+      if (row.hidden !== hidden) {
+        row.hidden = hidden;
+      }
       if (!row.hidden) {
         count++;
         advancedMatch ||= !!item.advanced;
@@ -214,9 +272,14 @@ var gLumenPane = {
     this.node("lumen-no-results").hidden = count !== 0;
   },
 
-  observe() {
-    if (!this.busy) {
-      this.refresh();
+  observe(subject, topic, pref) {
+    if (!this.allNames.has(pref)) {
+      return;
+    }
+    if (this.busy) {
+      this.dirty.add(pref);
+    } else {
+      this.refresh(this.relatedNames([pref]));
     }
   },
 
@@ -224,25 +287,47 @@ var gLumenPane = {
     document.l10n.setAttributes(this.node("lumen-status"), id, args);
   },
 
-  async action(callback) {
+  setBusy(busy) {
+    this.busy = busy;
+    this.node("lumen-controls").toggleAttribute("aria-busy", busy);
+    if (busy) {
+      this.node("lumen-controls").setAttribute("aria-busy", "true");
+    }
+    for (const [pref, { input, reset }] of this.rows) {
+      const state = this.states.get(pref);
+      input.disabled = busy || !state?.available || state.locked || !state.dependencyMet;
+      reset.disabled = busy || !state?.available || state.locked || !state.modified;
+    }
+    for (const id of ["lumen-import", "lumen-export", "lumen-reset-all"]) {
+      this.node(id).disabled = busy;
+    }
+  },
+
+  async action(callback, names = []) {
     if (this.busy) {
       return;
     }
-    this.busy = true;
-    this.node("lumen-controls").setAttribute("aria-busy", "true");
+    this.dirty.clear();
+    this.setBusy(true);
     this.node("lumen-error").hidden = true;
     this.node("lumen-status").removeAttribute("data-l10n-id");
     this.node("lumen-status").textContent = "";
     try {
-      this.refresh();
       await callback();
     } catch (error) {
       this.node("lumen-error").textContent = error.message;
       this.node("lumen-error").hidden = false;
     } finally {
       this.busy = false;
-      this.node("lumen-controls").removeAttribute("aria-busy");
-      this.refresh();
+      try {
+        this.refresh(this.relatedNames([...names, ...this.dirty]));
+      } catch (error) {
+        this.node("lumen-error").textContent = error.message;
+        this.node("lumen-error").hidden = false;
+      } finally {
+        this.dirty.clear();
+        this.setBusy(false);
+      }
     }
   },
 
@@ -284,6 +369,7 @@ var gLumenPane = {
   },
 
   cleanup() {
+    this.searchObserver?.disconnect();
     for (const pref of this.observed) {
       try {
         Services.prefs.removeObserver(pref, this);

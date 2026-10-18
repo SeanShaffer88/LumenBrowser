@@ -32,6 +32,7 @@ let reads = 0;
 let l10nCalls = 0;
 let values = new Map();
 let observers = new Map();
+let locks = new Set();
 function get(name, branch = false) { reads++; return !branch && values.has(name) ? values.get(name) : defaults.get(name); }
 function set(name, value) {
   const previous = get(name);
@@ -43,7 +44,7 @@ for (const kind of ["Bool", "Int", "String"]) defaultBranch[`get${kind}Pref`] = 
 window.Services = { prefs: {
   getDefaultBranch: () => defaultBranch,
   getPrefType: name => { reads++; return types.get(name) ?? 0; },
-  prefIsLocked: () => { reads++; return false; },
+  prefIsLocked: name => { reads++; return locks.has(name); },
   prefHasUserValue: name => { reads++; return values.has(name); },
   clearUserPref: name => { values.delete(name); for (const observer of observers.get(name) ?? []) observer.observe(null, "nsPref:changed", name); },
   addObserver: (name, observer) => { if (!observers.has(name)) observers.set(name, new Set()); observers.get(name).add(observer); },
@@ -86,7 +87,7 @@ async function measure(callback) {
   return { ...stats(timings), preference_reads_per_op: readCounts[4], localization_calls_per_op: translationCounts[4], samples_ms: timings };
 }
 async function run(variant) {
-  values = new Map(); observers = new Map();
+  values = new Map(); observers = new Map(); locks = new Set();
   document.getElementById("fixture").innerHTML = template;
   const script = document.createElement("script");
   script.src = variant === "baseline" ? "../out/performance-baseline-settings.js" : "../browser/settings.js";
@@ -106,10 +107,47 @@ async function run(variant) {
   document.getElementById("lumen-filter").value = "smooth scrolling";
   pane.filter();
   if (document.querySelectorAll(".lumen-row:not([hidden])").length !== 1) throw new Error("Filtering regression");
+  const checks = [];
+  const assert = (condition, name) => { if (!condition) throw new Error(name); checks.push(name); };
+  const smooth = pane.rows.get("general.smoothScroll");
+  document.getElementById("lumen-filter").value = "";
+  pane.filter();
+  Services.prefs.setBoolPref("privacy.userContext.enabled", false);
+  assert(pane.rows.get("privacy.userContext.ui.enabled").input.disabled, "dependent disabled");
+  Services.prefs.setBoolPref("privacy.userContext.enabled", true);
+  assert(!pane.rows.get("privacy.userContext.ui.enabled").input.disabled, "dependent restored");
+  locks.add("general.smoothScroll");
+  pane.observe(null, "nsPref:changed", "general.smoothScroll");
+  assert(smooth.input.disabled && smooth.reset.disabled, "policy lock notification");
+  locks.delete("general.smoothScroll");
+  pane.observe(null, "nsPref:changed", "general.smoothScroll");
+  const desired = !Services.prefs.getBoolPref("general.smoothScroll");
+  smooth.input.checked = desired;
+  smooth.input.dispatchEvent(new Event("change"));
+  await Promise.resolve(); await Promise.resolve();
+  assert(Services.prefs.getBoolPref("general.smoothScroll") === desired && !pane.busy, "DOM change handler");
+  await pane.action(async () => {
+    assert(smooth.input.disabled, "busy disables controls");
+    Services.prefs.setBoolPref("general.smoothScroll", !desired);
+    Services.prefs.setBoolPref("privacy.userContext.enabled", false);
+  });
+  assert(smooth.input.checked === !desired && !smooth.input.disabled && pane.rows.get("privacy.userContext.ui.enabled").input.disabled, "busy observer reconciliation");
+  document.getElementById("lumen-modified-only").checked = true;
+  pane.filter();
+  assert(!smooth.row.hidden, "modified control visible");
+  smooth.reset.click();
+  await Promise.resolve(); await Promise.resolve();
+  assert(smooth.row.hidden && !values.has("general.smoothScroll"), "reset updates modified filter");
+  document.getElementById("lumen-modified-only").checked = false;
+  smooth.row.querySelector("label").textContent = "Translated unique search token";
+  await Promise.resolve();
+  document.getElementById("lumen-filter").value = "translated unique search token";
+  pane.filter();
+  assert(!smooth.row.hidden && document.querySelectorAll(".lumen-row:not([hidden])").length === 1, "localized search invalidation");
   pane.cleanup();
   if ([...observers.values()].some(set => set.size)) throw new Error("Observer cleanup regression");
   script.remove();
-  return { initialization_ms, external_preference_update: observer, interactive_change: action, filtering: filter };
+  return { correctness_checks: checks, initialization_ms, external_preference_update: observer, interactive_change: action, filtering: filter };
 }
 try {
   const mode = new URLSearchParams(location.search).get("mode") ?? "baseline";
@@ -121,3 +159,4 @@ try {
   document.getElementById("results").textContent = JSON.stringify({ error: error.stack });
 }
 </script>
+
