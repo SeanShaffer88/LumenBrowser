@@ -1,0 +1,162 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Lumen settings DOM benchmark — simulated Gecko services</title>
+<link rel="stylesheet" href="../browser/settings.css">
+<style>
+  :root { color-scheme: light; --border-color: #d9d9e3; --text-color-deemphasized: #5b5b68; }
+  body { font: 15px "Segoe UI", sans-serif; padding: 32px; margin: auto; max-width: 860px; background: #fbfbfe; color: #15141a; }
+  input, select, button { font: inherit; padding: 8px; }
+  a { color: #065bc6; }
+</style>
+<p>This developer benchmark uses real DOM elements and the Lumen UI, with simulated Gecko preferences/localization. It is not a running Lumen browser.</p>
+<div id="fixture"></div>
+<pre id="results">running</pre>
+<script type="module">
+import { LumenSettings } from "../browser/settings-model.mjs";
+
+const catalog = await (await fetch("../config/customization.json")).json();
+const overrides = await (await fetch("../config/preferences.json")).json();
+const template = (await (await fetch("../browser/settings.inc.xhtml")).text()).replaceAll("html:", "");
+const fluent = await (await fetch("../browser/lumen.ftl")).text();
+const messages = new Map([...fluent.matchAll(/^([a-z][\w-]*) = (.+)$/gm)].map(match => [match[1], match[2]]));
+catalog.forEach((item, i) => {
+  for (const field of ["title", "description", "warning"]) {
+    if (item[field]) messages.set(`lumen-setting-${i}-${field}`, item[field]);
+  }
+  item.options?.forEach((option, j) => messages.set(`lumen-setting-${i}-option-${j}`, option.label));
+});
+const defaults = new Map(catalog.map(item => [item.pref, item.type === "bool" ? false : item.options[0].value]));
+for (const item of overrides) if (defaults.has(item.name)) defaults.set(item.name, item.value);
+const types = new Map(catalog.map(item => [item.pref, { bool: 128, int: 64, string: 32 }[item.type]]));
+let reads = 0;
+let l10nCalls = 0;
+let values = new Map();
+let observers = new Map();
+let locks = new Set();
+function get(name, branch = false) { reads++; return !branch && values.has(name) ? values.get(name) : defaults.get(name); }
+function set(name, value) {
+  const previous = get(name);
+  values.set(name, value);
+  if (previous !== value) for (const observer of observers.get(name) ?? []) observer.observe(null, "nsPref:changed", name);
+}
+const defaultBranch = { getPrefType: name => { reads++; return types.get(name) ?? 0; } };
+for (const kind of ["Bool", "Int", "String"]) defaultBranch[`get${kind}Pref`] = name => get(name, true);
+window.Services = { prefs: {
+  getDefaultBranch: () => defaultBranch,
+  getPrefType: name => { reads++; return types.get(name) ?? 0; },
+  prefIsLocked: name => { reads++; return locks.has(name); },
+  prefHasUserValue: name => { reads++; return values.has(name); },
+  clearUserPref: name => { values.delete(name); for (const observer of observers.get(name) ?? []) observer.observe(null, "nsPref:changed", name); },
+  addObserver: (name, observer) => { if (!observers.has(name)) observers.set(name, new Set()); observers.get(name).add(observer); },
+  removeObserver: (name, observer) => observers.get(name)?.delete(observer),
+}, prompt: { confirm: () => true } };
+for (const kind of ["Bool", "Int", "String"]) {
+  Services.prefs[`get${kind}Pref`] = name => get(name);
+  Services.prefs[`set${kind}Pref`] = set;
+}
+window.ChromeUtils = { importESModule: path => path.endsWith("catalog.mjs") ? { LUMEN_CATALOG: catalog } : { LumenSettings } };
+function translate(id, args = {}) {
+  let text = messages.get(id) ?? id;
+  for (const [name, value] of Object.entries(args)) text = text.replaceAll(`{ $${name} }`, String(value));
+  return text;
+}
+document.l10n = {
+  setAttributes: (element, id, args) => {
+    l10nCalls++;
+    element.setAttribute("data-l10n-id", id);
+    const text = translate(id, args);
+    if (element.textContent !== text) element.textContent = text;
+  },
+  formatValue: async (id, args) => translate(id, args),
+  formatValues: async requests => requests.map(request => typeof request === "string" ? translate(request) : translate(request.id, request.args)),
+};
+function stats(samples) {
+  const sorted = [...samples].sort((a, b) => a - b);
+  return { median_ms: sorted[Math.floor(sorted.length / 2)], min_ms: sorted[0], max_ms: sorted.at(-1) };
+}
+async function measure(callback) {
+  for (let i = 0; i < 20; i++) await callback(i);
+  const timings = [], readCounts = [], translationCounts = [];
+  for (let batch = 0; batch < 9; batch++) {
+    reads = 0; l10nCalls = 0;
+    const start = performance.now();
+    for (let i = 0; i < 100; i++) await callback(i);
+    timings.push((performance.now() - start) / 100);
+    readCounts.push(reads / 100);
+    translationCounts.push(l10nCalls / 100);
+  }
+  return { ...stats(timings), preference_reads_per_op: readCounts[4], localization_calls_per_op: translationCounts[4], samples_ms: timings };
+}
+async function run(variant) {
+  values = new Map(); observers = new Map(); locks = new Set();
+  document.getElementById("fixture").innerHTML = template;
+  const script = document.createElement("script");
+  script.src = variant === "baseline" ? "../out/performance-baseline-settings.js" : "../browser/settings.js";
+  await new Promise((resolve, reject) => { script.onload = resolve; script.onerror = reject; document.head.append(script); });
+  const pane = window.gLumenPane;
+  const start = performance.now();
+  pane.init();
+  const initialization_ms = performance.now() - start;
+  document.getElementById("lumen-controls").hidden = false;
+  if (pane.rows.size !== 57) throw new Error("Unexpected control count");
+  const observer = await measure(i => Services.prefs.setBoolPref("general.smoothScroll", !!(i % 2)));
+  const action = await measure(i => pane.action(() => pane.model.set("general.smoothScroll", !!(i % 2)), ["general.smoothScroll"]));
+  const filter = await measure(i => {
+    document.getElementById("lumen-filter").value = i % 2 ? "smooth scrolling" : "privacy";
+    pane.filter();
+  });
+  document.getElementById("lumen-filter").value = "smooth scrolling";
+  pane.filter();
+  if (document.querySelectorAll(".lumen-row:not([hidden])").length !== 1) throw new Error("Filtering regression");
+  const checks = [];
+  const assert = (condition, name) => { if (!condition) throw new Error(name); checks.push(name); };
+  const smooth = pane.rows.get("general.smoothScroll");
+  document.getElementById("lumen-filter").value = "";
+  pane.filter();
+  Services.prefs.setBoolPref("privacy.userContext.enabled", false);
+  assert(pane.rows.get("privacy.userContext.ui.enabled").input.disabled, "dependent disabled");
+  Services.prefs.setBoolPref("privacy.userContext.enabled", true);
+  assert(!pane.rows.get("privacy.userContext.ui.enabled").input.disabled, "dependent restored");
+  locks.add("general.smoothScroll");
+  pane.observe(null, "nsPref:changed", "general.smoothScroll");
+  assert(smooth.input.disabled && smooth.reset.disabled, "policy lock notification");
+  locks.delete("general.smoothScroll");
+  pane.observe(null, "nsPref:changed", "general.smoothScroll");
+  const desired = !Services.prefs.getBoolPref("general.smoothScroll");
+  smooth.input.checked = desired;
+  smooth.input.dispatchEvent(new Event("change"));
+  await Promise.resolve(); await Promise.resolve();
+  assert(Services.prefs.getBoolPref("general.smoothScroll") === desired && !pane.busy, "DOM change handler");
+  await pane.action(async () => {
+    assert(smooth.input.disabled, "busy disables controls");
+    Services.prefs.setBoolPref("general.smoothScroll", !desired);
+    Services.prefs.setBoolPref("privacy.userContext.enabled", false);
+  });
+  assert(smooth.input.checked === !desired && !smooth.input.disabled && pane.rows.get("privacy.userContext.ui.enabled").input.disabled, "busy observer reconciliation");
+  document.getElementById("lumen-modified-only").checked = true;
+  pane.filter();
+  assert(!smooth.row.hidden, "modified control visible");
+  smooth.reset.click();
+  await Promise.resolve(); await Promise.resolve();
+  assert(smooth.row.hidden && !values.has("general.smoothScroll"), "reset updates modified filter");
+  document.getElementById("lumen-modified-only").checked = false;
+  smooth.row.querySelector("label").textContent = "Translated unique search token";
+  await Promise.resolve();
+  document.getElementById("lumen-filter").value = "translated unique search token";
+  pane.filter();
+  assert(!smooth.row.hidden && document.querySelectorAll(".lumen-row:not([hidden])").length === 1, "localized search invalidation");
+  pane.cleanup();
+  if ([...observers.values()].some(set => set.size)) throw new Error("Observer cleanup regression");
+  script.remove();
+  return { correctness_checks: checks, initialization_ms, external_preference_update: observer, interactive_change: action, filtering: filter };
+}
+try {
+  const mode = new URLSearchParams(location.search).get("mode") ?? "baseline";
+  const results = { environment: { user_agent: navigator.userAgent, hardware_threads: navigator.hardwareConcurrency, controls: 57,
+    batches: 9, iterations_per_batch: 100, warmup_iterations: 20, services: "Simulated preferences/localization; real DOM; no Gecko runtime" } };
+  for (const variant of mode === "both" ? ["baseline", "candidate"] : [mode]) results[variant] = await run(variant);
+  document.getElementById("results").textContent = JSON.stringify(results);
+} catch (error) {
+  document.getElementById("results").textContent = JSON.stringify({ error: error.stack });
+}
+</script>

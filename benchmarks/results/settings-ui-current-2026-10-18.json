@@ -1,0 +1,154 @@
+{
+  "environment": {
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+    "hardware_threads": 16,
+    "controls": 57,
+    "batches": 9,
+    "iterations_per_batch": 100,
+    "warmup_iterations": 20,
+    "services": "Simulated preferences/localization; real DOM; no Gecko runtime"
+  },
+  "baseline": {
+    "correctness_checks": [
+      "dependent disabled",
+      "dependent restored",
+      "policy lock notification",
+      "DOM change handler",
+      "busy disables controls",
+      "busy observer reconciliation",
+      "modified control visible",
+      "reset updates modified filter",
+      "localized search invalidation"
+    ],
+    "initialization_ms": 5,
+    "external_preference_update": {
+      "median_ms": 0.165,
+      "min_ms": 0.14300000004470348,
+      "max_ms": 0.185,
+      "preference_reads_per_op": 373,
+      "localization_calls_per_op": 57,
+      "samples_ms": [
+        0.1670000000298023,
+        0.17100000001490115,
+        0.165,
+        0.14600000001490115,
+        0.17600000001490115,
+        0.185,
+        0.1519999999552965,
+        0.16100000001490117,
+        0.14300000004470348
+      ]
+    },
+    "interactive_change": {
+      "median_ms": 0.3530000000447035,
+      "min_ms": 0.33700000002980235,
+      "max_ms": 0.375,
+      "preference_reads_per_op": 764,
+      "localization_calls_per_op": 114,
+      "samples_ms": [
+        0.35299999997019765,
+        0.33700000002980235,
+        0.35799999997019766,
+        0.34899999998509884,
+        0.36,
+        0.3530000000447035,
+        0.3660000000149012,
+        0.34899999998509884,
+        0.375
+      ]
+    },
+    "filtering": {
+      "median_ms": 0.08,
+      "min_ms": 0.07,
+      "max_ms": 0.10100000001490116,
+      "preference_reads_per_op": 0,
+      "localization_calls_per_op": 0,
+      "samples_ms": [
+        0.07599999994039536,
+        0.09,
+        0.07300000004470349,
+        0.10100000001490116,
+        0.09299999997019767,
+        0.08600000001490116,
+        0.07,
+        0.08,
+        0.075
+      ]
+    }
+  },
+  "candidate": {
+    "correctness_checks": [
+      "dependent disabled",
+      "dependent restored",
+      "policy lock notification",
+      "DOM change handler",
+      "busy disables controls",
+      "busy observer reconciliation",
+      "modified control visible",
+      "reset updates modified filter",
+      "localized search invalidation"
+    ],
+    "initialization_ms": 3.600000001490116,
+    "external_preference_update": {
+      "median_ms": 0.0029999999701976776,
+      "min_ms": 0.0010000000149011613,
+      "max_ms": 0.003999999985098839,
+      "preference_reads_per_op": 7,
+      "localization_calls_per_op": 1,
+      "samples_ms": [
+        0.0030000000447034836,
+        0.0019999999552965165,
+        0.0030000000447034836,
+        0.0010000000149011613,
+        0.0029999999701976776,
+        0.0029999999701976776,
+        0.0020000000298023225,
+        0.003999999985098839,
+        0.0010000000149011613
+      ]
+    },
+    "interactive_change": {
+      "median_ms": 0.085,
+      "min_ms": 0.07899999998509884,
+      "max_ms": 0.09899999998509884,
+      "preference_reads_per_op": 26,
+      "localization_calls_per_op": 1,
+      "samples_ms": [
+        0.08899999998509883,
+        0.08800000004470349,
+        0.08399999998509884,
+        0.085,
+        0.09899999998509884,
+        0.08300000004470348,
+        0.08799999997019768,
+        0.07899999998509884,
+        0.08399999998509884
+      ]
+    },
+    "filtering": {
+      "median_ms": 0.01899999998509884,
+      "min_ms": 0.01600000001490116,
+      "max_ms": 0.026000000014901162,
+      "preference_reads_per_op": 0,
+      "localization_calls_per_op": 0,
+      "samples_ms": [
+        0.02100000001490116,
+        0.01600000001490116,
+        0.01600000001490116,
+        0.01899999998509884,
+        0.02100000001490116,
+        0.021999999955296515,
+        0.026000000014901162,
+        0.01600000001490116,
+        0.01899999998509884
+      ]
+    }
+  },
+  "source_hashes": {
+    "browser/settings.js": "ffa3e7b869f8cdf5b9901a7a91147d1979bfffcf21f782d3b60479e35f2c7153",
+    "browser/settings-model.mjs": "90c8f6fd6f1dfd74a2bdaa770c1c588270170ae172d840f7590d35912d4b2a6b",
+    "config/customization.json": "f74fa762e80f617adea9585a071fa5f0d677d9b491f9c75f0cbbf0841b33c1c2",
+    "out/performance-baseline-settings.js": "6e6b5034113ae1696c48c05f5ce5fd4f2f133c6f79fe060bf95c04bf7b0ee601"
+  },
+  "baseline_commit": "c455485"
+}

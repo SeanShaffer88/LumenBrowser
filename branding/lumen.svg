@@ -1,0 +1,12 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this file,
+   - You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect x="16" y="16" width="224" height="224" rx="44" fill="#121214"/>
+  <defs><linearGradient id="bezel" x2="0" y2="1"><stop stop-color="#b6242c"/><stop offset="1" stop-color="#70181e"/></linearGradient></defs>
+  <circle cx="128" cy="128" r="91.5" fill="none" stroke="url(#bezel)" stroke-width="13"/>
+  <circle cx="128" cy="128" r="101" fill="none" stroke="url(#bezel)" stroke-width="6" stroke-dasharray="20.4 32.48" stroke-dashoffset="10.2"/>
+  <path d="M78 66h33v86h66v33H78z" fill="#efe8e2"/>
+  <path d="m161 72 15 15-15 15-15-15z" fill="#e62a34"/>
+  <g fill="#7d6e6a"><circle cx="57" cy="57" r="4"/><circle cx="199" cy="57" r="4"/><circle cx="57" cy="199" r="4"/><circle cx="199" cy="199" r="4"/></g>
+</svg>

@@ -1,0 +1,374 @@
+{
+  "repository": "https://github.com/mozilla-firefox/firefox.git",
+  "revision": "3c71aeacdb296402e41fb2084b13e797d1770642",
+  "channel": "release",
+  "retrieved_utc": "2026-10-18",
+  "files": [
+    {
+      "path": "browser/app/profile/firefox.js",
+      "sha256": "08cc0ca2e3d24c3ca305c38422bbfad51468bd209f29e2b51034742453203aac"
+    },
+    {
+      "path": "browser/base/content/test/browser-general/browser.toml",
+      "sha256": "2767251da985d478a345ff2632ff3b63a0f58fe21006b0fd03a9e6b4e2034580"
+    },
+    {
+      "path": "browser/config/version.txt",
+      "sha256": "658810f32f9eb1bc41f6749467ee90ba7256a7601eae75c01af31246c41dd69c"
+    },
+    {
+      "path": "browser/moz.configure",
+      "sha256": "f674592be7543ee877956433739665ff52e041073c528edf76753e453a8e3783"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "a799adf18bfb1911f16086dc0e2a6d1cd0e31272f47e7ee6841b465b74d249de"
+    },
+    {
+      "path": "modules/libpref/init/all.js",
+      "sha256": "f23f6eeacc25a2bd2ca29d3b92626dc07ace175e6c827a86294eeacd2be6a780"
+    },
+    {
+      "path": "modules/libpref/init/StaticPrefList.yaml",
+      "sha256": "2ddfb1c6c8d5a86da25913d32abaa7e545485a1650bcbbd733c67c7ef8c3daa3"
+    },
+    {
+      "path": "toolkit/components/glean/moz.build",
+      "sha256": "2c484edeb091ebd25aa00cca42be0e7cb977c00b22367cd64c32bb2280c1167b"
+    },
+    {
+      "path": "toolkit/components/telemetry/app/TelemetryController.sys.mjs",
+      "sha256": "8b9a4e5e66e9938ba6e202abfae5afefbc11f2f5e908fc0c832441ab1c42f68f"
+    },
+    {
+      "path": "toolkit/moz.configure",
+      "sha256": "eb271efeecaac909e12e40ea5fbf913e8e124f290d8a712ec4282ffb323d68e5"
+    },
+    {
+      "path": "browser/base/content/test/browser-protectionsUI/browser.toml",
+      "sha256": "3103ad406489d924bf5a018b51053b80e8b09a28c9c6353fddc035cb640552b0"
+    },
+    {
+      "path": "build/moz.configure/update-programs.configure",
+      "sha256": "cc9bce53d13cda48918ab528673f4ec1273caf66b7a0027eaf94c18797b89d2e"
+    },
+    {
+      "path": "toolkit/content/license.html.mako",
+      "sha256": "8ea2d318571fa999ee2ce41de8a5166207c16d12aff6a1fc5633b7eb82ca58f6"
+    },
+    {
+      "path": "python/mach/mach/telemetry.py",
+      "sha256": "d8a6b367982c0736deb5c03e5c8201344e74eb18d79894b36b1519fd0ac19c77"
+    },
+    {
+      "path": "browser/components/preferences/preferences.xhtml",
+      "sha256": "39bcbbc6236779aaccfe29729e9e2860d7446c05f0c69f965695d33396cd7307"
+    },
+    {
+      "path": "browser/components/preferences/preferences.js",
+      "sha256": "993ced6c6c155ca202d522bc34c80104fbe8a4afafd6110097132bc56073e9e9"
+    },
+    {
+      "path": "browser/components/preferences/jar.mn",
+      "sha256": "8459ff7bad59b92539841a1d38bde6e30df1be161199b6c0023e3c4bf2283cf2"
+    },
+    {
+      "path": "browser/components/preferences/tests/browser.toml",
+      "sha256": "d7f2e93574fc507e1f1acb3427a6724da609f7827f22a92df9853d840091c9a1"
+    },
+    {
+      "path": "build/moz.configure/windows.configure",
+      "sha256": "b83e97d9e98c78a0573665ab0954a1b7406a39c1cf63b55f7cb6964ebb9e8379"
+    },
+    {
+      "path": "toolkit/components/nimbus/ExperimentAPI.sys.mjs",
+      "sha256": "27146cfdb49f9644d28990c473825c457116311add6ce1cc89e02b375317f246"
+    },
+    {
+      "path": "toolkit/components/nimbus/lib/RemoteSettingsExperimentLoader.sys.mjs",
+      "sha256": "104915c2394fd85c6ecb6c098e396ef4b15f5075aa3ff1b154c9a592cd5a18cb"
+    },
+    {
+      "path": "browser/components/urlbar/QuickSuggest.sys.mjs",
+      "sha256": "960427b732110aab84a235c916fb958d8dee227fd3b0598a5829d094fc9198f3"
+    },
+    {
+      "path": "browser/branding/unofficial/configure.sh",
+      "sha256": "4acf0a166ac30fa6037d3e6f46a9670cbde6e220826e8aa5a4be7a509ea84921"
+    },
+    {
+      "path": "browser/branding/unofficial/branding.nsi",
+      "sha256": "3d9e75d768235f644ecca64a7019a4b9d93fc83071da31f3d12137ab609a31ed"
+    },
+    {
+      "path": "browser/branding/unofficial/locales/en-US/brand.ftl",
+      "sha256": "c04cdff120ecddbf1e9bf6c6e233edb85f8cfa9aa7e74593d4df2970fbf2ecdd"
+    },
+    {
+      "path": "browser/branding/unofficial/locales/en-US/brand.properties",
+      "sha256": "8ca616b13d370781fd37ea4137204f664a70bb85b3182e859b3bf90dead36d6d"
+    },
+    {
+      "path": "browser/branding/unofficial/pref/firefox-branding.js",
+      "sha256": "7d45771d1f3b21d275058269bd0bcd54560e2f7a0be93989b8c4094b015129ed"
+    },
+    {
+      "path": "browser/branding/unofficial/content/about-logo.svg",
+      "sha256": "30423d5568272f1aa4ea4840b7b6a2049e4037466d4a49798d58307435fd3df1"
+    },
+    {
+      "path": "browser/branding/unofficial/content/about-wordmark.svg",
+      "sha256": "0d221e483973c702938bdfe41d85d27604a163736c2c59701f9ca847147643fb"
+    },
+    {
+      "path": "browser/branding/unofficial/content/firefox-wordmark.svg",
+      "sha256": "4fede41832f6693e865a3eea161c6dc2922a591d8322dbdca02412756dc9d7f1"
+    },
+    {
+      "path": "browser/branding/unofficial/content/document_pdf.svg",
+      "sha256": "4571f86690964bbf4516de0ac86c025973c071739d6e247596de5ad2f0aa52bb"
+    },
+    {
+      "path": "browser/branding/unofficial/firefox.VisualElementsManifest.xml",
+      "sha256": "dded8c3942e2d8eca65838e55379b1da5765c2dd6183dd5c3530c9976cb25a86"
+    },
+    {
+      "path": "browser/branding/unofficial/private_browsing.VisualElementsManifest.xml",
+      "sha256": "9ea86a18d41112e25b17454044ac29b458f508d9814700a6f4c0f9370678f3ae"
+    },
+    {
+      "path": "browser/branding/branding-common.mozbuild",
+      "sha256": "52e27c7a86cfb388cceb2dc90d8f28f26429731f66ea5e4288746286c1685976"
+    },
+    {
+      "path": "browser/app/moz.build",
+      "sha256": "a4c71c07a9ffe5e362432c11fff9f9ab5dbbff0cb5930f8263d469e4c5eab57c"
+    },
+    {
+      "path": "browser/installer/windows/nsis/defines.nsi.in",
+      "sha256": "e2a7d76b512b412db7399a9918a93d2bdf3dbdcc718ce6576b40f9a90a98c841"
+    },
+    {
+      "path": "browser/installer/windows/nsis/installer.nsi",
+      "sha256": "a187d38bba1dd72f5dc94f2ed2a5d5c234f9e08e5cab8dfe44bcde00cf68f9af"
+    },
+    {
+      "path": "browser/installer/windows/nsis/uninstaller.nsi",
+      "sha256": "f8033ed7806e9f2e90347ffef828a63f5110b8960a2e1ac7ea739ac876631c88"
+    },
+    {
+      "path": "browser/installer/windows/nsis/install_dir_helpers.nsh",
+      "sha256": "3304e1e5d90f8cda7672de8fdd77c8eff6ce4910e4a738611c36873948eccf20"
+    },
+    {
+      "path": "toolkit/mozapps/installer/windows/nsis/common.nsh",
+      "sha256": "df7c175a48abd6002623c478a5526e84d38bf8783608ce40f4f01790a383afc3"
+    },
+    {
+      "path": "browser/locales/en-US/installer/override.properties",
+      "sha256": "352237286c9a8fdf6b8fe4749b6852deb15bb7d49b2724e212f64d3500b138f8"
+    },
+    {
+      "path": "browser/locales/en-US/installer/custom.properties",
+      "sha256": "7eab7d50808c4b2089a5801aad3116b989f5a1992c5951bc9c6b88ed4ffbc136"
+    },
+    {
+      "path": "browser/branding/unofficial/default16.png",
+      "sha256": "1e8aea59ad881e31e351f7f38143293a45a8e7b916571f3eccce5e89844c1969"
+    },
+    {
+      "path": "browser/branding/unofficial/default22.png",
+      "sha256": "783448749a0c380b385f862bd41da4c314a62f9242607b2774ab3f976b8e54a7"
+    },
+    {
+      "path": "browser/branding/unofficial/default24.png",
+      "sha256": "b03fee5010797dd6ec0850a9616ec1d1dc73e0836ed4445b6d1d6b7c000fc3ab"
+    },
+    {
+      "path": "browser/branding/unofficial/default32.png",
+      "sha256": "6b7170dd4e0ad2a095f11bb2d84c35bb7495e30e38218045eb85f81882f46a29"
+    },
+    {
+      "path": "browser/branding/unofficial/default48.png",
+      "sha256": "9ffbdd36b545394fca032ff753d5422c8092de97acd22ede27ea0b3b0dcb2359"
+    },
+    {
+      "path": "browser/branding/unofficial/default64.png",
+      "sha256": "060fd5cd86fda946ff84225f3035675e8031e25af55ef49c3bc16c779058fea9"
+    },
+    {
+      "path": "browser/branding/unofficial/default128.png",
+      "sha256": "be2fdb8622b028a2248510793980e8b9294cee66d55ca2cb0a103610bd409ba4"
+    },
+    {
+      "path": "browser/branding/unofficial/default256.png",
+      "sha256": "c6b5b3c02abe862b4e59acedb06d283a5b1eeafc78ac125736b31e0fd8436103"
+    },
+    {
+      "path": "browser/branding/unofficial/firefox.ico",
+      "sha256": "851b4a33f8ca2e7e09a788658234a83bea7e96807b1bf6b7869d5e6f7e9b52b1"
+    },
+    {
+      "path": "browser/branding/unofficial/firefox64.ico",
+      "sha256": "6af9ea012b0404ebb1c183da813739c0c93574cb18e572b7c26138bd553e1841"
+    },
+    {
+      "path": "browser/branding/unofficial/document.ico",
+      "sha256": "f4e39ac3723ad9b34aefeebbd82f66add46b6de6c11e4e4117b50f8ec8fb4241"
+    },
+    {
+      "path": "browser/branding/unofficial/document_pdf.ico",
+      "sha256": "52223d943e6a6adc46edaa662fb857dff97a3bb42c06d25643129ace5b7c0bf9"
+    },
+    {
+      "path": "browser/branding/unofficial/newtab.ico",
+      "sha256": "97f1b1ce699478e285cc096f5a276ca7b3f0252903416147d9f3165e63537247"
+    },
+    {
+      "path": "browser/branding/unofficial/newwindow.ico",
+      "sha256": "904d4a4f6ca04307013d353d6ebb4f0f3201fb4447a73ade192959cc860a0133"
+    },
+    {
+      "path": "browser/branding/unofficial/pbmode.ico",
+      "sha256": "1026d3db3423ae054fc01a1651382d426c2375dff77129e8962a6807f9de1e53"
+    },
+    {
+      "path": "browser/branding/unofficial/wizHeader.bmp",
+      "sha256": "689ea80105f4e61ffc73062516c7d7053f92bae0c700c0673c3a9b445345df1d"
+    },
+    {
+      "path": "browser/branding/unofficial/wizHeaderRTL.bmp",
+      "sha256": "e4d89b985e221d67b18c268bb0e89a60f39953d70efde0d1206e029578aca57e"
+    },
+    {
+      "path": "browser/branding/unofficial/wizWatermark.bmp",
+      "sha256": "b1805e4132a0dc5ded71b822f6662530ab1965f997f91398e984db3240ee4b82"
+    },
+    {
+      "path": "browser/branding/unofficial/VisualElements_70.png",
+      "sha256": "2e44d52cc2539367300f5cf4e551f4c51198d6f99ef188a9ff8fb14b9ee60924"
+    },
+    {
+      "path": "browser/branding/unofficial/VisualElements_150.png",
+      "sha256": "cd4efe5fbc7e755d19fac485a4ebdba3cc8af4a1d69263d9feaa834f8c512fdb"
+    },
+    {
+      "path": "browser/branding/unofficial/PrivateBrowsing_70.png",
+      "sha256": "761b1c2e81a799768a8d6f9a8a7cdaf4b95b3d4b54e98fa58c31783e16bc898a"
+    },
+    {
+      "path": "browser/branding/unofficial/PrivateBrowsing_150.png",
+      "sha256": "7d96744c1ec08e6113521423ab15ed082835d679aa425600910afb21d64cbda6"
+    },
+    {
+      "path": "browser/branding/unofficial/content/about.png",
+      "sha256": "6f33420f16263f443fa2a3fad08f54e9fde5846d3d28780e2f2245fadb1cbf14"
+    },
+    {
+      "path": "browser/branding/unofficial/content/about-logo.png",
+      "sha256": "33c3794f02a697f565a12d4efa11d7c6ba4901abf3a2dc07e6ac4bd86c2628f7"
+    },
+    {
+      "path": "browser/branding/unofficial/content/about-logo@2x.png",
+      "sha256": "18c59cb8be0e90447e39347cbd4c3ac1042893d5c9bca1a2954f791400abb4fa"
+    },
+    {
+      "path": "browser/branding/unofficial/content/about-logo-private.png",
+      "sha256": "95fc0a29531b9b489b4c13169033fc29e211ee07e549f3b1cdd70f4be8b936b7"
+    },
+    {
+      "path": "browser/branding/unofficial/content/about-logo-private@2x.png",
+      "sha256": "62f0669109fec349eaf66bfb1707411048cb7444f5f188a954e4fbb66e225e4e"
+    },
+    {
+      "path": "browser/locales/en-US/installer/mui.properties",
+      "sha256": "53eb46ead0bd96645668d3529232ed24195f3b628b77581d0a4f51059e2cc378"
+    },
+    {
+      "path": "browser/installer/windows/app.tag",
+      "sha256": "6abd58ec58e502c5459a65f3782721b477cb10f625f77d6ec908b7483f238e00"
+    },
+    {
+      "path": "python/mozbuild/mozbuild/action/exe_7z_archive.py",
+      "sha256": "11465cd5d6471a843ffcb3788e103bd3d4a0ec409699ce44a2a8e4a36f48595e"
+    },
+    {
+      "path": "other-licenses/7zstub/README.mozilla",
+      "sha256": "e0aaf6aac212a9da20baaa3b4391145f9084214a8ab4119526307eb3734237b8"
+    },
+    {
+      "path": "toolkit/mozapps/installer/windows/nsis/setup.ico",
+      "sha256": "ba306550d41be6e77bb836384504ac1979f467320295e6be2a2f39433df7a7a6"
+    },
+    {
+      "path": "browser/installer/package-manifest.in",
+      "sha256": "9cae2b9557044218745851c23883126c2ea6a4b48a4adf5d69357a0bc7b04a9a"
+    },
+    {
+      "path": "browser/installer/windows/nsis/shared.nsh",
+      "sha256": "d5db2ef193f8e46b48fed6aab0dca37ba15cc1d1a17fad5b3f16a3b3449383f3"
+    },
+    {
+      "path": "other-licenses/7zstub/src/CPP/7zip/Bundles/SFXSetup/SfxSetup.cpp",
+      "sha256": "e392947e48ef851e9b86b316cd0ef59752d3af3b3364eec841cc881cee24a2b8"
+    },
+    {
+      "path": "toolkit/components/glean/src/init/mod.rs",
+      "sha256": "3a6c627caa994fd4e6b5331c4c62feec7a17ba95335911183dc115ff7f497a2f"
+    },
+    {
+      "path": "toolkit/components/glean/src/init/upload_pref.rs",
+      "sha256": "52730e3faaedeebc3a98d100fecbe53955cb7983b8fa66d315c6becb1a14f211"
+    },
+    {
+      "path": "toolkit/components/glean/src/init/viaduct_uploader.rs",
+      "sha256": "84cbba3acb38bff6cbb4213f0c757d209cb3d4ba69ff10ce5e75c08d80ee8bdd"
+    },
+    {
+      "path": "toolkit/components/glean/docs/dev/preferences.md",
+      "sha256": "7f0d072e4711f4b32101804fa0436d53e7686c40e7ee793f182a2eeb4513b0cc"
+    },
+    {
+      "path": "toolkit/library/rust/gkrust-features.mozbuild",
+      "sha256": "5f2705448dad9e94a98f11b49f778ae0c3c7e421d15ccfb3647ec68cf8b6157d"
+    },
+    {
+      "path": "toolkit/components/dap/DAPTelemetrySender.sys.mjs",
+      "sha256": "b0def0dd890c1983fdcd4f3faceb53897427be6a28d083ce56a7a007908c48f1"
+    },
+    {
+      "path": "toolkit/components/dap/DAPSender.sys.mjs",
+      "sha256": "aea0b54d8f9f04ecb1fb6ed8f7d8b1c70c374c88f5d768d18287810f67d40d2c"
+    },
+    {
+      "path": "toolkit/components/resistfingerprinting/nsUserCharacteristics.cpp",
+      "sha256": "81750263322911a2bcd98a1dc3da224ddaff841f2b1c63b8b24a7148226b6f92"
+    },
+    {
+      "path": "toolkit/components/nimbus/FeatureManifest.yaml",
+      "sha256": "fcbae5424a24d719be85e909556cd5e7e47ca7b0d4bcacf274b3d440d435e41b"
+    },
+    {
+      "path": "browser/components/shell/CustomIconManager.sys.mjs",
+      "sha256": "4c273aaff469c02d3e1b449499952ce34fa2fc68e95951d09bb5e158e14679e7"
+    },
+    {
+      "path": "browser/components/shell/nsWindowsShellService.cpp",
+      "sha256": "81ddbcf611456223fa7c27435b5aebef7b48f3fc3e1385ef7bcb8d332d07c0ee"
+    },
+    {
+      "path": "browser/app/module.ver",
+      "sha256": "72422400e85c9ace625a9eb95cf150fe5f4130dd1da5079f40995c1559066479"
+    },
+    {
+      "path": "browser/app/pbproxy/module.ver",
+      "sha256": "72422400e85c9ace625a9eb95cf150fe5f4130dd1da5079f40995c1559066479"
+    },
+    {
+      "path": "config/create_rc.py",
+      "sha256": "7db4542100b04413061dbdae60657588fdc20857acc9f98b345537a3861c3bf4"
+    }
+  ],
+  "version": "158.0",
+  "tag": "FIREFOX_158_0_RELEASE"
+}

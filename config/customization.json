@@ -1,0 +1,680 @@
+[
+  {
+    "pref": "dom.security.https_only_mode",
+    "title": "Require secure connections",
+    "description": "Upgrade ordinary browsing to HTTPS. HTTP-only sites need an explicit exception.",
+    "category": "privacy",
+    "type": "bool",
+    "warning": "Turning this off permits unencrypted HTTP connections.",
+    "warnValues": [
+      false
+    ]
+  },
+  {
+    "pref": "dom.security.https_only_mode_pbm",
+    "title": "Require HTTPS in private windows",
+    "description": "Use HTTPS-only protection in private windows too.",
+    "category": "privacy",
+    "type": "bool",
+    "warning": "Turning this off permits unencrypted HTTP connections in private windows.",
+    "warnValues": [
+      false
+    ]
+  },
+  {
+    "pref": "privacy.trackingprotection.enabled",
+    "title": "Block known trackers",
+    "description": "Use the browser tracking-protection lists. Use the shield button for site exceptions.",
+    "category": "privacy",
+    "type": "bool",
+    "warning": "Turning this off reduces tracking protection.",
+    "warnValues": [
+      false
+    ]
+  },
+  {
+    "pref": "privacy.trackingprotection.socialtracking.enabled",
+    "title": "Block social-media trackers",
+    "description": "Reduce cross-site tracking from embedded social content.",
+    "category": "privacy",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "privacy.trackingprotection.cryptomining.enabled",
+    "title": "Block cryptomining scripts",
+    "description": "Block known scripts that consume resources to mine cryptocurrency.",
+    "category": "privacy",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "privacy.trackingprotection.fingerprinting.enabled",
+    "title": "Block known fingerprinters",
+    "description": "Block listed fingerprinting scripts while retaining ordinary website features.",
+    "category": "privacy",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "privacy.resistFingerprinting",
+    "title": "Resist fingerprinting",
+    "description": "Normalize browser characteristics. This can alter time zones, appearance, and site behavior.",
+    "category": "privacy",
+    "type": "bool",
+    "advanced": true,
+    "warning": "Fingerprinting resistance can break website features and change how pages look.",
+    "warnValues": [
+      true
+    ],
+    "restart": true
+  },
+  {
+    "pref": "network.cookie.cookieBehavior",
+    "title": "Cookies in ordinary windows",
+    "description": "Partitioning cross-site cookies balances privacy with website compatibility.",
+    "category": "privacy",
+    "type": "int",
+    "options": [
+      {
+        "value": 5,
+        "label": "Partition cross-site cookies"
+      },
+      {
+        "value": 4,
+        "label": "Block tracking cookies"
+      },
+      {
+        "value": 1,
+        "label": "Block third-party cookies"
+      },
+      {
+        "value": 2,
+        "label": "Block all cookies"
+      },
+      {
+        "value": 0,
+        "label": "Allow all cookies"
+      }
+    ],
+    "warning": "Changing cookie isolation can reduce privacy or break sign-in and embedded content.",
+    "warnValues": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "advanced": true
+  },
+  {
+    "pref": "network.cookie.cookieBehavior.pbmode",
+    "title": "Cookies in private windows",
+    "description": "Partitioning cross-site cookies balances privacy with website compatibility.",
+    "category": "privacy",
+    "type": "int",
+    "options": [
+      {
+        "value": 5,
+        "label": "Partition cross-site cookies"
+      },
+      {
+        "value": 4,
+        "label": "Block tracking cookies"
+      },
+      {
+        "value": 1,
+        "label": "Block third-party cookies"
+      },
+      {
+        "value": 2,
+        "label": "Block all cookies"
+      },
+      {
+        "value": 0,
+        "label": "Allow all cookies"
+      }
+    ],
+    "warning": "Changing cookie isolation can reduce privacy or break sign-in and embedded content.",
+    "warnValues": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "advanced": true
+  },
+  {
+    "pref": "privacy.userContext.enabled",
+    "title": "Enable browsing containers",
+    "description": "Keep cookies separate between container identities. Existing tabs are not automatically moved.",
+    "category": "privacy",
+    "type": "bool",
+    "restart": true
+  },
+  {
+    "pref": "privacy.userContext.ui.enabled",
+    "title": "Show container controls",
+    "description": "Expose upstream controls for opening tabs in separate containers.",
+    "category": "privacy",
+    "type": "bool",
+    "dependsOn": {
+      "pref": "privacy.userContext.enabled",
+      "value": true
+    }
+  },
+  {
+    "pref": "permissions.default.geo",
+    "title": "Location requests",
+    "description": "Choose whether websites may ask for this permission. Existing site exceptions are managed in Privacy & Security.",
+    "category": "permissions",
+    "type": "int",
+    "options": [
+      {
+        "value": 0,
+        "label": "Ask each time permission is needed"
+      },
+      {
+        "value": 2,
+        "label": "Block new requests"
+      }
+    ]
+  },
+  {
+    "pref": "permissions.default.camera",
+    "title": "Camera requests",
+    "description": "Choose whether websites may ask for this permission. Existing site exceptions are managed in Privacy & Security.",
+    "category": "permissions",
+    "type": "int",
+    "options": [
+      {
+        "value": 0,
+        "label": "Ask each time permission is needed"
+      },
+      {
+        "value": 2,
+        "label": "Block new requests"
+      }
+    ]
+  },
+  {
+    "pref": "permissions.default.microphone",
+    "title": "Microphone requests",
+    "description": "Choose whether websites may ask for this permission. Existing site exceptions are managed in Privacy & Security.",
+    "category": "permissions",
+    "type": "int",
+    "options": [
+      {
+        "value": 0,
+        "label": "Ask each time permission is needed"
+      },
+      {
+        "value": 2,
+        "label": "Block new requests"
+      }
+    ]
+  },
+  {
+    "pref": "permissions.default.desktop-notification",
+    "title": "Notification requests",
+    "description": "Choose whether websites may ask for this permission. Existing site exceptions are managed in Privacy & Security.",
+    "category": "permissions",
+    "type": "int",
+    "options": [
+      {
+        "value": 0,
+        "label": "Ask each time permission is needed"
+      },
+      {
+        "value": 2,
+        "label": "Block new requests"
+      }
+    ]
+  },
+  {
+    "pref": "browser.search.suggest.enabled",
+    "title": "Remote search suggestions",
+    "description": "Send typed search text to the selected search engine for suggestions.",
+    "category": "search",
+    "type": "bool",
+    "warning": "Enabling remote suggestions can send partial search queries to your search provider.",
+    "warnValues": [
+      true
+    ]
+  },
+  {
+    "pref": "browser.search.suggest.enabled.private",
+    "title": "Suggestions in private windows",
+    "description": "Allow the search engine to receive partial queries from private windows.",
+    "category": "search",
+    "type": "bool",
+    "warning": "Enabling remote suggestions can send partial search queries to your search provider.",
+    "warnValues": [
+      true
+    ],
+    "advanced": true,
+    "dependsOn": {
+      "pref": "browser.search.suggest.enabled",
+      "value": true
+    }
+  },
+  {
+    "pref": "browser.urlbar.suggest.searches",
+    "title": "Search suggestions in the address bar",
+    "description": "Include search-engine suggestions in address-bar results.",
+    "category": "search",
+    "type": "bool",
+    "warning": "Enabling remote suggestions can send partial search queries to your search provider.",
+    "warnValues": [
+      true
+    ],
+    "dependsOn": {
+      "pref": "browser.search.suggest.enabled",
+      "value": true
+    }
+  },
+  {
+    "pref": "browser.urlbar.suggest.history",
+    "title": "Suggest browsing history",
+    "description": "Find previously visited pages from the address bar.",
+    "category": "search",
+    "type": "bool"
+  },
+  {
+    "pref": "browser.urlbar.suggest.bookmark",
+    "title": "Suggest bookmarks",
+    "description": "Include saved bookmarks in address-bar results.",
+    "category": "search",
+    "type": "bool"
+  },
+  {
+    "pref": "browser.urlbar.suggest.openpage",
+    "title": "Suggest open tabs",
+    "description": "Find and switch to tabs already open in this profile.",
+    "category": "search",
+    "type": "bool"
+  },
+  {
+    "pref": "browser.urlbar.suggest.engines",
+    "title": "Suggest search engines",
+    "description": "Offer installed search engines in address-bar results.",
+    "category": "search",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "browser.urlbar.autoFill",
+    "title": "Complete addresses inline",
+    "description": "Complete known addresses from local browsing data.",
+    "category": "search",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "browser.tabs.warnOnClose",
+    "title": "Confirm closing multiple tabs",
+    "description": "Ask before closing a window with multiple tabs.",
+    "category": "tabs",
+    "type": "bool"
+  },
+  {
+    "pref": "browser.tabs.warnOnCloseOtherTabs",
+    "title": "Confirm closing other tabs",
+    "description": "Ask before closing other tabs from a tab menu.",
+    "category": "tabs",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "browser.tabs.warnOnOpen",
+    "title": "Warn before opening many tabs",
+    "description": "Confirm opening a large group of tabs at once.",
+    "category": "tabs",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "browser.tabs.loadInBackground",
+    "title": "Open links in background tabs",
+    "description": "Keep the current tab selected when opening a link in a new tab.",
+    "category": "tabs",
+    "type": "bool"
+  },
+  {
+    "pref": "browser.tabs.insertRelatedAfterCurrent",
+    "title": "Keep related tabs together",
+    "description": "Open related tabs next to the current tab.",
+    "category": "tabs",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "browser.tabs.closeWindowWithLastTab",
+    "title": "Close the window with its last tab",
+    "description": "When disabled, closing the last tab keeps the browser window available.",
+    "category": "tabs",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "browser.tabs.hoverPreview.enabled",
+    "title": "Preview tabs on hover",
+    "description": "Show a preview when the pointer rests on a tab.",
+    "category": "tabs",
+    "type": "bool"
+  },
+  {
+    "pref": "browser.tabs.hoverPreview.showThumbnails",
+    "title": "Show images in tab previews",
+    "description": "Include a page thumbnail in the preview.",
+    "category": "tabs",
+    "type": "bool",
+    "dependsOn": {
+      "pref": "browser.tabs.hoverPreview.enabled",
+      "value": true
+    },
+    "advanced": true
+  },
+  {
+    "pref": "browser.ctrlTab.sortByRecentlyUsed",
+    "title": "Switch tabs by recent use",
+    "description": "Use Ctrl+Tab to switch through recently used tabs.",
+    "category": "tabs",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "browser.tabs.groups.enabled",
+    "title": "Enable tab groups",
+    "description": "Organize related tabs into collapsible groups.",
+    "category": "tabs",
+    "type": "bool"
+  },
+  {
+    "pref": "sidebar.verticalTabs",
+    "title": "Use vertical tabs",
+    "description": "Place the tab list in the side panel instead of along the top.",
+    "category": "tabs",
+    "type": "bool"
+  },
+  {
+    "pref": "browser.uidensity",
+    "title": "Toolbar density",
+    "description": "Choose compact, standard, or touch-friendly spacing.",
+    "category": "appearance",
+    "type": "int",
+    "options": [
+      {
+        "value": 0,
+        "label": "Standard"
+      },
+      {
+        "value": 1,
+        "label": "Compact"
+      },
+      {
+        "value": 2,
+        "label": "Touch"
+      }
+    ]
+  },
+  {
+    "pref": "browser.toolbars.bookmarks.visibility",
+    "title": "Bookmarks toolbar",
+    "description": "Choose where the bookmarks toolbar appears.",
+    "category": "appearance",
+    "type": "string",
+    "options": [
+      {
+        "value": "always",
+        "label": "Always"
+      },
+      {
+        "value": "never",
+        "label": "Never"
+      },
+      {
+        "value": "newtab",
+        "label": "Only on new tabs"
+      }
+    ]
+  },
+  {
+    "pref": "browser.display.use_document_fonts",
+    "title": "Website fonts",
+    "description": "Use website fonts or prefer your configured fonts. Font substitution can change layout.",
+    "category": "appearance",
+    "type": "int",
+    "options": [
+      {
+        "value": 1,
+        "label": "Allow website fonts"
+      },
+      {
+        "value": 0,
+        "label": "Use configured fonts"
+      }
+    ],
+    "advanced": true
+  },
+  {
+    "pref": "layout.css.prefers-color-scheme.content-override",
+    "title": "Website color preference",
+    "description": "Choose the light/dark preference advertised to websites. Sites may use their own theme.",
+    "category": "appearance",
+    "type": "int",
+    "options": [
+      {
+        "value": 0,
+        "label": "Dark"
+      },
+      {
+        "value": 1,
+        "label": "Light"
+      },
+      {
+        "value": 2,
+        "label": "Match the operating system"
+      },
+      {
+        "value": 3,
+        "label": "Match the browser"
+      }
+    ]
+  },
+  {
+    "pref": "browser.startup.page",
+    "title": "When the browser starts",
+    "description": "Choose a blank page, your homepage, or the previous session.",
+    "category": "browsing",
+    "type": "int",
+    "options": [
+      {
+        "value": 0,
+        "label": "Open a blank page"
+      },
+      {
+        "value": 1,
+        "label": "Open the homepage"
+      },
+      {
+        "value": 3,
+        "label": "Restore the previous session"
+      }
+    ]
+  },
+  {
+    "pref": "general.smoothScroll",
+    "title": "Smooth scrolling",
+    "description": "Animate scrolling instead of moving in immediate steps.",
+    "category": "accessibility",
+    "type": "bool"
+  },
+  {
+    "pref": "general.autoScroll",
+    "title": "Middle-button autoscroll",
+    "description": "Use the middle mouse button to scroll.",
+    "category": "accessibility",
+    "type": "bool"
+  },
+  {
+    "pref": "accessibility.typeaheadfind",
+    "title": "Find text as you type",
+    "description": "Start a page search when typing outside a text field.",
+    "category": "accessibility",
+    "type": "bool"
+  },
+  {
+    "pref": "accessibility.blockautorefresh",
+    "title": "Warn about automatic refresh",
+    "description": "Allow upstream warnings for pages that automatically reload or redirect.",
+    "category": "accessibility",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "media.hardwaremediakeys.enabled",
+    "title": "Use keyboard media keys",
+    "description": "Let hardware media keys control browser playback.",
+    "category": "accessibility",
+    "type": "bool"
+  },
+  {
+    "pref": "browser.zoom.siteSpecific",
+    "title": "Remember zoom for each website",
+    "description": "Store a separate zoom level for each site.",
+    "category": "accessibility",
+    "type": "bool"
+  },
+  {
+    "pref": "browser.zoom.full",
+    "title": "Zoom the whole page",
+    "description": "Scale layout and images as well as text.",
+    "category": "accessibility",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "accessibility.browsewithcaret",
+    "title": "Navigate text with a caret",
+    "description": "Use a movable text cursor for keyboard selection. This changes normal arrow-key behavior.",
+    "category": "accessibility",
+    "type": "bool",
+    "advanced": true,
+    "warning": "Caret browsing changes keyboard navigation on websites.",
+    "warnValues": [
+      true
+    ]
+  },
+  {
+    "pref": "layout.spellcheckDefault",
+    "title": "Spell checking",
+    "description": "Choose which editable text fields receive spelling checks.",
+    "category": "accessibility",
+    "type": "int",
+    "options": [
+      {
+        "value": 0,
+        "label": "Off"
+      },
+      {
+        "value": 1,
+        "label": "Multi-line text fields"
+      },
+      {
+        "value": 2,
+        "label": "All editable text fields"
+      }
+    ]
+  },
+  {
+    "pref": "media.autoplay.default",
+    "title": "Autoplay",
+    "description": "Control autoplay. Websites with explicit permission can behave differently.",
+    "category": "media",
+    "type": "int",
+    "options": [
+      {
+        "value": 0,
+        "label": "Allow audio and video"
+      },
+      {
+        "value": 1,
+        "label": "Block audible playback"
+      },
+      {
+        "value": 5,
+        "label": "Block audio and video"
+      }
+    ]
+  },
+  {
+    "pref": "media.videocontrols.picture-in-picture.enabled",
+    "title": "Picture-in-picture",
+    "description": "Watch supported video in a floating window.",
+    "category": "media",
+    "type": "bool"
+  },
+  {
+    "pref": "media.videocontrols.picture-in-picture.video-toggle.enabled",
+    "title": "Show picture-in-picture button",
+    "description": "Display the floating video button on supported videos.",
+    "category": "media",
+    "type": "bool",
+    "dependsOn": {
+      "pref": "media.videocontrols.picture-in-picture.enabled",
+      "value": true
+    },
+    "advanced": true
+  },
+  {
+    "pref": "media.peerconnection.enabled",
+    "title": "Allow real-time calls",
+    "description": "Enable WebRTC for voice/video calls and other real-time connections.",
+    "category": "media",
+    "type": "bool",
+    "advanced": true,
+    "warning": "Disabling WebRTC breaks many voice/video calling services.",
+    "warnValues": [
+      false
+    ],
+    "restart": true
+  },
+  {
+    "pref": "browser.download.useDownloadDir",
+    "title": "Save to the default download folder",
+    "description": "When disabled, ask where to save downloaded files.",
+    "category": "downloads",
+    "type": "bool"
+  },
+  {
+    "pref": "browser.download.alwaysOpenPanel",
+    "title": "Open the downloads panel automatically",
+    "description": "Show download progress when a new download starts.",
+    "category": "downloads",
+    "type": "bool"
+  },
+  {
+    "pref": "browser.download.manager.addToRecentDocs",
+    "title": "Add downloads to Windows recent files",
+    "description": "Allow downloaded items to appear in the operating system recent-document history.",
+    "category": "downloads",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "browser.tabs.unloadOnLowMemory",
+    "title": "Unload tabs when memory is low",
+    "description": "Allow the browser to unload inactive tabs under memory pressure. Returning to a tab may reload it.",
+    "category": "performance",
+    "type": "bool",
+    "advanced": true
+  },
+  {
+    "pref": "network.dns.disablePrefetch",
+    "title": "Avoid speculative DNS requests",
+    "description": "Resolve names when needed rather than speculating ahead. This may increase initial navigation latency.",
+    "category": "performance",
+    "type": "bool",
+    "advanced": true
+  }
+]

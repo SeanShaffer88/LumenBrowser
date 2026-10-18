@@ -1,0 +1,142 @@
+{
+  "environment": {
+    "os": "Windows 11 Home x64 build 26300",
+    "hardware_threads": 16,
+    "headless": true,
+    "order": [
+      "candidate",
+      "baseline"
+    ],
+    "profile": "Fresh disposable mochitest profile per run",
+    "test_user_preferences": {
+      "dom.security.https_only_mode": false
+    },
+    "concurrent_native_build": false,
+    "background_work": "Other host activity uncontrolled; fixed run order may affect timings"
+  },
+  "baseline_commit": "c455485",
+  "source_hashes": {
+    "browser/settings.js": "ffa3e7b869f8cdf5b9901a7a91147d1979bfffcf21f782d3b60479e35f2c7153",
+    "browser/settings.css": "e1b728be94c02573f1c6cd7871a742574c4b9f84194513ace83e99165068cf0f",
+    "browser/settings-model.mjs": "90c8f6fd6f1dfd74a2bdaa770c1c588270170ae172d840f7590d35912d4b2a6b",
+    "config/customization.json": "f74fa762e80f617adea9585a071fa5f0d677d9b491f9c75f0cbbf0841b33c1c2",
+    "browser/browser_lumen_performance.js": "66b1d33b60574616f0091b0af1ca8e443a80633ee2d4530fd11471bee4eab14c",
+    "baseline/browser/settings.js": "6e6b5034113ae1696c48c05f5ce5fd4f2f133c6f79fe060bf95c04bf7b0ee601"
+  },
+  "binary_sha256": {
+    "firefox.exe": "540045d2cd37f932317ba0f1d44f92794cd8b8b5d9d4f33b3e647aa8a70e938a",
+    "xul.dll": "1729cf9050c56a93a214fba122dab633dd8b440e91592e3dd1ee3a5d9cfaa9db"
+  },
+  "candidate": {
+    "runtime": "160.0a1",
+    "build_id": "20261018023517",
+    "services": "Native Gecko preferences and Fluent; headless browser-chrome test",
+    "batches": 9,
+    "iterations_per_batch": 100,
+    "warmup_iterations": 20,
+    "external_preference_update": {
+      "median_ms": 0.35040899999999964,
+      "min_ms": 0.3240409999999997,
+      "max_ms": 0.4458569999999986,
+      "samples_ms": [
+        0.4458569999999986,
+        0.3700149999999985,
+        0.3552399999999989,
+        0.36136899999999966,
+        0.347645,
+        0.35033399999999804,
+        0.35040899999999964,
+        0.3430970000000002,
+        0.3240409999999997
+      ]
+    },
+    "interactive_change": {
+      "median_ms": 0.5452899999999999,
+      "min_ms": 0.5219130000000018,
+      "max_ms": 0.5951389999999992,
+      "samples_ms": [
+        0.5951389999999992,
+        0.5796350000000007,
+        0.5354449999999974,
+        0.5452899999999999,
+        0.5934909999999991,
+        0.559360999999999,
+        0.5219130000000018,
+        0.5361890000000017,
+        0.5250880000000007
+      ]
+    },
+    "filtering": {
+      "median_ms": 0.02104100000000244,
+      "min_ms": 0.018772000000001298,
+      "max_ms": 0.028445000000001528,
+      "samples_ms": [
+        0.028445000000001528,
+        0.019934999999998128,
+        0.018902000000000498,
+        0.02029700000000048,
+        0.024653000000000702,
+        0.018772000000001298,
+        0.02104100000000244,
+        0.022942999999997937,
+        0.024143999999998868
+      ]
+    }
+  },
+  "baseline": {
+    "runtime": "160.0a1",
+    "build_id": "20261018023517",
+    "services": "Native Gecko preferences and Fluent; headless browser-chrome test",
+    "batches": 9,
+    "iterations_per_batch": 100,
+    "warmup_iterations": 20,
+    "external_preference_update": {
+      "median_ms": 0.9023270000000002,
+      "min_ms": 0.8741510000000017,
+      "max_ms": 0.9533330000000001,
+      "samples_ms": [
+        0.9030479999999989,
+        0.8964230000000021,
+        0.8933429999999999,
+        0.9533330000000001,
+        0.8933339999999999,
+        0.9023270000000002,
+        0.9401440000000002,
+        0.8741510000000017,
+        0.9210680000000048
+      ]
+    },
+    "interactive_change": {
+      "median_ms": 1.4652269999999954,
+      "min_ms": 1.406503000000007,
+      "max_ms": 1.7974690000000009,
+      "samples_ms": [
+        1.7974690000000009,
+        1.5600000000000045,
+        1.5692520000000014,
+        1.4421990000000005,
+        1.456547999999998,
+        1.4652269999999954,
+        1.406503000000007,
+        1.4647949999999992,
+        1.4809109999999963
+      ]
+    },
+    "filtering": {
+      "median_ms": 0.08766599999999926,
+      "min_ms": 0.0791070000000036,
+      "max_ms": 0.10624199999999291,
+      "samples_ms": [
+        0.0828099999999995,
+        0.08800899999999728,
+        0.1029629999999952,
+        0.08356099999999515,
+        0.10624199999999291,
+        0.09722999999999501,
+        0.08458500000000185,
+        0.0791070000000036,
+        0.08766599999999926
+      ]
+    }
+  }
+}

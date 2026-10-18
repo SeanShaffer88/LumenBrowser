@@ -1,0 +1,55 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<html:section id="lumen-controls" data-category="paneLumen" hidden="true">
+  <html:h1 data-l10n-id="lumen-title"/>
+  <html:p class="lumen-intro" data-l10n-id="lumen-intro"/>
+  <html:div class="lumen-toolbar">
+    <html:label for="lumen-filter" data-l10n-id="lumen-search"/>
+    <html:div class="lumen-search-field">
+      <html:input id="lumen-filter" type="search" maxlength="200"/>
+      <html:button id="lumen-clear-filters" data-l10n-id="lumen-clear-filters"/>
+    </html:div>
+    <html:label for="lumen-category" data-l10n-id="lumen-category"/>
+    <html:select id="lumen-category">
+      <html:option value="all" data-l10n-id="lumen-all-categories"/>
+    </html:select>
+    <html:label class="lumen-modified-filter">
+      <html:input id="lumen-modified-only" type="checkbox"/>
+      <html:span data-l10n-id="lumen-modified-only"/>
+    </html:label>
+  </html:div>
+  <html:p id="lumen-result-count" class="lumen-note" role="status" aria-live="polite" aria-atomic="true"/>
+  <html:div class="lumen-actions">
+    <html:button id="lumen-export" data-l10n-id="lumen-export"/>
+    <html:button id="lumen-import" data-l10n-id="lumen-import"/>
+    <html:button id="lumen-reset-all" data-l10n-id="lumen-reset-all"/>
+    <html:input id="lumen-import-file" type="file" accept="application/json,.json" hidden="true"/>
+  </html:div>
+  <html:p data-l10n-id="lumen-export-scope" class="lumen-note"/>
+  <html:p id="lumen-status" role="status" aria-live="polite"/>
+  <html:p id="lumen-error" role="alert" hidden="true"/>
+  <html:div id="lumen-standard"/>
+  <html:details id="lumen-advanced">
+    <html:summary data-l10n-id="lumen-advanced"/>
+    <html:p data-l10n-id="lumen-advanced-description"/>
+    <html:div id="lumen-advanced-rows"/>
+    <html:a href="about:config" data-l10n-id="lumen-advanced-config"/>
+    <html:p class="lumen-note" data-l10n-id="lumen-advanced-config-warning"/>
+  </html:details>
+  <html:p id="lumen-no-results" hidden="true" data-l10n-id="lumen-no-results"/>
+  <html:section class="lumen-tools">
+    <html:h2 data-l10n-id="lumen-tools-title"/>
+    <html:p data-l10n-id="lumen-tools-description"/>
+    <html:nav class="lumen-tool-links" data-l10n-id="lumen-tools-nav">
+      <html:a href="about:preferences#general" data-l10n-id="lumen-tool-general"/>
+      <html:a href="about:preferences#privacy" data-l10n-id="lumen-tool-privacy"/>
+      <html:a href="about:logins" data-l10n-id="lumen-tool-passwords"/>
+      <html:a href="about:addons" data-l10n-id="lumen-tool-extensions"/>
+      <html:a href="about:downloads" data-l10n-id="lumen-tool-downloads"/>
+      <html:a href="about:keyboard" data-l10n-id="lumen-tool-keyboard"/>
+      <html:a href="about:profiles" data-l10n-id="lumen-tool-profiles"/>
+      <html:a href="about:support" data-l10n-id="lumen-tool-troubleshooting"/>
+    </html:nav>
+  </html:section>
+</html:section>

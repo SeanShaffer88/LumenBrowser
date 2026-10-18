@@ -1,0 +1,23 @@
+{
+  "artifact": "firefox-160.0a1.en-US.win64.zip",
+  "sha256": "57dde33c7f53e4a0900788b075f848ea702cb301758c7eb72d8a4adf5692dda3",
+  "bytes": 139138987,
+  "zip_crc_verified": true,
+  "extracted_launch": {
+    "version": "160.0a1",
+    "build_id": "20261018023517",
+    "rows": 57,
+    "pane_visible": true,
+    "https_only_default": true,
+    "quick_suggest_default": false,
+    "sponsored_default": false
+  },
+  "os": "Windows 11 Home x64 build 26300",
+  "child_path": "SystemRoot/System32 and SystemRoot only",
+  "profile": "Fresh disposable Marionette profile",
+  "limitations": [
+    "Headless startup and settings only; no packaged network capture",
+    "No Windows 10 execution, signing or independent fork identity",
+    "System-installed runtimes may satisfy dependencies; not a clean Windows VM test"
+  ]
+}

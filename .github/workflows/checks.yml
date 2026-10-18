@@ -1,0 +1,32 @@
+name: Foundation checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tooling:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Validate pinned inputs
+        run: python tools/lumen.py validate
+      - name: Test tooling and failure paths
+        run: python -m unittest discover -s tests -v
+      - name: Test settings validation and recovery
+        run: node --test tests/settings-model.test.mjs
+      - name: Generate source patch
+        run: python tools/lumen.py patch --output out/lumen.patch
+      - name: Package development sources
+        run: python tools/bundle.py --output out/lumen-development-source.zip
