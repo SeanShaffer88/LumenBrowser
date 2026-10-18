@@ -6,6 +6,7 @@ for (const redesign of [false, true]) {
     await SpecialPowers.pushPrefEnv({ set: [
       ["browser.settings-redesign.enabled", redesign],
       ["general.smoothScroll", true],
+      ["privacy.userContext.enabled", true],
     ] });
     await openPreferencesViaOpenPreferencesAPI("paneLumen", { leaveOpen: true });
     const win = gBrowser.contentWindow;
@@ -27,9 +28,25 @@ for (const redesign of [false, true]) {
       await TestUtils.waitForCondition(() => !pane.busy, "Reset completed");
       Assert.ok(!Services.prefs.prefHasUserValue("general.smoothScroll"), "Reset restores the shipped default branch");
       Services.prefs.lockPref("general.smoothScroll");
-      pane.refresh();
+      await TestUtils.waitForCondition(() => row.input.disabled, "Policy lock notification updates the control");
       Assert.ok(row.input.disabled, "Policy-managed control is disabled");
       Assert.throws(() => pane.model.set("general.smoothScroll", false), /managed by policy/, "Model enforces policy too");
+      Services.prefs.unlockPref("general.smoothScroll");
+      await TestUtils.waitForCondition(() => !row.input.disabled, "Unlock restores the control");
+      const dependent = pane.rows.get("privacy.userContext.ui.enabled");
+      Services.prefs.setBoolPref("privacy.userContext.enabled", false);
+      await TestUtils.waitForCondition(() => dependent.input.disabled, "Parent notifications disable dependent controls");
+      await pane.action(() => Services.prefs.setBoolPref("privacy.userContext.enabled", true));
+      Assert.ok(!dependent.input.disabled, "Busy action reconciles dependent controls");
+      search.value = "";
+      search.dispatchEvent(new win.Event("input", { bubbles: true }));
+      const modifiedOnly = doc.getElementById("lumen-modified-only");
+      modifiedOnly.checked = true;
+      modifiedOnly.dispatchEvent(new win.Event("change", { bubbles: true }));
+      Services.prefs.setBoolPref("general.smoothScroll", !Services.prefs.getDefaultBranch("").getBoolPref("general.smoothScroll"));
+      Assert.ok(!row.row.hidden, "Modified-only view reacts to external changes");
+      EventUtils.synthesizeMouseAtCenter(row.reset, {}, win);
+      await TestUtils.waitForCondition(() => !pane.busy && row.row.hidden, "Reset reconciles the modified-only filter");
     } finally {
       Services.prefs.unlockPref("general.smoothScroll");
       BrowserTestUtils.removeTab(gBrowser.selectedTab);

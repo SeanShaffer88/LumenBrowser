@@ -13,7 +13,7 @@ This document records performed work and explicitly separates it from release re
 | Settings model tests | 11 Node tests passed locally; includes explicit write/rollback postconditions and no npm dependencies |
 | Settings performance | Paired isolated Edge DOM harness: preference reads 373→7 per external update, 764→26 per edit; nine correctness checks pass on both adapters. Simulated Gecko services; see PERFORMANCE.md for timings/limits |
 | Source packaging | Deterministic archive generation, ZIP integrity and complete SHA-256 manifest tested |
-| Published review | Draft PR #1 contains the foundation; initial Windows/Linux foundation CI passed |
+| Published review | Draft PR #1 contains the foundation; Windows/Linux foundation CI passed for optimization commit `c08f954` (run `39109974632`) |
 | Development host | Windows 11 Home x64, build 26300; not a Windows 10 test environment |
 | MozillaBuild | 4.2.1, extracted locally from a Mozilla-signed installer; installer not executed |
 | Build Python / Rust | MozillaBuild Python 3.12.10 / isolated Rust 1.99.1 |
