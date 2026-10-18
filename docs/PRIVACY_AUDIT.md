@@ -1,6 +1,6 @@
 # Pinned telemetry consumer audit — 2026-10-18
 
-Scope: selected Windows-relevant consumers at Firefox revision `4523d65b575546e2b588dfb8b91e3d94ebeec19a`. This is source inspection, not packet capture or a complete telemetry-removal claim. The exact upstream bytes below are under `audit/upstream/` with SHA-256 entries in `upstream.lock.json`; inspected working-source files were compared byte-for-byte with that pin. No privacy/security implementation was changed during this audit.
+Scope: selected Windows-relevant consumers, originally inspected at `4523d65b575546e2b588dfb8b91e3d94ebeec19a` and compared during the Release 158.0 port at `3c71aeacdb296402e41fb2084b13e797d1770642`. This is source inspection, not packet capture or a complete telemetry-removal claim. The exact upstream bytes below are under `audit/upstream/` with SHA-256 entries in `upstream.lock.json`; inspected working-source files were compared byte-for-byte with that pin. No privacy/security implementation was changed during this audit.
 
 | Consumer | Actual gate / behavior | Evidence and remaining qualification |
 |---|---|---|
@@ -20,3 +20,5 @@ The pinned Glean preferences documentation describes collection-independent ping
 Use the exact packaged artifact, new and previously opted-in disposable profiles, and process-attributed capture in isolated Windows environments. Exercise startup/idle/shutdown, master-pref transitions, retained ping stores, debug/local test overrides and feature caches. Keep captures local, sanitize published evidence and compare with source consumers. Verify security lists, certificate validation and signed extensions continue functioning. Do not equate an empty short capture or a mocked upload return value with zero telemetry.
 
 Legacy Telemetry's full scheduling/deletion paths, all DAP direct callers and incrementality consumers, account flows, push, resolver/connectivity probes, optional component/model downloads and every Remote Settings consumer remain outside this completed subset. The release requirements in VERIFICATION.md still apply.
+
+Release port comparison: upload-pref observer, Viaduct uploader, DAP sender/wrapper, characteristics consumer and Rust build feature gates are byte-identical in the two pins. Release FOG initialization lacks newer submitted-ping storage and early-event acceleration settings; the inspected upload/recording/build gates remain the same. Feature-manifest changes require continued feature-by-feature auditing. This comparison carries no runtime network assurance, and existing packet-capture work remains open.

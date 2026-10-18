@@ -1,6 +1,6 @@
 # Windows development build
 
-Target: Windows 10 and newer, x64. The full pinned checkout and isolated MozillaBuild/Rust/compiler environment were prepared under `C:/lumen-work` on the development host; the native x64 build and integrated frontend build succeeded. Native defaults, settings and performance tests passed on Windows 11. Windows 10 remains unverified. The project workspace contains spaces, which upstream does not support for its build paths. Use a separate short source/state path without spaces. Do not change system security settings or existing installations as an incidental build step.
+Target: Windows 10 and newer, x64. Current source target: Firefox Release 158.0. The native results below describe the prior 160.0a1 development build until Release qualification completes. The full pinned checkout and isolated MozillaBuild/Rust/compiler environment were prepared under `C:/lumen-work` on the development host; the native x64 build and integrated frontend build succeeded. Native defaults, settings and performance tests passed on Windows 11. Windows 10 remains unverified. The project workspace contains spaces, which upstream does not support for its build paths. Use a separate short source/state path without spaces. Do not change system security settings or existing installations as an incidental build step.
 
 Use the current [Mozilla Windows setup guide](https://firefox-source-docs.mozilla.org/setup/windows_build.html) for supported Visual Studio/SDK, MozillaBuild, Python, Rust, memory, and disk prerequisites. Upstream documents at least 40 GB free disk. Toolchain downloads contact Mozilla and dependency hosts; inspect bootstrap prompts before accepting machine-wide modifications. This repository does not install prerequisites or alter antivirus exclusions.
 
@@ -14,7 +14,7 @@ cd C:/lumen-work/firefox
 git config core.autocrlf false
 git config core.longpaths true
 git remote add origin https://github.com/mozilla-firefox/firefox.git
-git fetch --depth=1 origin 4523d65b575546e2b588dfb8b91e3d94ebeec19a
+git fetch --depth=1 origin 3c71aeacdb296402e41fb2084b13e797d1770642
 git checkout --detach FETCH_HEAD
 ```
 

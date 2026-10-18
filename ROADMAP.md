@@ -17,3 +17,5 @@
 No public release date or performance/memory target is promised. Linux/macOS support is outside the initial implementation scope. Upstream services such as push, component downloads, account flows, and AI-related features require individual privacy decisions before product completion.
 
 Follow [DELIVERY_PLAN.md](DELIVERY_PLAN.md) for the applied critical path and [PRODUCT_GOALS.md](PRODUCT_GOALS.md) for accepted quality/security/compatibility requirements. Discretionary feature expansion is deferred until the current build and settings pass their gates.
+
+The source lock now targets Firefox Release 158.0. Source fixture/model checks pass; native Release qualification is in progress. Prior native binaries and performance reports remain 160.0a1 evidence.

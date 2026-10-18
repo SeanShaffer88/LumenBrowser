@@ -4,7 +4,7 @@ These requirements implement the project owner's accepted goal adjustments. They
 
 ## 1. Security updates take precedence
 
-Choose a security-maintained Firefox release baseline before public distribution. Keep the downstream patch set small enough to rebase routinely. Target triage within 24 hours of an upstream security release and delivery of a validated fix within 72 hours for exploited or critical issues. These are engineering targets, not a staffed service guarantee. If a safe integration cannot meet the target, stop distributing the affected build, document the gap, and prioritize the fix over new features. Do not ship an unvalidated update to satisfy a clock.
+Use the owner-selected **Firefox Release** channel, pinned to an exact stable release revision, and qualify each security-maintained baseline before public distribution. Keep the downstream patch set small enough to rebase routinely. Target triage within 24 hours of an upstream security release and delivery of a validated fix within 72 hours for exploited or critical issues. These are engineering targets, not a staffed service guarantee. If a safe integration cannot meet the target, stop distributing the affected build, document the gap, and prioritize the fix over new features. Do not ship an unvalidated update to satisfy a clock.
 
 A private reporting channel, release owner, supported-version list, signing keys, and update infrastructure are required before launch. No monitoring automation or maintainer availability is implied by this policy.
 

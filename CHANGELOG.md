@@ -45,3 +45,7 @@ Entries record each development stage; current implementation and verification a
 - Repeat the final native adapter benchmark: updates 0.844→0.410 ms, edits 1.551→0.611 ms, filtering 0.090→0.023 ms under the documented microbenchmark conditions.
 
 - Verify the exact full unsigned installer: `/Help`, guard exit propagation, shortcut flags/folder, 62 payload hashes, installed icon changes, unchanged defaults and uninstall/profile retention. Artifact hashes and scope are in docs/lumen-artifacts-2026-10-18.json.
+
+## Firefox Release baseline — 2026-10-18
+
+- Apply the owner’s selection of Firefox Release, pinning 158.0 / FIREFOX_158_0_RELEASE / 3c71aeacdb296402e41fb2084b13e797d1770642. Refresh all 91 byte-verified audit snapshots; overlay fixture/model tests pass without removing features. Native Release qualification is in progress; previous artifact and benchmark reports remain identified as 160.0a1 evidence.

@@ -8,13 +8,13 @@ Project repository: [SeanShaffer88/LumenBrowser](https://github.com/SeanShaffer8
 
 [Product goals and release criteria](PRODUCT_GOALS.md): security updates first, measured resource use, simple and advanced settings, Windows 10/11 compatibility and recovery, and verified background-network behavior.
 
-[Current build and verification status](docs/BUILD_STATUS.md) distinguishes completed checks from remaining work. Native Windows 11 x64 builds, default/settings tests, measured settings optimizations, and extracted development ZIP startup have passed. [Artifact evidence](docs/development-artifact-2026-10-18.json) records the exact ZIP hash and limitations.
+[Current build and verification status](docs/BUILD_STATUS.md) distinguishes completed checks from remaining work. Native Windows 11 x64 builds, default/settings tests, measured settings optimizations, and extracted development ZIP startup have passed. [Artifact evidence](docs/lumen-artifacts-2026-10-18.json) records the prior 160.0a1 build; Release 158.0 native qualification is in progress.
 
 [Performance investigation](PERFORMANCE.md) records measured bottlenecks, test conditions and the limits of the current evidence.
 
 ## Current implementation
 
-- Pinned Mozilla Firefox `160.0a1` development source revision in `upstream.lock.json`; selected source snapshots are hash-verified offline. These snapshots are not a full checkout.
+- Pinned Mozilla Firefox Release `158.0` source revision in `upstream.lock.json`; selected source snapshots are hash-verified offline. These snapshots are not a full checkout.
 - 31 explained, typed defaults: HTTPS-only navigation, cross-site cookie partitioning, tracking protection, disabled remote search suggestions, disabled new-tab surface, and disabled collection/experiment preferences.
 - Generated patch removes application-level Health Reporter and Normandy implications. Development mozconfig disables crash reporting and telemetry reporting, privileged maintenance service, update agent, and default-browser agent. Native compilation succeeded on Windows 11 x64.
 - Registered upstream browser mochitest checks default-branch preferences without relying on user preference overrides.

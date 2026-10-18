@@ -477,10 +477,6 @@ pref("browser.urlbar.loglevel", "Error");
 // The maximum number of mentions to show.
 pref("browser.urlbar.mentions.maxResults", 5);
 
-// The maximum number of tab groups to show in the mentions panel. Capped
-// separately from maxResults so groups and tabs are limited independently.
-pref("browser.urlbar.mentions.maxGroupResults", 5);
-
 // the maximum number of results to show in autocomplete when doing richResults
 pref("browser.urlbar.maxRichResults", 10);
 
@@ -554,17 +550,6 @@ pref("browser.urlbar.suggest.weather", true);
 // If `browser.urlbar.trending.featureGate` is true, this controls whether
 // trending suggestions are turned on.
 pref("browser.urlbar.suggest.trending", true);
-
-// Feature gate pref for temporal search suggestions in the urlbar.
-pref("browser.urlbar.temporal.featureGate", false);
-
-// If `browser.urlbar.temporal.featureGate` is true, this controls whether
-// temporal search suggestions are turned on.
-pref("browser.urlbar.suggest.temporal", true);
-
-// If `browser.urlbar.suggest.temporal` is true, this controls whether seasonal
-// temporal search suggestions are shown.
-pref("browser.urlbar.suggest.temporal.seasonal", true);
 
 // Whether results that are part of the Firefox Suggest brand are shown in the
 // urlbar. This pref is exposed to the user in the UI, and it's sticky so that
@@ -743,6 +728,10 @@ pref("browser.urlbar.showSearchTerms.enabled", true);
 pref("browser.urlbar.shortcuts.bookmarks", true);
 pref("browser.urlbar.shortcuts.tabs", true);
 pref("browser.urlbar.shortcuts.history", true);
+
+// When we send events to Urlbar extensions, we wait this amount of time in
+// milliseconds for them to respond before timing out.
+pref("browser.urlbar.extension.timeout", 400);
 
 // Controls when to DNS resolve single word search strings, after they were
 // searched for. If the string is resolved as a valid host, show a
@@ -1079,7 +1068,6 @@ pref("permissions.default.local-network", 0);
 pref("permissions.default.xr", 0);
 pref("permissions.default.desktop-notification", 0);
 pref("permissions.default.shortcuts", 0);
-pref("permissions.default.register-protocol-handler", 0);
 
 pref("permissions.desktop-notification.postPrompt.enabled", true);
 
@@ -1198,8 +1186,6 @@ pref("browser.tabs.groups.hoverPreview.enabled", true);
 pref("browser.tabs.groups.alternateMenu", false);
 // Bug 2052293: temporarily disabled while tab groups move away from the list all tabs menu.
 pref("browser.tabs.groups.onboardingCallouts.enabled", false);
-// Number of times the "Tab group saved" confirmation hint has been shown
-pref("browser.tabs.groups.saveHintShownCount", 0);
 
 pref("browser.tabs.groups.smart.enabled", true);
 
@@ -1567,8 +1553,6 @@ pref("browser.lna.warning.infoURL", "https://support.mozilla.org/%LOCALE%/kb/con
 pref("browser.sessionstore.resume_from_crash", true);
 pref("browser.sessionstore.resume_session_once", false);
 pref("browser.sessionstore.resuming_after_os_restart", false);
-pref("browser.sessionstore.encryption.available", false);
-pref("browser.sessionstore.encryption.enabled", false);
 
 // Determines the behavior for opening new tab when users resume sessions
 pref("browser.sessionstore.newTabOnRestore", false);
@@ -2024,41 +2008,6 @@ pref("browser.newtabpage.activity-stream.discoverystream.region-weather-config",
 // List of locales that weather widget supports.
 pref("browser.newtabpage.activity-stream.discoverystream.locale-weather-config", "bg,cs,da,de,el,en-CA,en-GB,en-US,es-ES,et,fi,fr,hr,hu,is,it,lv,nb-NO,nl,pl,pt-PT,ro,sk,sl,sv-SE,tr");
 
-// Regions with no widgets at all. Everywhere else the container is available
-// and on, and each widget's own prefs decide what appears. Blank means no
-// restriction, so there is no allow list here. Nightly ignores every list
-// below -- see marketGate in ActivityStream.sys.mjs.
-pref("browser.newtabpage.activity-stream.widgets.system.region-block", "");
-
-// Lists is available everywhere the container is except PL, and off by
-// default. The second region-block is unread until widgets.lists.enabled goes
-// back to marketGate.
-pref("browser.newtabpage.activity-stream.widgets.system.lists.region-block", "PL");
-pref("browser.newtabpage.activity-stream.widgets.lists.region-block", "DE,FR,PL,US");
-
-// Focus timer is available everywhere the container is except PL, and off by
-// default. The second region-block is unread until widgets.focusTimer.enabled
-// goes back to marketGate.
-pref("browser.newtabpage.activity-stream.widgets.system.focusTimer.region-block", "PL");
-pref("browser.newtabpage.activity-stream.widgets.focusTimer.region-block", "DE,FR,PL,US");
-
-// Clocks is available everywhere the container is except PL, and off by
-// default. The second region-block is unread until widgets.clocks.enabled goes
-// back to marketGate.
-pref("browser.newtabpage.activity-stream.widgets.system.clocks.region-block", "PL");
-pref("browser.newtabpage.activity-stream.widgets.clocks.region-block", "DE,FR,PL,US");
-
-// Picture of the day is available everywhere the container is except PL, and
-// off by default. The second region-block is unread until
-// widgets.pictureOfTheDay.enabled goes back to marketGate.
-pref("browser.newtabpage.activity-stream.widgets.system.pictureOfTheDay.region-block", "PL");
-pref("browser.newtabpage.activity-stream.widgets.pictureOfTheDay.region-block", "DE,FR,PL,US");
-
-// Crossword is English-only, available in every region except PL and off by
-// default.
-pref("browser.newtabpage.activity-stream.widgets.system.crossword.locale-config", "en-CA,en-GB,en-US");
-pref("browser.newtabpage.activity-stream.widgets.system.crossword.region-block", "PL");
-
 // Promo card visibility
 pref("browser.newtabpage.activity-stream.discoverystream.promoCard.visible", true);
 
@@ -2340,7 +2289,8 @@ pref("pdfjs.handleOctetStream", true);
 pref("sidebar.position_start", true);
 pref("sidebar.revamp", true);
 pref("sidebar.animation.enabled", true);
-pref("sidebar.animation.expand-on-hover.duration-ms", 200);
+pref("sidebar.animation.duration-ms", 200);
+pref("sidebar.animation.expand-on-hover.duration-ms", 400);
 pref("sidebar.animation.expand-on-hover.delay-duration-ms", 200);
 
 // This pref is used to store user customized tools in the sidebar launcher and shouldn't be changed.
@@ -2375,14 +2325,6 @@ pref("sidebar.openTabsPanel.sortOption", "tabStripOrder");
 pref("sidebar.openTabsPanel.hoverPreview.enabled", true);
 
 pref("sidebar.notification.badge.aichat", false);
-
-// Adds the contextual password manager to the launcher for existing sidebar
-// users, as long as browser.contextual-password-manager.enabled is true.
-// See browser/components/sidebar/docs/index.md.
-pref(
-  "sidebar.newTool.migration.passwords",
-  '{"visibilityPref":"browser.contextual-password-manager.enabled"}'
-);
 
 pref("browser.resourceMonitor.enabled", false);
 // Registers the Resource Monitor for sidebar new-tool migration. When
@@ -2440,8 +2382,6 @@ pref("browser.smartwindow.memories.generateFromHistory", true);
 pref("browser.smartwindow.memories.generateFromConversation", true);
 pref("browser.smartwindow.memories.hasSeenMemories", false);
 pref("browser.smartwindow.memoriesLogLevel", "Warn");
-// Gates resume-activity ("pick up where you left off") starter generation.
-pref("browser.smartwindow.resumeActivity.enabled", true);
 // TODO Bug 2067871: remove once journey store is available.
 pref("browser.smartwindow.resumeCards.enabled", false);
 pref("browser.smartwindow.firstrun.autoAdvanceMS", 3000);
@@ -2457,17 +2397,20 @@ pref("browser.smartwindow.mistralRelease", true);
 // Semantic distance threshold for Smart Window history search only.
 pref("places.semanticHistory.smartwindow.distanceThreshold", "0.6");
 
+// Smart Window: AITab
+pref("browser.smartwindow.aitab.enabled", false);
+// Base URL of the external AITab viewer used for development prototyping.
+// The generate_aitab tool returns a link to this viewer with the page config in the URL hash.
+pref("browser.smartwindow.aitab.viewerURL", "");
+
 // Smart Window: Auto Tab Grouping (bug 2054500).
 pref("browser.smartwindow.autoTabGrouping.enabled", true);
 pref("browser.smartwindow.autoTabGrouping.preloadModels", true);
 pref("browser.smartwindow.autoTabGrouping.maxGroups", 3);
 pref("browser.smartwindow.autoTabGrouping.minTabsPerGroup", 2);
 pref("browser.smartwindow.autoTabGrouping.minCandidateTabs", 2);
-pref("browser.smartwindow.autoTabGrouping.maxCandidateTabs", 200);
 pref("browser.smartwindow.autoTabGrouping.minCohesion", "0.15");
 pref("browser.smartwindow.autoTabGrouping.timeoutMs", 8000);
-pref("browser.smartwindow.autoTabGrouping.supportedLocales", "en,fr");
-pref("browser.smartwindow.autoTabGrouping.nonEnglishThresholdInt", 550);
 pref("browser.smartwindow.autoTabGrouping.loglevel", "Warn");
 
 // Smart Window: Smart Form Fill (bug 2055009).
@@ -2504,11 +2447,6 @@ pref("browser.smartwindow.searchQuery.apiKey", "");
 // Smart Window: when true, search_the_web returns Exa snippets straight to the
 // main assistant instead of generating an answer from background page reads.
 pref("browser.smartwindow.searchTheWebFast", true);
-
-// Smart Window: when true, search_the_web asks Exa's /answers service for a
-// written answer and its citations in one call. Takes precedence over
-// browser.smartwindow.searchTheWebFast.
-pref("browser.smartwindow.searchTheWebAnswers", false);
 
 // Smart Window Logging
 pref("browser.smartwindow.aiTabHistory.logLevel", "Error");
@@ -2633,13 +2571,12 @@ pref("media.gmp-gmpopenh264.enabled", true);
 
 pref("media.videocontrols.picture-in-picture.enabled", true);
 pref("media.videocontrols.picture-in-picture.audio-toggle.enabled", true);
-pref("media.videocontrols.picture-in-picture.playback-speed.enabled", true);
+pref("media.videocontrols.picture-in-picture.playback-speed.enabled", false);
 pref("media.videocontrols.picture-in-picture.video-toggle.enabled", true);
 pref("media.videocontrols.picture-in-picture.video-toggle.visibility-threshold", "1.0");
 pref("media.videocontrols.picture-in-picture.keyboard-controls.enabled", true);
 pref("media.videocontrols.picture-in-picture.urlbar-button.enabled", true);
 pref("media.videocontrols.picture-in-picture.enable-when-switching-tabs.enabled", false);
-pref("media.videocontrols.picture-in-picture.enable-when-occluded.enabled", false);
 pref("media.videocontrols.picture-in-picture.auto-close.enabled", true);
 pref("media.videocontrols.picture-in-picture.auto-close.timeoutMs", 1000);
 
@@ -3086,14 +3023,8 @@ pref("browser.screenshots.folderList", 4);
 pref("browser.screenshots.dir", "");
 
 // Enable/disable opening a tab into a mini window.
-pref("browser.mini-window.enabled", true);
+pref("browser.mini-window.enabled", false);
 pref("browser.mini-window.log", false);
-// How long the toolbar stays up before idling away.
-pref("browser.mini-window.toolbar.hide-delay-ms", 2000);
-// Depth of the top-edge strip that reveals the toolbar on hover.
-pref("browser.mini-window.toolbar.edge-zone-px", 12);
-// Dwell before a hover on the top edge reveals the toolbar.
-pref("browser.mini-window.toolbar.hover-reveal-delay-ms", 50);
 
 // DoH Rollout: whether to clear the mode value at shutdown.
 pref("doh-rollout.clearModeOnShutdown", false);
@@ -3143,6 +3074,10 @@ pref("app.normandy.onsync_skew_sec", 600);
   pref("intl.multilingual.aboutWelcome.languageMismatchEnabled", false);
 #endif
 
+// Coverage ping is disabled by default.
+pref("toolkit.coverage.enabled", false);
+pref("toolkit.coverage.endpoint.base", "https://coverage.mozilla.org");
+
 // Enable personalized extension recommendations
 pref("browser.discovery.enabled", true);
 
@@ -3178,6 +3113,7 @@ pref("browser.toolbars.share-button.enabled", true);
 pref("browser.urlbar.share-button.enabled", false);
 
 pref("security.certerrors.felt-privacy-v1", true);
+
 
 // Prefs to control the Firefox Account toolbar menu.
 // This pref will surface existing Firefox Account information
@@ -3356,9 +3292,6 @@ pref("devtools.anti-tracking.enabled", false);
 
 // Session History panel
 pref("devtools.application.sessionHistory.enabled", false);
-
-// Speculative Loads Panel
-pref("devtools.application.speculativeLoads", false);
 
 // Enable the custom formatters feature
 // This preference represents the user's choice to enable the custom formatters feature.
@@ -3612,9 +3545,6 @@ pref("devtools.popup.disable_autohide", false);
   pref("devtools.high-contrast-mode-support", false);
 #endif
 
-// Enable the in-progress devtools settings redesign/rewrite
-pref("devtools.settings.redesign-enabled", false);
-
 // FirstStartup service time-out in ms
 pref("first-startup.timeout", 30000);
 pref("first-startup.category-tasks-enabled", true);
@@ -3726,15 +3656,6 @@ pref("browser.privatebrowsing.resetPBM.enabled", true);
 // performing the clear action.
 pref("browser.privatebrowsing.resetPBM.showConfirmationDialog", true);
 
-// Whether the fire button, which clears the current browsing session and
-// replaces all open windows with a fresh one, is registered as a navbar
-// widget. Read once at startup, so a change only takes effect on restart.
-pref("browser.fireButton.enabled", false);
-
-// Which flow the fire button starts. "panel" shows the confirmation panel;
-// "direct" skips it and opens the clear browsing data dialog straight away.
-pref("browser.fireButton.flow", "panel");
-
 // the preferences related to the Nimbus experiment, to activate and deactivate
 // the the entire rollout (see: bug 1864216 - two prompts, 1877500 - set two in one prompt)
 pref("browser.mailto.dualPrompt", false);
@@ -3822,8 +3743,6 @@ pref("browser.ipProtection.userEnabled", false);
 pref("browser.ipProtection.userEnableCount", 0);
 // Pref to track if user has ever opened the VPN panel
 pref("browser.ipProtection.everOpenedPanel", false);
-// Pref to track if the user has opened the panel since release 160
-pref("browser.ipProtection.openedPanelSince160", false);
 // Pref to track if the VPN UI has ever been exposed to the user. Once it is
 // true the UI is shown regardless of the l10n coverage of
 // browser/ipProtection.ftl. A profile data upgrade sets it to true on profiles
@@ -3842,8 +3761,6 @@ pref("browser.ipProtection.l10nGateVersion", 0);
 pref("browser.ipProtection.features.siteExceptions", true);
 // Pref to enable support for site inclusions
 pref("browser.ipProtection.features.siteInclusions", false);
-// Pref to track if the site inclusion prompt has been shown in the VPN panel
-pref("browser.ipProtection.siteInclusionPromptShown", false);
 // Pref to show confirmation hints for site exceptions
 pref("browser.ipProtection.siteExceptionsHintsEnabled", true);
 pref("browser.ipProtection.log", false);
@@ -3864,6 +3781,8 @@ pref("browser.ipProtection.bandwidthThreshold", 0);
 // Tracks the highest bandwidth warning threshold (75 or 90) dismissed per surface.
 // Stored as JSON: { infobar: <number>, panel: <number> }. Reset when bandwidth resets.
 pref("browser.ipProtection.bandwidthWarningDismissedThreshold", "");
+// Pref to track if the "NEW" badge on the location selection button should be visible.
+pref("browser.ipProtection.locationButtonBadgeDismissed", false);
 
 // Pref to enable aboug:glean redesign.
 pref("about.glean.redesign.enabled", false);

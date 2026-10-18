@@ -1,5 +1,7 @@
 # Performance investigation
 
+Current source target is Firefox Release 158.0. All native timing reports below identify prior 160.0a1 binaries; they are not Release performance evidence. A matched Release run is required after its native build.
+
 Status: native Windows x64 compilation, settings correctness tests and paired Gecko benchmarks passed. A development ZIP also passed extracted startup/settings checks on Windows 11. No browser startup, page-rendering, scrolling or memory improvement is claimed.
 
 ## Scope and baseline

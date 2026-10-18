@@ -1,24 +1,24 @@
 {
   "repository": "https://github.com/mozilla-firefox/firefox.git",
-  "revision": "4523d65b575546e2b588dfb8b91e3d94ebeec19a",
-  "channel": "main-development-only",
+  "revision": "3c71aeacdb296402e41fb2084b13e797d1770642",
+  "channel": "release",
   "retrieved_utc": "2026-10-18",
   "files": [
     {
       "path": "browser/app/profile/firefox.js",
-      "sha256": "7e725b528f8215ad30297558744c19adece8ba1c7a045c1c9a02b9555b03bedc"
+      "sha256": "08cc0ca2e3d24c3ca305c38422bbfad51468bd209f29e2b51034742453203aac"
     },
     {
       "path": "browser/base/content/test/browser-general/browser.toml",
-      "sha256": "7e727e9673a8933eb29f633f5221d7c9b88416182bc1744439a83161eacba264"
+      "sha256": "2767251da985d478a345ff2632ff3b63a0f58fe21006b0fd03a9e6b4e2034580"
     },
     {
       "path": "browser/config/version.txt",
-      "sha256": "1f56220a57c581669eae475ff5f8ddd69822ddedb27fd5ff27450b7f6e6b25a3"
+      "sha256": "658810f32f9eb1bc41f6749467ee90ba7256a7601eae75c01af31246c41dd69c"
     },
     {
       "path": "browser/moz.configure",
-      "sha256": "e96fabb062e027e9b793afe0c1f12d528f130aa50bf2d3211692171e369560ce"
+      "sha256": "f674592be7543ee877956433739665ff52e041073c528edf76753e453a8e3783"
     },
     {
       "path": "LICENSE",
@@ -26,11 +26,11 @@
     },
     {
       "path": "modules/libpref/init/all.js",
-      "sha256": "44492fb4b445409524d246166f805fdc1f12e2ee749b9aef0859250627feaf31"
+      "sha256": "f23f6eeacc25a2bd2ca29d3b92626dc07ace175e6c827a86294eeacd2be6a780"
     },
     {
       "path": "modules/libpref/init/StaticPrefList.yaml",
-      "sha256": "3af1d19482c0a110b406d40ce3537f6edb8a2ecd3e9a51b114c9a153b512a260"
+      "sha256": "2ddfb1c6c8d5a86da25913d32abaa7e545485a1650bcbbd733c67c7ef8c3daa3"
     },
     {
       "path": "toolkit/components/glean/moz.build",
@@ -42,31 +42,31 @@
     },
     {
       "path": "toolkit/moz.configure",
-      "sha256": "7e5b4060fbee0cbf092e3d8438ed78155a28dc1cac660b30e9111ff9ef8901dc"
+      "sha256": "eb271efeecaac909e12e40ea5fbf913e8e124f290d8a712ec4282ffb323d68e5"
     },
     {
       "path": "browser/base/content/test/browser-protectionsUI/browser.toml",
-      "sha256": "b3137633318d32b21655ec597f08602a9ba38541f0b241e5885afeb0b39fb64c"
+      "sha256": "3103ad406489d924bf5a018b51053b80e8b09a28c9c6353fddc035cb640552b0"
     },
     {
       "path": "build/moz.configure/update-programs.configure",
-      "sha256": "dd02887768989d509ecf673127db60819852f8bbf1adc0b8e06b65c2fd6a291a"
+      "sha256": "cc9bce53d13cda48918ab528673f4ec1273caf66b7a0027eaf94c18797b89d2e"
     },
     {
       "path": "toolkit/content/license.html.mako",
-      "sha256": "6fc3136a08cdf9590e00f3be223e0007e3841f406e1d1f3a0bfbb42fcc638acd"
+      "sha256": "8ea2d318571fa999ee2ce41de8a5166207c16d12aff6a1fc5633b7eb82ca58f6"
     },
     {
       "path": "python/mach/mach/telemetry.py",
-      "sha256": "0b5ce4ef51c177d7a2179bc171685190639bd8dd524215442168704b2e82b7c1"
+      "sha256": "d8a6b367982c0736deb5c03e5c8201344e74eb18d79894b36b1519fd0ac19c77"
     },
     {
       "path": "browser/components/preferences/preferences.xhtml",
-      "sha256": "69d2b05b72981df6371430c989fbcc2b5b2e962f62e52871f4c03793074c9d66"
+      "sha256": "39bcbbc6236779aaccfe29729e9e2860d7446c05f0c69f965695d33396cd7307"
     },
     {
       "path": "browser/components/preferences/preferences.js",
-      "sha256": "81d1000dfc608daff7bc39e3f9d626863f34ebfe916a06498a791e1c9e3ea995"
+      "sha256": "993ced6c6c155ca202d522bc34c80104fbe8a4afafd6110097132bc56073e9e9"
     },
     {
       "path": "browser/components/preferences/jar.mn",
@@ -74,23 +74,23 @@
     },
     {
       "path": "browser/components/preferences/tests/browser.toml",
-      "sha256": "550dfe83ac807f78f4cad603a110a60a8ee75bd715f70261ab5e4a02ab82ddf9"
+      "sha256": "d7f2e93574fc507e1f1acb3427a6724da609f7827f22a92df9853d840091c9a1"
     },
     {
       "path": "build/moz.configure/windows.configure",
-      "sha256": "06358ba998f525469c43c0f2fdd0372c3de99de55fa6e3f45c7b414e50257fa4"
+      "sha256": "b83e97d9e98c78a0573665ab0954a1b7406a39c1cf63b55f7cb6964ebb9e8379"
     },
     {
       "path": "toolkit/components/nimbus/ExperimentAPI.sys.mjs",
-      "sha256": "32e2bd1325483c46662ee176348c010e587a8d2f1104828ae0ca10310d6f5cab"
+      "sha256": "27146cfdb49f9644d28990c473825c457116311add6ce1cc89e02b375317f246"
     },
     {
       "path": "toolkit/components/nimbus/lib/RemoteSettingsExperimentLoader.sys.mjs",
-      "sha256": "630d8870e3316e6420e930e2d1822d37426274a75ca64f131a408d2f768030f2"
+      "sha256": "104915c2394fd85c6ecb6c098e396ef4b15f5075aa3ff1b154c9a592cd5a18cb"
     },
     {
       "path": "browser/components/urlbar/QuickSuggest.sys.mjs",
-      "sha256": "4472b1c0a63aa4d0be25fbc28bdd22b074b7e9c334eb2824a7f75e906539fad0"
+      "sha256": "960427b732110aab84a235c916fb958d8dee227fd3b0598a5829d094fc9198f3"
     },
     {
       "path": "browser/branding/unofficial/configure.sh",
@@ -142,11 +142,11 @@
     },
     {
       "path": "browser/app/moz.build",
-      "sha256": "0e0e10a0ebabbdd94bc9f3fcc6042073d615624f0f1b9f6156f795aa09ca29ea"
+      "sha256": "a4c71c07a9ffe5e362432c11fff9f9ab5dbbff0cb5930f8263d469e4c5eab57c"
     },
     {
       "path": "browser/installer/windows/nsis/defines.nsi.in",
-      "sha256": "aff3744e471eb0c8b1ff9faa133d15dcffef5b6763806e8bbcdfa932ca64bd4c"
+      "sha256": "e2a7d76b512b412db7399a9918a93d2bdf3dbdcc718ce6576b40f9a90a98c841"
     },
     {
       "path": "browser/installer/windows/nsis/installer.nsi",
@@ -290,7 +290,7 @@
     },
     {
       "path": "python/mozbuild/mozbuild/action/exe_7z_archive.py",
-      "sha256": "2fae211836f34117198ff0b92fe0ccff790747f95d51983c26856cbfcca6a3c3"
+      "sha256": "11465cd5d6471a843ffcb3788e103bd3d4a0ec409699ce44a2a8e4a36f48595e"
     },
     {
       "path": "other-licenses/7zstub/README.mozilla",
@@ -302,7 +302,7 @@
     },
     {
       "path": "browser/installer/package-manifest.in",
-      "sha256": "3802cdb774d97b682a6d770d586e4b90a97def908191851f8c3ea0c552b06984"
+      "sha256": "9cae2b9557044218745851c23883126c2ea6a4b48a4adf5d69357a0bc7b04a9a"
     },
     {
       "path": "browser/installer/windows/nsis/shared.nsh",
@@ -314,7 +314,7 @@
     },
     {
       "path": "toolkit/components/glean/src/init/mod.rs",
-      "sha256": "ad73858f6debd86276e79cf9722b489ac695e0a6cbe79c0006e17c7ee89a5edc"
+      "sha256": "3a6c627caa994fd4e6b5331c4c62feec7a17ba95335911183dc115ff7f497a2f"
     },
     {
       "path": "toolkit/components/glean/src/init/upload_pref.rs",
@@ -326,7 +326,7 @@
     },
     {
       "path": "toolkit/components/glean/docs/dev/preferences.md",
-      "sha256": "388569a56e99f2c28b237c625b02be40f1f464650381c3b186d1a83641da93c5"
+      "sha256": "7f0d072e4711f4b32101804fa0436d53e7686c40e7ee793f182a2eeb4513b0cc"
     },
     {
       "path": "toolkit/library/rust/gkrust-features.mozbuild",
@@ -346,7 +346,7 @@
     },
     {
       "path": "toolkit/components/nimbus/FeatureManifest.yaml",
-      "sha256": "d11be41d57d287de65dd74f6863601c3277e39b33565fefc0885bb7d585562d1"
+      "sha256": "fcbae5424a24d719be85e909556cd5e7e47ca7b0d4bcacf274b3d440d435e41b"
     },
     {
       "path": "browser/components/shell/CustomIconManager.sys.mjs",
@@ -354,7 +354,7 @@
     },
     {
       "path": "browser/components/shell/nsWindowsShellService.cpp",
-      "sha256": "5744f47ba0c5f726ddd7e923e671c60662e5c23ffdef4f8c327184740a9cca3c"
+      "sha256": "81ddbcf611456223fa7c27435b5aebef7b48f3fc3e1385ef7bcb8d332d07c0ee"
     },
     {
       "path": "browser/app/module.ver",
@@ -368,5 +368,7 @@
       "path": "config/create_rc.py",
       "sha256": "7db4542100b04413061dbdae60657588fdc20857acc9f98b345537a3861c3bf4"
     }
-  ]
+  ],
+  "version": "158.0",
+  "tag": "FIREFOX_158_0_RELEASE"
 }

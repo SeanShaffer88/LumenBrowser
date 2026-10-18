@@ -2,6 +2,8 @@
 
 This document records performed work and explicitly separates it from release requirements. It is not a release announcement.
 
+**Current target: Firefox Release 158.0**, selected by the owner. All 91 snapshots match exact Git commit `3c71aeacdb296402e41fb2084b13e797d1770642`; overlay fixture tests pass. Native build/package/performance results below remain historical evidence for 160.0a1 until the Release qualification pass completes.
+
 | Check | Evidence / state |
 |---|---|
 | Project repository | SeanShaffer88/LumenBrowser; original main license preserved |
