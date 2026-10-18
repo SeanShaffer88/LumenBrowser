@@ -1,6 +1,6 @@
 # Windows development build
 
-Target: Windows 10 and newer, x64. The full pinned checkout and isolated MozillaBuild/Rust/compiler environment were prepared under `C:/lumen-work` on the development host; native compilation is in progress. This is not a completed browser build or Windows 10 certification. The project workspace contains spaces, which upstream does not support for its build paths. Use a separate short source/state path without spaces. Do not change system security settings or existing installations as an incidental build step.
+Target: Windows 10 and newer, x64. The full pinned checkout and isolated MozillaBuild/Rust/compiler environment were prepared under `C:/lumen-work` on the development host; the native x64 build and integrated frontend build succeeded. Native defaults, settings and performance tests passed on Windows 11. Windows 10 remains unverified. The project workspace contains spaces, which upstream does not support for its build paths. Use a separate short source/state path without spaces. Do not change system security settings or existing installations as an incidental build step.
 
 Use the current [Mozilla Windows setup guide](https://firefox-source-docs.mozilla.org/setup/windows_build.html) for supported Visual Studio/SDK, MozillaBuild, Python, Rust, memory, and disk prerequisites. Upstream documents at least 40 GB free disk. Toolchain downloads contact Mozilla and dependency hosts; inspect bootstrap prompts before accepting machine-wide modifications. This repository does not install prerequisites or alter antivirus exclusions.
 
@@ -44,9 +44,9 @@ export DISABLE_TELEMETRY=1
 export PATH=/c/lumen-work/cargo/bin:$PATH
 ./mach --no-interactive bootstrap --application-choice=browser --no-system-changes
 ./mach build -j8
-./mach mochitest --headless browser/base/content/test/browser-protectionsUI/browser_lumen_defaults.js
-./mach mochitest --headless browser/components/preferences/tests/browser_lumen_controls.js
-./mach mochitest --headless browser/components/preferences/tests/browser_lumen_performance.js
+./mach mochitest --headless --setpref dom.security.https_only_mode=false browser/base/content/test/browser-protectionsUI/browser_lumen_defaults.js
+./mach mochitest --headless --setpref dom.security.https_only_mode=false browser/components/preferences/tests/browser_lumen_controls.js
+./mach mochitest --headless --setpref dom.security.https_only_mode=false browser/components/preferences/tests/browser_lumen_performance.js
 ./mach lint browser/components/preferences/lumen.js browser/components/preferences/lumen/settings-model.mjs browser/moz.configure
 ./mach package
 ```
@@ -73,3 +73,5 @@ git apply --reverse "$LUMEN_ROOT/out/lumen.patch"
 ```
 
 Preserve `.mozconfig` and build artifacts separately as needed. Never reset a shared checkout or downgrade an upgraded profile. Restore a verified profile backup to a separate directory for recovery.
+
+The mochitest-only HTTPS preference override is required because the upstream runner fetches its manifest from HTTP on mochi.test. Lumen’s shipped HTTPS-only default otherwise upgrades that request and stalls the harness before assertions. This changes only the disposable test profile; the defaults test still checks the default branch is true. Do not use this override for packaged privacy/network verification.

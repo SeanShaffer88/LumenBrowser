@@ -31,7 +31,7 @@ The source patch sets defaults; existing profile values, policies, experiments, 
 
 Remote Settings includes security consumers; its removal is not a substitute for identifying nonessential consumers ([upstream service documentation](https://firefox-source-docs.mozilla.org/services/settings/index.html)). Unlike [LibreWolf's documented Safe Browsing choice](https://librewolf.net/docs/features/), Lumen's candidate retains that security mechanism. This comparison is limited to that published design choice.
 
-Pinned-source tracing found that `ExperimentAPI.labsEnabled` depended on enterprise policy allowance, independently of the studies/upload preferences. `RemoteSettingsExperimentLoader.enable()` checks `ExperimentAPI.enabled`, which is the union of Labs/rollout/study gates. The patch disables those three optional experiment gates explicitly rather than disabling Remote Settings as a whole. A generated browser test checks the resulting disabled state; execution is pending. Browser Glean remains compiled and must be audited separately; disabled upload defaults and build reporting flags are not proof that all measurement code is absent.
+Pinned-source tracing found that `ExperimentAPI.labsEnabled` depended on enterprise policy allowance, independently of the studies/upload preferences. `RemoteSettingsExperimentLoader.enable()` checks `ExperimentAPI.enabled`, which is the union of Labs/rollout/study gates. The patch disables those three optional experiment gates explicitly rather than disabling Remote Settings as a whole. The generated browser test passed and checks the resulting disabled state. Browser Glean remains compiled and must be audited separately; disabled upload defaults and build reporting flags are not proof that all measurement code is absent.
 
 ## Local data
 
@@ -44,3 +44,7 @@ The implemented settings editor exports only values from its 57-entry allowlist.
 ## Required proof
 
 Complete the [verification procedure](docs/VERIFICATION.md), attach sanitized captures and exact build hashes, classify every unexpected connection, and close all release gates before strengthening these claims. Record source and packaged behavior separately.
+
+## Runtime regional defaults
+
+Native default assertions found that Quick Suggest recalculates defaults by region/locale after loading firefox.js, re-enabling its platform and sponsored suggestions on the test host. The patch now makes the intended regional defaults for platform, sponsored and nonsponsored suggestions false. It retains default-branch handling and user choices rather than locking preferences or disabling security Remote Settings consumers. All 31 configured defaults and both Nimbus gates pass the native test after startup. This still does not establish absence of collection or network traffic.

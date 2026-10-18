@@ -6,7 +6,7 @@ Python tooling validation and unit tests on Windows. The suite verifies snapshot
 
 JavaScript model tests cover untrusted/oversized/malformed imports, complete validation before mutation, bounded choices, warnings, dependencies, policy locks, import review, partial-write recovery, failed rollback reporting, failed-reset recovery, privacy-limited exports and unavailable settings. These tests use Node's built-in runner and no external packages. The 57-control browser adapter is a separate integration surface.
 
-A full pinned Firefox checkout was fetched; audit snapshots were compared to its bytes and matched. The defaults/configure/Mach telemetry patch passed real `git apply --check` and was applied. The isolated toolchain bootstrap completed; native compilation is in progress. The newer settings/Nimbus integration patch passes fixture application/reversal and read-only checks against the real tree, but application waits for the ongoing core build. No browser test, packaged traffic result or Windows 10 runtime certification is complete.
+The full pinned Firefox checkout and audit snapshots match. Native x64 compilation succeeded on Windows 11 Home build 26300 in 48m 54s. The settings/Nimbus/regional-default patch is applied; frontend builds, 33 defaults assertions, 22 controls assertions across both Preferences layouts, and native performance checks passed. Complete changed-surface lint has zero errors (two nonblocking warnings: forced-color CanvasText use and an existing upstream deprecated Preferences import). Mochitest requires an HTTP-only disposable-profile override documented in BUILDING.md. Packaged traffic, full accessibility/security/recovery and Windows 10 execution remain unverified.
 
 ## Browser integration — unverified
 

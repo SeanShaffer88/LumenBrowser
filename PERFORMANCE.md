@@ -1,6 +1,6 @@
 # Performance investigation
 
-Status: the settings-layer optimization passed a paired DOM microbenchmark and correctness checks. A native Firefox build is compiling; no browser startup, page-rendering, scrolling or memory improvement is claimed.
+Status: native Windows x64 compilation, settings correctness tests and paired Gecko benchmarks passed. A development ZIP also passed extracted startup/settings checks on Windows 11. No browser startup, page-rendering, scrolling or memory improvement is claimed.
 
 ## Scope and baseline
 
@@ -16,7 +16,7 @@ Paired comparison on Windows 11 Home x64 build 26300, Edge 155.0.4283.62, Node 2
 | Interactive preference change | 0.527 (0.498–0.571) | 0.121 (0.107–0.129) | 764 → 26 | 114 → 1 |
 | Filtering | 0.111 (0.086–0.127) | 0.026 (0.022–0.031) | 0 → 0 | 0 → 0 |
 
-These paths were already sub-millisecond in this synthetic environment. The optimization removes redundant work and service-boundary crossings; it demonstrates no general browsing breakthrough. Single initialization samples are retained for transparency but do not establish a startup gain. An earlier paired run also reduced reads to 7/26 and median times to 0.004/0.123/0.027 ms; only the final report matches the final source hash.
+These paths were already sub-millisecond in this synthetic environment. The optimization removes redundant work and service-boundary crossings; it demonstrates no general browsing breakthrough. Single initialization samples are retained for transparency but do not establish a startup gain. An earlier paired run also reduced reads to 7/26 and median times to 0.004/0.123/0.027 ms; that historical report records the source hashes at that stage. The [current DOM report](benchmarks/results/settings-ui-current-2026-10-18.json) records the formatted adapter and final catalog; do not compare its absolute timings with the earlier contended run.
 
 ## Changes and correctness tradeoffs
 
@@ -24,7 +24,7 @@ Preference notifications now refresh the changed control and its transitive depe
 
 Search strings and current row states are cached for this pane's lifetime. One shared MutationObserver invalidates localized label/description text; filtering reuses strings and only changes visibility when needed. This adds bounded memory for 57 cached states/strings and small dependency sets; heap cost has not been measured. No timer, worker, dependency or network service was added. The observer disconnects on cleanup. Search covers titles, descriptions and preference names, rather than transient default/status hints.
 
-Both baseline and optimized adapters pass nine real-DOM checks: dependency disable/restore, policy lock notification, input change handler, busy disable/reconciliation, modified visibility, reset/filter reconciliation and localized search invalidation. The harness also checks control count, filtering and preference-observer cleanup. Services are simulated; actual Gecko observer/Fluent integration and native mochitests remain required. Model failure-injection tests cover write/rollback correctness independently.
+Both baseline and optimized adapters pass nine real-DOM checks: dependency disable/restore, policy lock notification, input change handler, busy disable/reconciliation, modified visibility, reset/filter reconciliation and localized search invalidation. The harness also checks control count, filtering and preference-observer cleanup. Services are simulated; native default/observer/control checks now pass in Gecko too. Complete accessibility and packaged network verification remain required. Model failure-injection tests cover write/rollback correctness independently.
 
 ## Ranked opportunities
 
@@ -53,9 +53,23 @@ For product-level evaluation, follow PRODUCT_GOALS.md: same hardware/OS/toolchai
 The generated patch registers `browser/components/preferences/tests/browser_lumen_performance.js`. After the native build and frontend integration succeed, run:
 
 ```bash
-./mach mochitest --headless browser/components/preferences/tests/browser_lumen_performance.js
+./mach mochitest --headless --setpref dom.security.https_only_mode=false browser/components/preferences/tests/browser_lumen_performance.js
 ```
 
-The test uses a disposable harness profile, native preferences/Fluent and the actual pane. It emits a `LUMEN_PERFORMANCE` JSON line with all nine batch samples, build ID and test conditions for the same three scenarios. It checks completed writes and visible UI errors rather than asserting a machine-specific timing threshold. It measures synchronous adapter/DOM work and awaited action callbacks; deferred translation, layout/painting and frame latency are outside the timing boundary. No native benchmark result has been recorded yet.
+The test uses a disposable harness profile, native preferences/Fluent and the actual pane. It emits a `LUMEN_PERFORMANCE` JSON line with all nine batch samples, build ID and test conditions for the same three scenarios. It checks completed writes and visible UI errors rather than asserting a machine-specific timing threshold. It measures synchronous adapter/DOM work and awaited action callbacks; deferred translation, layout/painting and frame latency are outside the timing boundary. The HTTP-only preference override applies to the disposable test profile because the upstream runner loads its manifest over HTTP. The shipped default remains HTTPS-only.
 
-For a UI-only native comparison, finish the current core build first. With all test browser processes closed, preserve the exact integrated adapter, substitute the baseline adapter from commit `c455485` into only `browser/components/preferences/lumen.js`, run `mach build faster`, then the benchmark. Restore the verified candidate bytes, rebuild the frontend and repeat. Check source hashes, profile conditions, logs and write assertions for both runs. Do not change the model, catalog, native binary or compiler flags between these runs. This comparison still does not establish startup or content-process gains. Never substitute files while a build or browser is using them.
+For a UI-only native comparison, finish the core build first. With all test browser processes closed, preserve the exact integrated adapter, substitute the baseline adapter from commit `c455485` into only `browser/components/preferences/lumen.js`, run `mach build faster`, then the benchmark. Restore the verified candidate bytes, rebuild the frontend and repeat. Check source hashes, profile conditions, logs and write assertions for both runs. Do not change the model, catalog, native binary or compiler flags between these runs. This comparison still does not establish startup or content-process gains. Never substitute files while a build or browser is using them.
+
+## Native comparison results
+
+Final assets on Windows 11 Home x64 build 26300, Firefox 160.0a1 build ID 20261018023517, 16 reported hardware threads. The native compiler was finished. Each adapter used a fresh disposable headless mochitest profile, the same xul.dll/firefox.exe, catalog, model, stylesheet and test; only lumen.js changed. Candidate ran first, baseline second. Each scenario used 20 warmups and nine batches of 100 operations. Other host activity was uncontrolled and fixed ordering can affect timings. This is a bounded settings microbenchmark, not a whole-browser comparison or a statistical population estimate.
+
+| Scenario | Baseline median ms/op (range) | Optimized median ms/op (range) |
+|---|---:|---:|
+| External preference update | 0.902 (0.874–0.953) | 0.350 (0.324–0.446) |
+| Interactive setting change | 1.465 (1.407–1.797) | 0.545 (0.522–0.595) |
+| Filtering | 0.088 (0.079–0.106) | 0.021 (0.019–0.028) |
+
+[Retained native samples, source hashes and binary hashes](benchmarks/results/settings-gecko-2026-10-18.json) identify this comparison. Both performance tests passed five assertions; the separate native defaults test passed 33 assertions and controls passed 22 assertions across both Preferences layouts. The optimized adapter was restored, hash-checked and frontend-rebuilt after baseline substitution. A prior native pair before the final stylesheet/localization polish also improved all three medians (0.818→0.435, 1.650→0.743 and 0.086→0.024 ms); its timing differences illustrate why cross-run absolute values are not interchangeable.
+
+The native results support retaining targeted refresh, notification coalescing and search caching. Native preference writes and remaining busy-state DOM updates still account for work; their individual contributions have not been profiled. Do not weaken write/rollback checks for smaller microbenchmark numbers. Cache heap cost, frame latency, idle behavior, startup and representative content workloads still require profiling and a matched upstream browser baseline. Full changed-surface lint reports zero errors; two nonblocking warnings concern intentional forced-color CanvasText use and the pre-existing upstream Preferences import in QuickSuggest.

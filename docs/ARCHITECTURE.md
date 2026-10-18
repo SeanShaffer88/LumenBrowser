@@ -27,7 +27,7 @@ The patch stays within Mozilla's build and preferences architecture. No wrapper 
 
 ## Risks and requirements
 
-No browser-level test or build is completed. Appending defaults does not remove all callers, telemetry libraries, startup task schedules, or Glean metrics. Disabling the crash reporter needs fault-path validation. Removing build implications needs full compilation and upstream test coverage. User values on an existing profile can override defaults; there is no profile migration yet. Never disable security services merely to satisfy a traffic count target.
+The Windows 11 x64 native/frontend builds and bounded defaults/controls/performance browser tests passed. Appending defaults does not remove all callers, telemetry libraries, startup task schedules, or Glean metrics. Disabling the crash reporter needs fault-path validation. Removing build implications needs full compilation and upstream test coverage. User values on an existing profile can override defaults; there is no profile migration yet. Never disable security services merely to satisfy a traffic count target.
 
 Mach's telemetry factory now returns `NoopTelemetry(False)` directly; telemetry enablement returns false and setup returns without employee detection or prompts. This avoids the upstream path that initializes Glean for a deletion ping even when uploads are disabled. It is a scoped build-tool change; browser Glean and other developer utilities remain separate audit surfaces.
 

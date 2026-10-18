@@ -24,7 +24,7 @@
   {
     "pref": "privacy.trackingprotection.enabled",
     "title": "Block known trackers",
-    "description": "Use Firefox tracking-protection lists. Use the shield button for site exceptions.",
+    "description": "Use the browser tracking-protection lists. Use the shield button for site exceptions.",
     "category": "privacy",
     "type": "bool",
     "warning": "Turning this off reduces tracking protection.",

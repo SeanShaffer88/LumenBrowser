@@ -4,7 +4,7 @@
 |---|---|---|
 | P0 | Pinned upstream investigation and minimal defaults patch | Implemented; snapshots verified against full checkout and real patch application |
 | P0 | Complete network consumer inventory, Glean/DAP/deletion behavior | Preliminary categories documented; source tracing and captures pending |
-| P0 | Windows x64 compile and browser integration | Isolated toolchain bootstrapped successfully; native build in progress |
+| P0 | Windows x64 compile and browser integration | Native/frontend builds and extracted ZIP startup succeeded on Windows 11 x64; defaults, both settings layouts and native benchmarks pass |
 | P0 | Supported release baseline and security intake | Not selected/published; main pin is development only |
 | P0 | Independent branding/install/profile/update identities | Pending; development assets must not ship as finished Lumen |
 | P0 | Signed updates and recoverable profile migrations | Pending; no infrastructure, keys, or service endpoints supplied |

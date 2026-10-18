@@ -174,6 +174,14 @@ def render_patch(root=ROOT):
     updated = replace_once(updated, '  get studiesEnabled() {\n    return this.#studiesEnabled;\n  }',
                            '  get studiesEnabled() {\n    return false;\n  }')
     patch += diff(nimbus, original, updated)
+    suggest = "browser/components/urlbar/QuickSuggest.sys.mjs"
+    original = (snapshot / suggest).read_text(encoding="utf-8")
+    updated = replace_once(original, "      ...regionLocalePrefs,\n",
+                           '      ...regionLocalePrefs,\n'
+                           '      "quicksuggest.enabled": false,\n'
+                           '      "suggest.quicksuggest.sponsored": false,\n'
+                           '      "suggest.quicksuggest.nonsponsored": false,\n')
+    patch += diff(suggest, original, updated)
     test_name = "browser_lumen_defaults.js"
     manifest = f"{TEST_DIR}/browser.toml"
     original = (snapshot / manifest).read_text(encoding="utf-8")
@@ -229,7 +237,7 @@ def settings_patch(root, snapshot):
               "settings.inc.xhtml": "lumen.inc.xhtml", "settings-model.mjs": "lumen/settings-model.mjs"}
     for local, target in assets.items():
         patch += diff(f"{directory}/{target}", "", (root / "browser" / local).read_text(encoding="utf-8"))
-    runtime_catalog = "// SPDX-License-Identifier: MPL-2.0\nexport const LUMEN_CATALOG = " + json.dumps(catalog, indent=2) + ";\n"
+    runtime_catalog = "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file, You can obtain one at http://mozilla.org/MPL/2.0/. */\n// prettier-ignore\nexport const LUMEN_CATALOG = " + json.dumps(catalog, indent=2) + ";\n"
     patch += diff(f"{directory}/lumen/catalog.mjs", "", runtime_catalog)
     locale = (root / "browser/lumen.ftl").read_text(encoding="utf-8")
     for index, item in enumerate(catalog):

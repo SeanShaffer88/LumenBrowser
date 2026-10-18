@@ -8,8 +8,8 @@ The pinned `build/moz.configure/windows.configure` sets `WINVER` and `_WIN32_WIN
 
 | Target | Required release evidence | Current state |
 |---|---|---|
-| Windows 10 x64 | Clean installation and portable execution, startup, TLS/network, rendering, codecs, sandbox, extensions, accessibility, profile upgrade, update/recovery | Unverified; no Lumen binary |
-| Windows 11 x64 | Same functional/security suite on current supported releases | Unverified; host tooling checks do not qualify |
+| Windows 10 x64 | Clean installation and portable execution, startup, TLS/network, rendering, codecs, sandbox, extensions, accessibility, profile upgrade, update/recovery | Unverified; development x64 binary exists but has not run on Windows 10 |
+| Windows 11 x64 | Same functional/security suite on current supported releases | Native build and bounded defaults/settings tests passed on Windows 11 Home build 26300; full release matrix remains unverified |
 | Earlier Windows 10 builds | Audit PE/manifest minimum, API availability, runtime dependencies and oldest usable upstream baseline; exercise supported fallback paths | No build-specific compatibility claim established |
 | Windows ARM64 | Native build plus the full Windows 10/11 matrix where the OS/architecture combination is supported | Planned only |
 

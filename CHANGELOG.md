@@ -22,3 +22,10 @@
 
 - Refresh changed preferences and their dependent controls, reconcile busy notifications once, and cache search text with localization invalidation. Preserve model validation and recovery.
 - Retain a paired DOM benchmark report and nine UI correctness checks; reduce simulated preference reads from 373 to 7 per external update and 764 to 26 per edit. This is not a Gecko or whole-browser speed claim; see PERFORMANCE.md.
+
+## Native development validation — 2026-10-18
+
+- Complete the Windows 11 x64 native build, apply the settings/Nimbus integration and pass native defaults/controls/performance checks.
+- Fix runtime Quick Suggest regional defaults that re-enabled platform/sponsored suggestions after startup.
+- Batch Fluent requests, follow upstream formatting/license conventions, use native design tokens, and document localization variables.
+- Diagnose the HTTP mochitest manifest conflict with HTTPS-only navigation and isolate its override to disposable test profiles.

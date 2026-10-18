@@ -12,7 +12,7 @@ A private reporting channel, release owner, supported-version list, signing keys
 
 Compare Lumen and an unmodified same-revision Firefox build on the same Windows hardware, OS, toolchain, build mode and representative profiles. Record cold/warm startup, idle CPU, private/working-set memory, tab workloads, and page responsiveness. Use repeated runs, document caching and network conditions, retain raw results, and report variation. Establish budgets from that baseline before setting numerical performance limits.
 
-Investigate repeatable regressions beyond observed measurement variability. Do not accept a feature merely for its count when it increases background work, memory, dependencies or maintenance without a clear user benefit. Idle work should be event-driven; add no unbounded polling or optional background daemon. No benchmark advantage is currently demonstrated.
+Investigate repeatable regressions beyond observed measurement variability. Do not accept a feature merely for its count when it increases background work, memory, dependencies or maintenance without a clear user benefit. Idle work should be event-driven; add no unbounded polling or optional background daemon. Settings-layer improvements are measured in native Gecko; whole-browser resource/startup advantages remain unmeasured.
 
 ## 3. Simple primary interface, searchable advanced controls
 

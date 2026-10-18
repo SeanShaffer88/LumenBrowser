@@ -26,7 +26,7 @@ flowchart LR
 
 | Milestone | Exit condition |
 |---|---|
-| Development build | Successful native x64 compile; real settings pane and defaults verified in Firefox; package created |
+| Development build | Completed on the Windows 11 host: native x64 compile, real settings/defaults tests, package creation and extracted ZIP startup. Full compatibility/privacy qualification remains separate |
 | Product integration | Original Lumen branding, separate application/install/profile identity, curated onboarding and accessible settings interactions |
 | Privacy and compatibility | Complete source-consumer inventory, packaged traffic evidence, security-preservation tests, extension/accessibility matrix, Windows 10 and Windows 11 execution |
 | Release infrastructure | Supported security baseline, private reporting channel, release ownership, signed update identity/service and tested failure recovery |

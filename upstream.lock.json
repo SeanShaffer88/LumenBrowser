@@ -87,6 +87,10 @@
     {
       "path": "toolkit/components/nimbus/lib/RemoteSettingsExperimentLoader.sys.mjs",
       "sha256": "630d8870e3316e6420e930e2d1822d37426274a75ca64f131a408d2f768030f2"
+    },
+    {
+      "path": "browser/components/urlbar/QuickSuggest.sys.mjs",
+      "sha256": "4472b1c0a63aa4d0be25fbc28bdd22b074b7e9c334eb2824a7f75e906539fad0"
     }
   ]
 }

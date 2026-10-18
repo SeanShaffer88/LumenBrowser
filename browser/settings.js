@@ -1,4 +1,6 @@
-// SPDX-License-Identifier: MPL-2.0
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 /* import-globals-from preferences.js */
 "use strict";
 
@@ -34,11 +36,14 @@ var gLumenPane = {
     this.model = new LumenSettings(this.catalog, {
       type: name => {
         const type = defaults.getPrefType(name);
-        return type === Services.prefs.getPrefType(name) ? types[type] : undefined;
+        return type === Services.prefs.getPrefType(name)
+          ? types[type]
+          : undefined;
       },
       get: (name, type) => Services.prefs[`get${methods[type]}Pref`](name),
       defaultValue: (name, type) => defaults[`get${methods[type]}Pref`](name),
-      set: (name, type, value) => Services.prefs[`set${methods[type]}Pref`](name, value),
+      set: (name, type, value) =>
+        Services.prefs[`set${methods[type]}Pref`](name, value),
       clear: name => Services.prefs.clearUserPref(name),
       locked: name => Services.prefs.prefIsLocked(name),
       hasUserValue: name => Services.prefs.prefHasUserValue(name),
@@ -49,7 +54,9 @@ var gLumenPane = {
       option.value = category;
       this.node("lumen-category").append(option);
       for (const advanced of [false, true]) {
-        const items = this.catalog.filter(item => item.category === category && !!item.advanced === advanced);
+        const items = this.catalog.filter(
+          item => item.category === category && !!item.advanced === advanced
+        );
         if (!items.length) {
           continue;
         }
@@ -59,7 +66,9 @@ var gLumenPane = {
         heading.id = `lumen-group-${advanced ? "advanced" : "standard"}-${category}`;
         group.setAttribute("aria-labelledby", heading.id);
         group.append(heading);
-        this.node(advanced ? "lumen-advanced-rows" : "lumen-standard").append(group);
+        this.node(advanced ? "lumen-advanced-rows" : "lumen-standard").append(
+          group
+        );
         const rowElements = items.map(item => this.buildRow(item, group));
         this.groups.push({ group, rows: rowElements });
       }
@@ -68,7 +77,10 @@ var gLumenPane = {
     this.searchObserver = new MutationObserver(records => {
       const names = new Set();
       for (const record of records) {
-        const element = record.target.nodeType === Node.ELEMENT_NODE ? record.target : record.target.parentElement;
+        const element =
+          record.target.nodeType === Node.ELEMENT_NODE
+            ? record.target
+            : record.target.parentElement;
         const pref = element?.closest(".lumen-row")?.dataset.pref;
         if (pref) {
           names.add(pref);
@@ -83,7 +95,11 @@ var gLumenPane = {
     });
     for (const { label, description } of this.rows.values()) {
       for (const element of [label, description]) {
-        this.searchObserver.observe(element, { childList: true, characterData: true, subtree: true });
+        this.searchObserver.observe(element, {
+          childList: true,
+          characterData: true,
+          subtree: true,
+        });
       }
     }
     for (const item of this.catalog) {
@@ -92,17 +108,31 @@ var gLumenPane = {
     }
     this.node("lumen-filter").addEventListener("input", () => this.filter());
     this.node("lumen-category").addEventListener("change", () => this.filter());
-    this.node("lumen-modified-only").addEventListener("change", () => this.filter());
-    this.node("lumen-reset-all").addEventListener("click", () => this.action(async () => {
-      const title = await document.l10n.formatValue("lumen-title");
-      const message = await document.l10n.formatValue("lumen-reset-confirm");
-      if (Services.prompt.confirm(window, title, message)) {
-        this.status("lumen-reset-complete", { count: this.model.restoreDefaults() });
-      }
-    }, this.allNames));
-    this.node("lumen-export").addEventListener("click", () => this.action(() => this.exportSettings()));
-    this.node("lumen-import").addEventListener("click", () => this.node("lumen-import-file").click());
-    this.node("lumen-import-file").addEventListener("change", () => this.action(() => this.importSettings(), this.allNames));
+    this.node("lumen-modified-only").addEventListener("change", () =>
+      this.filter()
+    );
+    this.node("lumen-reset-all").addEventListener("click", () =>
+      this.action(async () => {
+        const [title, message] = await document.l10n.formatValues([
+          "lumen-title",
+          "lumen-reset-confirm",
+        ]);
+        if (Services.prompt.confirm(window, title, message)) {
+          this.status("lumen-reset-complete", {
+            count: this.model.restoreDefaults(),
+          });
+        }
+      }, this.allNames)
+    );
+    this.node("lumen-export").addEventListener("click", () =>
+      this.action(() => this.exportSettings())
+    );
+    this.node("lumen-import").addEventListener("click", () =>
+      this.node("lumen-import-file").click()
+    );
+    this.node("lumen-import-file").addEventListener("change", () =>
+      this.action(() => this.importSettings(), this.allNames)
+    );
     this.refresh();
   },
 
@@ -111,7 +141,10 @@ var gLumenPane = {
   },
 
   element(tag, l10nId) {
-    const element = document.createElementNS("http://www.w3.org/1999/xhtml", tag);
+    const element = document.createElementNS(
+      "http://www.w3.org/1999/xhtml",
+      tag
+    );
     if (l10nId) {
       document.l10n.setAttributes(element, l10nId);
     }
@@ -149,18 +182,25 @@ var gLumenPane = {
     input.setAttribute("aria-describedby", `${description.id} ${hint.id}`);
     const reset = this.element("button", "lumen-reset");
     reset.className = "lumen-reset";
-    document.l10n.setAttributes(reset, "lumen-reset-setting", { name: item.title });
-    reset.addEventListener("click", () => this.action(() => {
-      this.model.reset(item.pref);
-      this.status("lumen-reset-one");
-    }, [item.pref]));
+    document.l10n.setAttributes(reset, "lumen-reset-setting", {
+      name: item.title,
+    });
+    reset.addEventListener("click", () =>
+      this.action(() => {
+        this.model.reset(item.pref);
+        this.status("lumen-reset-one");
+      }, [item.pref])
+    );
     input.addEventListener("change", () => {
-      const value = item.type === "bool" ? input.checked : JSON.parse(input.value);
+      const value =
+        item.type === "bool" ? input.checked : JSON.parse(input.value);
       this.action(async () => {
         let confirmed = false;
         if (this.model.needsConfirmation(item.pref, value)) {
-          const title = await document.l10n.formatValue("lumen-change-confirm");
-          const warning = await document.l10n.formatValue(`${prefix}-warning`);
+          const [title, warning] = await document.l10n.formatValues([
+            "lumen-change-confirm",
+            `${prefix}-warning`,
+          ]);
           confirmed = Services.prompt.confirm(window, title, warning);
           if (!confirmed) {
             return;
@@ -184,7 +224,8 @@ var gLumenPane = {
   cacheSearchText(pref) {
     const entry = this.rows.get(pref);
     const item = this.model.definition(pref);
-    entry.searchText = `${item.title} ${item.description} ${pref} ${entry.label.textContent} ${entry.description.textContent}`.toLocaleLowerCase();
+    entry.searchText =
+      `${item.title} ${item.description} ${pref} ${entry.label.textContent} ${entry.description.textContent}`.toLocaleLowerCase();
   },
 
   relatedNames(names) {
@@ -202,20 +243,27 @@ var gLumenPane = {
   },
 
   refresh(names = null) {
-    const items = names ? [...names].map(name => this.model.definition(name)) : this.catalog;
+    const items = names
+      ? [...names].map(name => this.model.definition(name))
+      : this.catalog;
     for (const item of items) {
       const state = this.model.state(item.pref);
       this.states.set(item.pref, state);
       const { row, input, hint, reset } = this.rows.get(item.pref);
-      input.disabled = this.busy || !state.available || state.locked || !state.dependencyMet;
-      reset.disabled = this.busy || !state.available || state.locked || !state.modified;
+      input.disabled =
+        this.busy || !state.available || state.locked || !state.dependencyMet;
+      reset.disabled =
+        this.busy || !state.available || state.locked || !state.modified;
       row.dataset.modified = String(state.modified);
       if (item.type === "bool") {
         input.checked = !!state.value;
       } else {
         input.querySelector("[data-custom]")?.remove();
         const value = JSON.stringify(state.value);
-        if (state.available && !item.options.some(option => Object.is(option.value, state.value))) {
+        if (
+          state.available &&
+          !item.options.some(option => Object.is(option.value, state.value))
+        ) {
           const custom = this.element("option", "lumen-custom-value");
           custom.value = value;
           custom.disabled = true;
@@ -230,12 +278,20 @@ var gLumenPane = {
         document.l10n.setAttributes(hint, "lumen-managed");
       } else if (!state.dependencyMet) {
         const parent = this.model.definition(item.dependsOn.pref);
-        document.l10n.setAttributes(hint, "lumen-dependency", { parent: parent.title });
+        document.l10n.setAttributes(hint, "lumen-dependency", {
+          parent: parent.title,
+        });
       } else if (item.type === "bool") {
-        document.l10n.setAttributes(hint, "lumen-default-boolean", { value: String(state.defaultValue) });
+        document.l10n.setAttributes(hint, "lumen-default-boolean", {
+          value: String(state.defaultValue),
+        });
       } else {
-        const option = item.options.find(entry => Object.is(entry.value, state.defaultValue));
-        document.l10n.setAttributes(hint, "lumen-default-choice", { value: option?.label ?? String(state.defaultValue) });
+        const option = item.options.find(entry =>
+          Object.is(entry.value, state.defaultValue)
+        );
+        document.l10n.setAttributes(hint, "lumen-default-choice", {
+          value: option?.label ?? String(state.defaultValue),
+        });
       }
     }
     if (!names || this.node("lumen-modified-only").checked) {
@@ -251,9 +307,11 @@ var gLumenPane = {
     let advancedMatch = false;
     for (const item of this.catalog) {
       const { row, searchText } = this.rows.get(item.pref);
-      const hidden = !((!query || searchText.includes(query)) &&
+      const hidden = !(
+        (!query || searchText.includes(query)) &&
         (category === "all" || item.category === category) &&
-        (!modifiedOnly || this.states.get(item.pref)?.modified));
+        (!modifiedOnly || this.states.get(item.pref)?.modified)
+      );
       if (row.hidden !== hidden) {
         row.hidden = hidden;
       }
@@ -295,8 +353,10 @@ var gLumenPane = {
     }
     for (const [pref, { input, reset }] of this.rows) {
       const state = this.states.get(pref);
-      input.disabled = busy || !state?.available || state.locked || !state.dependencyMet;
-      reset.disabled = busy || !state?.available || state.locked || !state.modified;
+      input.disabled =
+        busy || !state?.available || state.locked || !state.dependencyMet;
+      reset.disabled =
+        busy || !state?.available || state.locked || !state.modified;
     }
     for (const id of ["lumen-import", "lumen-export", "lumen-reset-all"]) {
       this.node(id).disabled = busy;
@@ -336,14 +396,18 @@ var gLumenPane = {
     if (this.exportUrl) {
       URL.revokeObjectURL(this.exportUrl);
     }
-    this.exportUrl = URL.createObjectURL(new Blob([text], { type: "application/json" }));
+    this.exportUrl = URL.createObjectURL(
+      new Blob([text], { type: "application/json" })
+    );
     const anchor = this.element("a");
     anchor.href = this.exportUrl;
     anchor.download = "lumen-settings.json";
     document.body.append(anchor);
     anchor.click();
     anchor.remove();
-    this.status("lumen-export-complete", { count: JSON.parse(text).omitted.length });
+    this.status("lumen-export-complete", {
+      count: JSON.parse(text).omitted.length,
+    });
   },
 
   async importSettings() {
@@ -358,13 +422,25 @@ var gLumenPane = {
     }
     const text = await file.text();
     const plan = this.model.planImport(text);
-    const message = await document.l10n.formatValue("lumen-import-confirm", {
-      count: plan.changes.length, skipped: plan.skipped,
-    });
-    const title = await document.l10n.formatValue("lumen-change-confirm");
-    if (Services.prompt.confirm(window, title, [message, ...plan.warnings].join("\n\n"))) {
+    const [message, title] = await document.l10n.formatValues([
+      {
+        id: "lumen-import-confirm",
+        args: { count: plan.changes.length, skipped: plan.skipped },
+      },
+      "lumen-change-confirm",
+    ]);
+    if (
+      Services.prompt.confirm(
+        window,
+        title,
+        [message, ...plan.warnings].join("\n\n")
+      )
+    ) {
       const result = this.model.importSettings(text, true);
-      this.status("lumen-import-complete", { count: result.changed, skipped: result.skipped });
+      this.status("lumen-import-complete", {
+        count: result.changed,
+        skipped: result.skipped,
+      });
     }
   },
 

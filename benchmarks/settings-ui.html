@@ -68,6 +68,7 @@ document.l10n = {
     if (element.textContent !== text) element.textContent = text;
   },
   formatValue: async (id, args) => translate(id, args),
+  formatValues: async requests => requests.map(request => typeof request === "string" ? translate(request) : translate(request.id, request.args)),
 };
 function stats(samples) {
   const sorted = [...samples].sort((a, b) => a - b);
