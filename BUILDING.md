@@ -51,7 +51,7 @@ export PATH=/c/lumen-work/cargo/bin:$PATH
 ./mach package
 ```
 
-Check each command's exit code before the next step. Stop on failure. Do not run build if the copy failed or an existing `.mozconfig` has not been reviewed. The mozconfig is a development candidate, not a validated release configuration. Updater implementation and signature checks remain upstream; fork update identity, endpoints, signing keys, MAR trust, and rollback have not been configured. **Do not distribute this package or permit it to update a personal installation.** Branding still uses upstream nonofficial assets, not finished Lumen branding.
+Check each command's exit code before the next step. Stop on failure. Do not run build if the copy failed or an existing `.mozconfig` has not been reviewed. The mozconfig is a development candidate, not a validated release configuration. Updater implementation and signature checks remain upstream; fork update identity, endpoints, signing keys, MAR trust, and rollback have not been configured. **Do not distribute this package or permit it to update a personal installation.** The generated overlay replaces unofficial artwork with original Lumen Browser assets and keeps the internal executable name `lumen.exe`. Its development policy disables application updates until a fork update service is qualified; security list consumers remain upstream. See docs/INSTALLER.md for packaging boundaries.
 
 The isolated `CARGO_HOME`/`RUSTUP_HOME` must have rustup and a default stable toolchain before bootstrap. Install rustup from its official distribution with `--no-modify-path --profile minimal --default-toolchain stable`, using those process environment variables; otherwise a global rustup proxy can fail against an empty isolated home. Do not update a user's global Rust installation incidentally. The validated target triple is `x86_64-pc-windows-msvc`; the old `x86_64-pc-mingw32` triple is rejected by this upstream revision.
 
@@ -75,3 +75,11 @@ git apply --reverse "$LUMEN_ROOT/out/lumen.patch"
 Preserve `.mozconfig` and build artifacts separately as needed. Never reset a shared checkout or downgrade an upgraded profile. Restore a verified profile backup to a separate directory for recovery.
 
 The mochitest-only HTTPS preference override is required because the upstream runner fetches its manifest from HTTP on mochi.test. Lumen’s shipped HTTPS-only default otherwise upgrades that request and stalls the harness before assertions. This changes only the disposable test profile; the defaults test still checks the default branch is true. Do not use this override for packaged privacy/network verification.
+
+## Windows self-extractor
+
+The native packager builds a temporary Win32 SFX from the pinned SDK sources so silent setup returns the child installer's actual exit code. The isolated VS/Windows SDK must include Hostx64/x86 compiler/linker tools, x86 libraries and `rc.exe`. Optional build-only overrides are `LUMEN_VS_ROOT` and `LUMEN_WINDOWS_SDK_ROOT`; the default is the isolated `%MOZBUILD_STATE_PATH%\vs` layout. No system PATH or VS installation is modified. See [INSTALLER.md](docs/INSTALLER.md) for exact flags, build compatibility exclusions and test boundaries. Linux tooling CI does not compile this Windows helper.
+
+## Incremental identity/resource changes
+
+Run `./mach configure` after changing `configure.sh` or application display-name configuration before a native build. The inspected upstream resource generator collected `module.ver` dependencies but omitted them from its dependency output; the Lumen overlay records those files and `config/autoconf.mk`, preventing stale public Windows metadata on later incremental builds. Main/private executable metadata overrides append ASCII assignments while retaining upstream legacy-encoded copyright/trademark lines. Verify ProductName, FileDescription and CompanyName on the actual executable, and verify the NSIS stage display name before packaging. A successful unrelated relink alone does not establish refreshed resource metadata.

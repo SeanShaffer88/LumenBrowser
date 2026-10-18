@@ -18,7 +18,7 @@ The patch stays within Mozilla's build and preferences architecture. No wrapper 
 | Tracking protection and cookie partitioning | Reduce cross-site correlation while retaining persistent logins | Site regressions possible; use upstream shield and cookie controls | Candidate defaults; per-site tests pending |
 | Remote suggestion removal | Avoid transmitting partial queries by default | Less convenience; native search settings preserve control | Candidate defaults |
 | Blank new tab | Avoid remote recommendations and promotion surface | Less discovery; small patch but background services need audit | Temporary lean default; polished local page later |
-| Searchable settings | Easier discovery, bounded choices and recovery | Existing preferences page, native widgets and Fluent; 57 allowlisted controls | Implemented in source; model tests pass, browser verification pending |
+| Searchable settings | Easier discovery, bounded choices and recovery | Existing preferences page, native widgets and Fluent; 57 allowlisted controls | Implemented; model and prior native browser tests pass; refreshed QoL checks pending |
 | Containers/private windows | Optional browsing separation | Retain upstream architecture and extension compatibility; cannot imply anonymity | Existing functions retained; integrated container UI evaluation pending |
 | Import/export | User ownership and portability | Allowlisted settings only, size/version/type validation, preview and rollback | Settings transfer implemented/model-tested; bookmarks/passwords retain upstream tools |
 | AI/sidebar/extra tools | Possible convenience | Remote inference/model downloads and ongoing audit increase scope | No additional implementation; upstream services still need inventory |
@@ -40,3 +40,7 @@ Every release needs independent profile/update identity so Firefox and Lumen can
 ## Research
 
 Reviewed on 2026-10-18: [Windows setup](https://firefox-source-docs.mozilla.org/setup/windows_build.html), [contributor workflow](https://firefox-source-docs.mozilla.org/contributing/contribution_quickref.html), [telemetry preference/build distinctions](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/internals/preferences.html), [Remote Settings](https://firefox-source-docs.mozilla.org/services/settings/index.html), and [LibreWolf's feature choices](https://librewolf.net/docs/features/). This is an initial comparator review, not exhaustive fork coverage. Implementation evidence is the hash-locked upstream snapshot set. No benchmark or security assurance is inferred from the research.
+
+## Product and installer overlay
+
+Original Lumen Browser artwork and native Windows resource branding are generated without a runtime dependency. The public name is separate from stable internal `Lumen`/`lumen` application identifiers. The Windows installer defaults to `%LOCALAPPDATA%\Lumen Browser`, creates optional Start Menu links inside a dedicated Lumen Browser folder, and preserves existing upstream installation/removal mechanisms. Settings search shortcuts/result announcements are scoped to the pane and cleaned up on unload. Development policy disables application updates until a fork trust/service/rollback implementation exists; it does not remove security-list consumers. See INSTALLER.md for exact flags, tested boundaries and remaining recovery qualification.

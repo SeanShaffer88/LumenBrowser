@@ -6,11 +6,11 @@
 | P0 | Complete network consumer inventory, Glean/DAP/deletion behavior | Preliminary categories documented; source tracing and captures pending |
 | P0 | Windows x64 compile and browser integration | Native/frontend builds and extracted ZIP startup succeeded on Windows 11 x64; defaults, both settings layouts and native benchmarks pass |
 | P0 | Supported release baseline and security intake | Not selected/published; main pin is development only |
-| P0 | Independent branding/install/profile/update identities | Pending; development assets must not ship as finished Lumen |
+| P0 | Independent branding/install/profile/update identities | Lumen Browser original branding, separate internal identity and native offline installer implemented; native and full-payload checks pass on Windows 11; signing/updates blocked |
 | P0 | Signed updates and recoverable profile migrations | Pending; no infrastructure, keys, or service endpoints supplied |
-| P1 | Safe searchable customization/onboarding | 57-control pane, model, import/export and recovery implemented; browser verification and onboarding pending |
-| P1 | Packaged security/network/accessibility/regression matrix | Pending real binaries and isolated test environment |
-| P1 | Windows 10 and newer x64 compatibility | Required product target; Windows 10/11 runtime and minimum-API checks pending |
+| P1 | Safe searchable customization/onboarding | 57-control pane, model, import/export and recovery implemented; prior native controls tests pass; refreshed QoL/defaults tests pass and local first-launch controls are verified in the extracted ZIP |
+| P1 | Packaged security/network/accessibility/regression matrix | Development binaries exist; complete isolated security/network/accessibility qualification remains pending |
+| P1 | Windows 10 and newer x64 compatibility | Required product target; bounded Windows 11 x64 checks pass; Windows 10 and full minimum-API qualification pending |
 | P1 | Windows ARM64 | Planned only; no build or support claim |
 | P2 | Optional container integration and local usability tools | Evaluate benefits/cost before adding |
 

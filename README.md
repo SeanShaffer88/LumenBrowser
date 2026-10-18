@@ -1,4 +1,6 @@
-# Lumen
+# Lumen Browser
+
+![Lumen Browser](branding/banner.svg)
 
 Privacy-centric Firefox fork under development. **No supported release exists yet.** This repository maintains the downstream patch set, privacy defaults, a 57-control integrated settings pane, tests, and build/release procedures. It does not establish zero telemetry or production readiness. See [DELIVERY_PLAN.md](DELIVERY_PLAN.md) for the applied completion strategy.
 
@@ -16,7 +18,7 @@ Project repository: [SeanShaffer88/LumenBrowser](https://github.com/SeanShaffer8
 - 31 explained, typed defaults: HTTPS-only navigation, cross-site cookie partitioning, tracking protection, disabled remote search suggestions, disabled new-tab surface, and disabled collection/experiment preferences.
 - Generated patch removes application-level Health Reporter and Normandy implications. Development mozconfig disables crash reporting and telemetry reporting, privileged maintenance service, update agent, and default-browser agent. Native compilation succeeded on Windows 11 x64.
 - Registered upstream browser mochitest checks default-branch preferences without relying on user preference overrides.
-- Integrated Lumen controls in `about:preferences#lumen`: ten categories, search, changed-only filter, advanced disclosure, warnings, dependency checks, policy locks, individual reset, restore defaults, and settings import/export. Native controls tests pass in both Preferences layouts; model failure-injection tests also pass.
+- Integrated Lumen Browser controls in `about:preferences#lumen`: ten categories, search, changed-only filter, advanced disclosure, warnings, dependency checks, policy locks, individual reset, restore defaults, and settings import/export. Native controls tests pass in both Preferences layouts; model failure-injection tests also pass.
 - Mach telemetry factory uses the upstream no-op implementation; setup no longer performs employee lookup or opt-in prompts. This source change is tested in isolation; complete build/network behavior still requires verification.
 - Nimbus Labs, rollout and study gates are disabled in the patch so the optional experiment loader cannot remain enabled through the Labs policy alone. General Remote Settings security consumers are retained.
 - Patch generation never edits the supplied Firefox checkout. Output uses atomic replacement. No package dependencies or runtime services are added.
@@ -37,9 +39,9 @@ Tooling validation runs with Python 3.11+ and Git; settings-model tests use Node
 
 ## Scope and installation
 
-Product target: **Windows 10 and newer**, initially x64. The [compatibility matrix](docs/COMPATIBILITY.md) tracks required Windows 10 and Windows 11 verification. Windows 11 x64 development builds and bounded browser tests passed; full release qualification, Windows 10, ARM64, Linux and macOS remain unverified. Packaging still uses upstream development identity. Follow [BUILDING.md](BUILDING.md) for an isolated development build. Do not use personal browsing profiles with experimental builds.
+Product target: **Windows 10 and newer**, initially x64. The [compatibility matrix](docs/COMPATIBILITY.md) tracks required Windows 10 and Windows 11 verification. Windows 11 x64 development builds and bounded browser tests passed; full release qualification, Windows 10, ARM64, Linux and macOS remain unverified. The branding overlay supplies Lumen Browser artwork and independent internal application/profile names; native identity/defaults/controls tests and extracted-ZIP startup pass on the Windows 11 host. Follow [BUILDING.md](BUILDING.md) for an isolated development build. Do not use personal browsing profiles with experimental builds.
 
-Firefox's existing settings, accessibility architecture, WebExtensions, bookmark tools, password tools, and rendering engine remain the foundation. The Lumen pane is implemented but not yet verified in a running browser. Onboarding, profile migration, original branding assets, and fork updates are not implemented. New Rust components are not introduced merely to satisfy a language preference; use the language that fits each upstream boundary.
+Firefox's existing settings, accessibility architecture, WebExtensions, bookmark tools, password tools, and rendering engine remain the foundation. The settings pane has passed native browser tests in both Preferences layouts. The current overlay adds first-launch local controls, search shortcuts, a matching result count, original black/red gear-bezel artwork, and a native offline installer. The refreshed native tests and ZIP startup pass; exact installer evidence and remaining gates are recorded in [BUILD_STATUS.md](docs/BUILD_STATUS.md). Profile migration and signed fork updates remain unimplemented. See [installer behavior and validation](docs/INSTALLER.md). New Rust components are not introduced merely to satisfy a language preference; use the language that fits each upstream boundary.
 
 ## Documentation
 

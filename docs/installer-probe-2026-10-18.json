@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-18",
+  "host": "Windows 11 Home x64 build 26300",
+  "standard_user_token": true,
+  "source_revision": "4523d65b575546e2b588dfb8b91e3d94ebeec19a",
+  "qualification": "Component probe only: public-name NSIS fixture using the previously verified ZIP payload. Final configured browser and full SFX require a separate pass.",
+  "installer_probe": {
+    "foreign_guard_exit": 2,
+    "foreign_files_preserved": true,
+    "path_with_spaces": true,
+    "silent_install_exit": 0,
+    "no_shortcuts_override": true,
+    "payload_files_hash_verified": 62,
+    "repeat_install_exit": 0,
+    "desktop_shortcut_created": true,
+    "dedicated_start_menu_folder": true,
+    "root_start_menu_shortcut_absent": true,
+    "default_browser_choices_unchanged": true,
+    "uninstall_exit": 0,
+    "core_files_removed": true,
+    "owned_shortcuts_removed": true,
+    "profile_sentinel_preserved": true,
+    "default_choices_unchanged_after_uninstall": true
+  },
+  "sfx_exit_contract": {
+    "upstream_exit": 0,
+    "candidate_exit": 37
+  },
+  "toolchain": {
+    "msvc": "14.51.36231",
+    "windows_sdk": "10.0.28000.0",
+    "sfx_target": "Win32",
+    "bounded_compile_workers": 8
+  },
+  "overlay_sha256": "2b1a467c2cd79b6926acf11af60c501e053ee23fb54da2ab10c48cd7ca0635bb",
+  "not_qualified": [
+    "Windows 10",
+    "ARM64",
+    "elevation/all-users",
+    "disk full/interruption recovery",
+    "signing",
+    "whole-application traffic capture"
+  ]
+}

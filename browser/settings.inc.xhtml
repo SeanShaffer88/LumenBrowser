@@ -6,7 +6,10 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
   <html:p class="lumen-intro" data-l10n-id="lumen-intro"/>
   <html:div class="lumen-toolbar">
     <html:label for="lumen-filter" data-l10n-id="lumen-search"/>
-    <html:input id="lumen-filter" type="search" maxlength="200"/>
+    <html:div class="lumen-search-field">
+      <html:input id="lumen-filter" type="search" maxlength="200"/>
+      <html:button id="lumen-clear-filters" data-l10n-id="lumen-clear-filters"/>
+    </html:div>
     <html:label for="lumen-category" data-l10n-id="lumen-category"/>
     <html:select id="lumen-category">
       <html:option value="all" data-l10n-id="lumen-all-categories"/>
@@ -16,6 +19,7 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
       <html:span data-l10n-id="lumen-modified-only"/>
     </html:label>
   </html:div>
+  <html:p id="lumen-result-count" class="lumen-note" role="status" aria-live="polite" aria-atomic="true"/>
   <html:div class="lumen-actions">
     <html:button id="lumen-export" data-l10n-id="lumen-export"/>
     <html:button id="lumen-import" data-l10n-id="lumen-import"/>

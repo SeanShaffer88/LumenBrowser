@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-18",
+  "host": "Windows 11 Home x64 build 26300",
+  "upstream_revision": "4523d65b575546e2b588dfb8b91e3d94ebeec19a",
+  "build_id": "20261018070934",
+  "qualification": "Unsigned development artifacts only; not a supported release.",
+  "artifacts": [
+    {
+      "name": "lumen-160.0a1.en-US.win64.zip",
+      "sha256": "bef058ba76cc6b15fbb8deb696caa4f82b232d292dafaebc8f6984ab4d1f8f19",
+      "bytes": 138485817
+    },
+    {
+      "name": "lumen-160.0a1.en-US.win64.installer.exe",
+      "sha256": "cd773b757217226acc5882f46a8cee53c1058631dfe79bab788f6f8eb86aa604",
+      "bytes": 91067810
+    }
+  ],
+  "zip_crc_verified": true,
+  "installer_signature": "NotSigned",
+  "public_metadata": {
+    "ProductName": "Lumen Browser",
+    "FileDescription": "Lumen Browser Setup",
+    "CompanyName": "Lumen Project"
+  },
+  "zip_launch": {
+    "version": "160.0a1",
+    "build_id": "20261018070934",
+    "name": "Lumen",
+    "vendor": "Lumen",
+    "profile_leaf": "Lumen",
+    "profile_vendor": "Lumen",
+    "rows": 57,
+    "pane_visible": true,
+    "https_only_default": true,
+    "quick_suggest_default": false,
+    "sponsored_default": false,
+    "application_updates_allowed": false,
+    "welcome_url": "about:preferences#lumen",
+    "result_count": 57,
+    "initial_local_tabs": [
+      "about:preferences#lumen"
+    ],
+    "public_controls_title": "Lumen Browser controls"
+  },
+  "installer": {
+    "help_exit": 0,
+    "help_did_not_install": true,
+    "foreign_guard_exit": 2,
+    "foreign_files_preserved": true,
+    "path_with_spaces": true,
+    "silent_install_exit": 0,
+    "no_shortcuts_override": true,
+    "payload_files_hash_verified": 62,
+    "repeat_install_exit": 0,
+    "desktop_shortcut_created": true,
+    "dedicated_start_menu_folder": true,
+    "root_start_menu_shortcut_absent": true,
+    "default_browser_choices_unchanged": true,
+    "uninstall_exit": 0,
+    "core_files_removed": true,
+    "owned_shortcuts_removed": true,
+    "profile_sentinel_preserved": true,
+    "default_choices_unchanged_after_uninstall": true
+  },
+  "installed_icon_test": {
+    "locations": [
+      "Desktop",
+      "Programs"
+    ],
+    "slot_taken": false,
+    "selection_and_revert": true
+  },
+  "installation_telemetry_file_absent": true,
+  "native_tests": {
+    "defaults_assertions": 35,
+    "controls_assertions": 32,
+    "performance_assertions_each_adapter": 5
+  },
+  "limitations": [
+    "No Windows 10 or ARM64 execution",
+    "No clean VM runtime-dependency qualification",
+    "No complete process-attributed network/privacy capture",
+    "No signed update service or update/rollback recovery qualification",
+    "No protected destination/elevated or interrupted-upgrade qualification",
+    "No complete keyboard, screen-reader, high-contrast or scaling matrix"
+  ]
+}

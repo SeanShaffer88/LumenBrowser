@@ -1,0 +1,17 @@
+<!-- SPDX-License-Identifier: MPL-2.0 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 256" role="img" aria-labelledby="title description">
+<title id="title">Lumen Browser</title><desc id="description">Black and red Lumen Browser banner with a restrained mechanical bezel emblem.</desc>
+<defs><linearGradient id="background"><stop stop-color="#0c0c0e"/><stop offset="1" stop-color="#2d1115"/></linearGradient></defs>
+<rect width="1000" height="256" rx="20" fill="url(#background)"/>
+<path d="M286 184h650" stroke="#7c2029" stroke-width="2"/>
+<svg xmlns="http://www.w3.org/2000/svg" x="40" y="24" width="208" height="208" viewBox="0 0 256 256">
+  <rect x="16" y="16" width="224" height="224" rx="44" fill="#121214"/>
+  <defs><linearGradient id="bezel" x2="0" y2="1"><stop stop-color="#b6242c"/><stop offset="1" stop-color="#70181e"/></linearGradient></defs>
+  <circle cx="128" cy="128" r="91.5" fill="none" stroke="url(#bezel)" stroke-width="13"/>
+  <circle cx="128" cy="128" r="101" fill="none" stroke="url(#bezel)" stroke-width="6" stroke-dasharray="20.4 32.48" stroke-dashoffset="10.2"/>
+  <path d="M78 66h33v86h66v33H78z" fill="#efe8e2"/>
+  <path d="m161 72 15 15-15 15-15-15z" fill="#e62a34"/>
+  <g fill="#7d6e6a"><circle cx="57" cy="57" r="4"/><circle cx="199" cy="57" r="4"/><circle cx="57" cy="199" r="4"/><circle cx="199" cy="199" r="4"/></g>
+</svg>
+<text x="286" y="149" fill="#efe8e2" font-family="Segoe UI, sans-serif" font-weight="600" font-size="64">Lumen <tspan fill="#df3541">Browser</tspan></text>
+</svg>

@@ -47,6 +47,26 @@ for (const redesign of [false, true]) {
         1,
         "Search filters other controls"
       );
+      Assert.equal(pane.matchCount, 1, "Live result count matches filtering");
+      search.value = "lumen-no-such-setting-xyz";
+      search.dispatchEvent(new win.Event("input", { bubbles: true }));
+      Assert.equal(pane.matchCount, 0, "Empty searches report zero matches");
+      search.focus();
+      EventUtils.synthesizeKey("KEY_Escape", {}, win);
+      Assert.equal(pane.matchCount, 57, "Escape clears all filters");
+      Assert.ok(
+        doc.getElementById("lumen-clear-filters").disabled,
+        "Clear button reflects inactive filters"
+      );
+      doc.getElementById("lumen-export").focus();
+      EventUtils.synthesizeKey("/", {}, win);
+      Assert.equal(
+        doc.activeElement,
+        search,
+        "Slash focuses the local setting search"
+      );
+      search.value = "smooth scrolling";
+      search.dispatchEvent(new win.Event("input", { bubbles: true }));
       row.reset.scrollIntoView({ block: "center" });
       await new Promise(resolve => win.requestAnimationFrame(resolve));
       EventUtils.synthesizeMouseAtCenter(row.reset, {}, win);

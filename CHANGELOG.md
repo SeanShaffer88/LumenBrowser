@@ -1,5 +1,7 @@
 # Changelog
 
+Entries record each development stage; current implementation and verification are in docs/BUILD_STATUS.md.
+
 ## Unreleased — development foundation, 2026-10-18
 
 - Integrate into SeanShaffer88/LumenBrowser while preserving the existing MPL-2.0 license.
@@ -29,3 +31,17 @@
 - Fix runtime Quick Suggest regional defaults that re-enabled platform/sponsored suggestions after startup.
 - Batch Fluent requests, follow upstream formatting/license conventions, use native design tokens, and document localization variables.
 - Diagnose the HTTP mochitest manifest conflict with HTTPS-only navigation and isolate its override to disposable test profiles.
+
+## Lumen Browser branding and QoL — 2026-10-18
+
+- Rename the public product to Lumen Browser, preserving stable internal Lumen/lumen identifiers.
+- Add original black/red gear-bezel logo, banner, Windows icons and native installer artwork with a standard-library asset generator.
+- Add clear-all filters, Escape reset, scoped slash-to-search and a polite matching count to the settings pane.
+- Implement a per-user offline installer with optional shortcuts in a dedicated Start Menu folder, a review summary, `/Help` and `/NoShortcuts` flags, cancellation without a survey, and a foreign-browser destination guard. Disable installer/uninstaller pings and application updates for development builds.
+- Compile and visually inspect the native wizard preview; pass 35 refreshed native defaults/identity assertions and 32 controls assertions across both layouts. Verify the final ZIP on a fresh disposable profile.
+- Preserve private-window icon distinction and matching upstream optional-icon previews; update native shortcut discovery for the dedicated Start Menu folder.
+- Source-build the offline self-extractor with child exit-code propagation; retain resource copyright metadata and deterministic original branding assets.
+- Fix omitted resource-generator dependency tracking so incremental module/configuration changes refresh Windows metadata.
+- Repeat the final native adapter benchmark: updates 0.844→0.410 ms, edits 1.551→0.611 ms, filtering 0.090→0.023 ms under the documented microbenchmark conditions.
+
+- Verify the exact full unsigned installer: `/Help`, guard exit propagation, shortcut flags/folder, 62 payload hashes, installed icon changes, unchanged defaults and uninstall/profile retention. Artifact hashes and scope are in docs/lumen-artifacts-2026-10-18.json.

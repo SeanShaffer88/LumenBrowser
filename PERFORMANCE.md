@@ -73,3 +73,31 @@ Final assets on Windows 11 Home x64 build 26300, Firefox 160.0a1 build ID 202610
 [Retained native samples, source hashes and binary hashes](benchmarks/results/settings-gecko-2026-10-18.json) identify this comparison. Both performance tests passed five assertions; the separate native defaults test passed 33 assertions and controls passed 22 assertions across both Preferences layouts. The optimized adapter was restored, hash-checked and frontend-rebuilt after baseline substitution. A prior native pair before the final stylesheet/localization polish also improved all three medians (0.818→0.435, 1.650→0.743 and 0.086→0.024 ms); its timing differences illustrate why cross-run absolute values are not interchangeable.
 
 The native results support retaining targeted refresh, notification coalescing and search caching. Native preference writes and remaining busy-state DOM updates still account for work; their individual contributions have not been profiled. Do not weaken write/rollback checks for smaller microbenchmark numbers. Cache heap cost, frame latency, idle behavior, startup and representative content workloads still require profiling and a matched upstream browser baseline. Full changed-surface lint reports zero errors; two nonblocking warnings concern intentional forced-color CanvasText use and the pre-existing upstream Preferences import in QuickSuggest.
+
+## QoL overlay check — 2026-10-18
+
+The new clear-filter/search-shortcut/live-count overlay was compared with the same `c455485` baseline in Edge 155.0.4283.62, Windows 11 x64, 57 controls, 20 warmups and nine batches of 100 operations. The native eight-worker build was concurrently active, baseline ran first, and Gecko services/Fluent were simulated. [Raw samples and exact source hashes](benchmarks/results/settings-ui-qol-2026-10-18.json) retain nine correctness checks per adapter. Median ms/op: external update 0.177→0.002, interactive edit 0.371→0.083, filtering 0.071→0.018. Preference reads remain 373→7 and 764→26; filtering adds one simulated localization request when its matching count changes. Count requests are suppressed when unchanged. These timings do not establish an improvement over the prior optimized adapter or include native deferred Fluent/layout/paint cost. The refreshed native comparison below tests the formatted QoL adapter; the earlier native report remains historical evidence for its preceding build.
+
+## Lumen Browser QoL native comparison
+
+Windows 11 Home x64 build 26300, Lumen Browser 160.0a1 build ID `20261018054500`, 16 hardware threads; no native compilation was running during either measurement. Candidate ran first, baseline second, with fresh headless mochitest profiles, 20 warmups and nine batches of 100 operations. The binary, model, catalog, stylesheet and test were identical; only the adapter changed to/from exact baseline commit `c455485`. The candidate bytes were restored, frontend-rebuilt and the entire generated overlay reverse-checked afterward. Each performance test passed five assertions. Other host activity and fixed run order remain limitations.
+
+| Scenario | Baseline median ms/op (range) | QoL candidate median ms/op (range) |
+|---|---:|---:|
+| External preference update | 1.113 (0.784–1.487) | 0.353 (0.332–0.594) |
+| Interactive setting change | 1.370 (1.309–1.586) | 0.544 (0.490–0.572) |
+| Filtering | 0.094 (0.086–0.131) | 0.019 (0.018–0.024) |
+
+[Exact samples and source/binary hashes](benchmarks/results/settings-gecko-qol-2026-10-18.json) identify this pair. This supports retaining the existing targeted refresh, notification coalescing and search cache alongside the new live count and keyboard/filter controls. It does not demonstrate an additional gain over the earlier optimized adapter, nor whole-browser startup, page-load, frame latency or memory improvements. Deferred translation/layout/paint remain outside the measurement boundary. A matched unmodified Firefox binary, representative workloads and profiler/ETW traces are still needed for broader optimization decisions.
+
+## Final public-name build verification
+
+Repeated the adapter-only native comparison on the final public-name build `20261018070934` after native compilation completed. Conditions remain Windows 11 Home x64 build 26300, 16 hardware threads, fresh headless profiles, candidate first, baseline `c455485` second, 20 warmups and nine batches of 100 operations per scenario. The exact same native binaries, model, catalog, stylesheet and test served both runs. Other host activity was uncontrolled. Both tests passed five assertions; candidate source was restored, frontend-rebuilt and the full overlay reverse-checked.
+
+| Scenario | Baseline median ms/op (range) | Final candidate median ms/op (range) |
+|---|---:|---:|
+| External preference update | 0.844 (0.817–0.922) | 0.410 (0.396–0.470) |
+| Interactive setting change | 1.551 (1.414–1.718) | 0.611 (0.578–0.674) |
+| Filtering | 0.090 (0.079–0.106) | 0.023 (0.019–0.031) |
+
+[Final samples and source/binary hashes](benchmarks/results/settings-gecko-final-2026-10-18.json) identify this comparison. Earlier reports above are historical measurements, not measurements of this final binary. The tested improvement retains targeted preference refresh, coalesced notifications and cached localized search text with the QoL controls. No additional improvement over earlier optimized adapters is claimed. Deferred Fluent work, layout, paint, startup, content loading, memory and idle CPU are outside this benchmark.

@@ -2,6 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 #lumen-controls {
+  display: block;
   max-inline-size: 100%;
   padding-block-end: var(--space-xxlarge);
 }
@@ -113,4 +114,23 @@
   .lumen-reset {
     margin-inline-start: 0;
   }
+}
+
+.lumen-search-field {
+  display: flex;
+  gap: var(--space-small);
+  min-inline-size: 0;
+}
+.lumen-search-field input {
+  flex: 1;
+}
+.lumen-search-field button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+#lumen-controls > .lumen-intro {
+  margin-block: var(--space-medium);
+}
+#lumen-result-count {
+  margin-block: var(--space-small);
 }

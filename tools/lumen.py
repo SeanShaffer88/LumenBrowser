@@ -13,6 +13,8 @@ import subprocess
 import sys
 import tempfile
 
+import brand_overlay
+
 ROOT = Path(__file__).resolve().parents[1]
 PREF_FILE = "browser/app/profile/firefox.js"
 TEST_DIR = "browser/base/content/test/browser-protectionsUI"
@@ -120,9 +122,11 @@ def replace_once(source, before, after):
 
 
 def diff(path, before, after):
-    return "".join(difflib.unified_diff(
+    lines = difflib.unified_diff(
         before.splitlines(keepends=True), after.splitlines(keepends=True),
-        fromfile=f"a/{path}" if before else "/dev/null", tofile=f"b/{path}", n=3))
+        fromfile=f"a/{path}" if before else "/dev/null", tofile=f"b/{path}", n=3)
+    return "".join(line if line.endswith("\n") else line + "\n\\ No newline at end of file\n"
+                   for line in lines)
 
 
 def replace_function(source, name, body):
@@ -153,6 +157,11 @@ def render_patch(root=ROOT):
         if updated.count(needle) != 1:
             raise ValueError(f"Unexpected upstream configure boundary: {flag}")
         updated = updated.replace(needle, f'# Lumen: {flag} intentionally not implied.\n')
+    updated = replace_once(updated, 'imply_option("MOZ_APP_VENDOR", "Mozilla")',
+                           'imply_option("MOZ_APP_VENDOR", "Lumen")\n'
+                           'imply_option("--with-app-basename", "Lumen")\n'
+                           'imply_option("--with-app-name", "lumen")\n'
+                           'imply_option("MOZ_APP_REMOTINGNAME", "lumen")')
     patch += diff(configure, original, updated)
     telemetry = "python/mach/mach/telemetry.py"
     original = (snapshot / telemetry).read_text(encoding="utf-8")
@@ -198,9 +207,12 @@ def render_patch(root=ROOT):
     test += '  const { ExperimentAPI } = ChromeUtils.importESModule("resource://nimbus/ExperimentAPI.sys.mjs");\n'
     test += '  Assert.ok(!ExperimentAPI.enabled, "Nimbus remote experiments are disabled");\n'
     test += '  Assert.ok(!ExperimentAPI.labsEnabled, "Labs cannot keep the remote loader enabled");\n'
+    test += '  Assert.equal(Services.appinfo.name, "Lumen", "Independent application name");\n'
+    test += '  Assert.equal(Services.appinfo.vendor, "Lumen", "Independent profile vendor");\n'
     test += "});\n"
     patch += diff(f"{TEST_DIR}/{test_name}", "", test)
     patch += settings_patch(root, snapshot)
+    patch += brand_overlay.render(root, snapshot, diff)
     return lock, patch
 
 

@@ -8,7 +8,10 @@ import subprocess
 import tempfile
 import types
 import unittest
+import sys
 from unittest.mock import patch
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
 SPEC = importlib.util.spec_from_file_location("lumen", Path(__file__).resolve().parents[1] / "tools/lumen.py")
 lumen = importlib.util.module_from_spec(SPEC)
@@ -94,6 +97,9 @@ class ToolingTests(unittest.TestCase):
         generated = source / lumen.TEST_DIR / "browser_lumen_defaults.js"
         self.assertTrue(generated.is_file())
         self.assertIn("getDefaultBranch", generated.read_text())
+        policies = json.loads((source / "browser/app/distribution/policies.json").read_text())
+        self.assertTrue(policies["policies"]["DisableAppUpdate"])
+
         telemetry = (source / "python/mach/mach/telemetry.py").read_text()
         names = {"create_telemetry_from_environment", "is_telemetry_enabled", "initialize_telemetry_setting"}
         functions = [node for node in ast.parse(telemetry).body
@@ -112,6 +118,19 @@ class ToolingTests(unittest.TestCase):
         self.assertFalse(generated.exists())
         for relative, content in before.items():
             self.assertEqual((source / relative).read_bytes(), content)
+
+    def test_patch_preserves_missing_final_newline(self):
+        source = self.root / "newline-case"
+        source.mkdir()
+        subprocess.run(["git", "-C", str(source), "init", "--quiet"], check=True)
+        subprocess.run(["git", "-C", str(source), "config", "core.autocrlf", "false"], check=True)
+        target = source / "file.svg"
+        target.write_bytes(b"<svg/>")
+        delta = lumen.diff("file.svg", "<svg/>", "<svg>updated</svg>\n").encode()
+        subprocess.run(["git", "-C", str(source), "apply", "-"], input=delta, check=True)
+        self.assertEqual(target.read_bytes(), b"<svg>updated</svg>\n")
+        subprocess.run(["git", "-C", str(source), "apply", "--reverse", "-"], input=delta, check=True)
+        self.assertEqual(target.read_bytes(), b"<svg/>")
 
     def test_interrupted_write_preserves_old_file(self):
         output = self.root / "result.patch"

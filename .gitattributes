@@ -3,3 +3,5 @@
 *.png binary
 *.ico binary
 audit/upstream/** -text
+
+*.bmp binary

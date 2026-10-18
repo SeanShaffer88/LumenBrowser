@@ -29,6 +29,7 @@ var gLumenPane = {
         this.dependents.get(parent).add(item.pref);
       }
     }
+    this.matchCount = null;
     this.busy = false;
     const defaults = Services.prefs.getDefaultBranch("");
     const methods = { bool: "Bool", int: "Int", string: "String" };
@@ -106,6 +107,36 @@ var gLumenPane = {
       Services.prefs.addObserver(item.pref, this);
       this.observed.push(item.pref);
     }
+    this.keyHandler = event => {
+      if (
+        this.node("lumen-controls").hidden ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.altKey
+      ) {
+        return;
+      }
+      const search = this.node("lumen-filter");
+      if (
+        event.key === "Escape" &&
+        event.target === search &&
+        !this.node("lumen-clear-filters").disabled
+      ) {
+        event.preventDefault();
+        this.clearFilters();
+      } else if (
+        event.key === "/" &&
+        !event.target.closest?.("input, textarea, select, [contenteditable]")
+      ) {
+        event.preventDefault();
+        search.focus();
+        search.select();
+      }
+    };
+    window.addEventListener("keydown", this.keyHandler);
+    this.node("lumen-clear-filters").addEventListener("click", () =>
+      this.clearFilters()
+    );
     this.node("lumen-filter").addEventListener("input", () => this.filter());
     this.node("lumen-category").addEventListener("change", () => this.filter());
     this.node("lumen-modified-only").addEventListener("change", () =>
@@ -299,6 +330,14 @@ var gLumenPane = {
     }
   },
 
+  clearFilters() {
+    this.node("lumen-filter").value = "";
+    this.node("lumen-category").value = "all";
+    this.node("lumen-modified-only").checked = false;
+    this.filter();
+    this.node("lumen-filter").focus();
+  },
+
   filter() {
     const query = this.node("lumen-filter").value.trim().toLocaleLowerCase();
     const category = this.node("lumen-category").value;
@@ -328,6 +367,16 @@ var gLumenPane = {
       this.node("lumen-advanced").open = true;
     }
     this.node("lumen-no-results").hidden = count !== 0;
+    this.node("lumen-clear-filters").disabled =
+      !query && category === "all" && !modifiedOnly;
+    if (count !== this.matchCount) {
+      this.matchCount = count;
+      document.l10n.setAttributes(
+        this.node("lumen-result-count"),
+        "lumen-available-count",
+        { count }
+      );
+    }
   },
 
   observe(subject, topic, pref) {
@@ -445,6 +494,7 @@ var gLumenPane = {
   },
 
   cleanup() {
+    window.removeEventListener("keydown", this.keyHandler);
     this.searchObserver?.disconnect();
     for (const pref of this.observed) {
       try {
