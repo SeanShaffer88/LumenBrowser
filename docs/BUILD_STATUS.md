@@ -20,7 +20,7 @@ This document records performed work and explicitly separates it from release re
 | Toolchain bootstrap | Completed with `--no-system-changes`; compiler/SDK/state under the dedicated development directory |
 | Build target | `x86_64-pc-windows-msvc`; generated `WINVER` and `_WIN32_WINNT` remain `0x0A00` |
 | Native compilation | In progress, eight workers; no successful browser artifact yet |
-| Browser mochitests | Implemented/registered; not yet executed |
+| Browser mochitests | Defaults, controls and native performance sampling implemented/registered; not yet executed |
 | UI visual/accessibility checks | Pending real browser execution |
 | Windows 10 runtime | Unverified |
 | Packaged network/privacy behavior | Unverified; no zero-telemetry claim |

@@ -242,10 +242,12 @@ def settings_patch(root, snapshot):
     patch += diff("browser/locales/en-US/browser/preferences/lumen.ftl", "", locale)
     path = f"{directory}/tests/browser.toml"
     original = (snapshot / path).read_text(encoding="utf-8")
-    updated = original + '\n["browser_lumen_controls.js"]\n'
+    updated = original + '\n["browser_lumen_controls.js"]\n\n["browser_lumen_performance.js"]\n'
     patch += diff(path, original, updated)
     patch += diff(f"{directory}/tests/browser_lumen_controls.js", "",
                   (root / "browser/browser_lumen_controls.js").read_text(encoding="utf-8"))
+    patch += diff(f"{directory}/tests/browser_lumen_performance.js", "",
+                  (root / "browser/browser_lumen_performance.js").read_text(encoding="utf-8"))
     return patch
 
 

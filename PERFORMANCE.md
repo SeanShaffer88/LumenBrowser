@@ -47,3 +47,15 @@ node benchmarks/run-settings.mjs --browser 'C:\Program Files (x86)\Microsoft\Edg
 After an optimization, use `--mode both --baseline-ref EXACT_BASELINE_COMMIT` to compare the prior UI source with current source. The report records source hashes, scenario samples and environment. Preserve the same model/catalog and browser version for a UI-only comparison. Baseline code is read with `git show`; user source files are not reset. Outputs and isolated benchmark profiles remain under ignored `out/`.
 
 For product-level evaluation, follow PRODUCT_GOALS.md: same hardware/OS/toolchain/build flags, fresh and representative profiles, repeated cold/warm starts, controlled pages/network/cache, memory measurements and idle/interactive traces. Use Firefox Profiler/ETW to locate actual main-thread, layout, GC, I/O or service bottlenecks before touching Gecko. Record correctness/security/compatibility results alongside gains.
+
+## Native Gecko measurement
+
+The generated patch registers `browser/components/preferences/tests/browser_lumen_performance.js`. After the native build and frontend integration succeed, run:
+
+```bash
+./mach mochitest --headless browser/components/preferences/tests/browser_lumen_performance.js
+```
+
+The test uses a disposable harness profile, native preferences/Fluent and the actual pane. It emits a `LUMEN_PERFORMANCE` JSON line with all nine batch samples, build ID and test conditions for the same three scenarios. It checks completed writes and visible UI errors rather than asserting a machine-specific timing threshold. It measures synchronous adapter/DOM work and awaited action callbacks; deferred translation, layout/painting and frame latency are outside the timing boundary. No native benchmark result has been recorded yet.
+
+For a UI-only native comparison, finish the current core build first. With all test browser processes closed, preserve the exact integrated adapter, substitute the baseline adapter from commit `c455485` into only `browser/components/preferences/lumen.js`, run `mach build faster`, then the benchmark. Restore the verified candidate bytes, rebuild the frontend and repeat. Check source hashes, profile conditions, logs and write assertions for both runs. Do not change the model, catalog, native binary or compiler flags between these runs. This comparison still does not establish startup or content-process gains. Never substitute files while a build or browser is using them.

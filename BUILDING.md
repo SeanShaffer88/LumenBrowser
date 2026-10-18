@@ -46,6 +46,7 @@ export PATH=/c/lumen-work/cargo/bin:$PATH
 ./mach build -j8
 ./mach mochitest --headless browser/base/content/test/browser-protectionsUI/browser_lumen_defaults.js
 ./mach mochitest --headless browser/components/preferences/tests/browser_lumen_controls.js
+./mach mochitest --headless browser/components/preferences/tests/browser_lumen_performance.js
 ./mach lint browser/components/preferences/lumen.js browser/components/preferences/lumen/settings-model.mjs browser/moz.configure
 ./mach package
 ```
