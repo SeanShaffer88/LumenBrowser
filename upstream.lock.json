@@ -1,0 +1,84 @@
+{
+  "repository": "https://github.com/mozilla-firefox/firefox.git",
+  "revision": "4523d65b575546e2b588dfb8b91e3d94ebeec19a",
+  "channel": "main-development-only",
+  "retrieved_utc": "2026-10-18",
+  "files": [
+    {
+      "path": "browser/app/profile/firefox.js",
+      "sha256": "7e725b528f8215ad30297558744c19adece8ba1c7a045c1c9a02b9555b03bedc"
+    },
+    {
+      "path": "browser/base/content/test/browser-general/browser.toml",
+      "sha256": "7e727e9673a8933eb29f633f5221d7c9b88416182bc1744439a83161eacba264"
+    },
+    {
+      "path": "browser/config/version.txt",
+      "sha256": "1f56220a57c581669eae475ff5f8ddd69822ddedb27fd5ff27450b7f6e6b25a3"
+    },
+    {
+      "path": "browser/moz.configure",
+      "sha256": "e96fabb062e027e9b793afe0c1f12d528f130aa50bf2d3211692171e369560ce"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "a799adf18bfb1911f16086dc0e2a6d1cd0e31272f47e7ee6841b465b74d249de"
+    },
+    {
+      "path": "modules/libpref/init/all.js",
+      "sha256": "44492fb4b445409524d246166f805fdc1f12e2ee749b9aef0859250627feaf31"
+    },
+    {
+      "path": "modules/libpref/init/StaticPrefList.yaml",
+      "sha256": "3af1d19482c0a110b406d40ce3537f6edb8a2ecd3e9a51b114c9a153b512a260"
+    },
+    {
+      "path": "toolkit/components/glean/moz.build",
+      "sha256": "2c484edeb091ebd25aa00cca42be0e7cb977c00b22367cd64c32bb2280c1167b"
+    },
+    {
+      "path": "toolkit/components/telemetry/app/TelemetryController.sys.mjs",
+      "sha256": "8b9a4e5e66e9938ba6e202abfae5afefbc11f2f5e908fc0c832441ab1c42f68f"
+    },
+    {
+      "path": "toolkit/moz.configure",
+      "sha256": "7e5b4060fbee0cbf092e3d8438ed78155a28dc1cac660b30e9111ff9ef8901dc"
+    },
+    {
+      "path": "browser/base/content/test/browser-protectionsUI/browser.toml",
+      "sha256": "b3137633318d32b21655ec597f08602a9ba38541f0b241e5885afeb0b39fb64c"
+    },
+    {
+      "path": "build/moz.configure/update-programs.configure",
+      "sha256": "dd02887768989d509ecf673127db60819852f8bbf1adc0b8e06b65c2fd6a291a"
+    },
+    {
+      "path": "toolkit/content/license.html.mako",
+      "sha256": "6fc3136a08cdf9590e00f3be223e0007e3841f406e1d1f3a0bfbb42fcc638acd"
+    },
+    {
+      "path": "python/mach/mach/telemetry.py",
+      "sha256": "0b5ce4ef51c177d7a2179bc171685190639bd8dd524215442168704b2e82b7c1"
+    },
+    {
+      "path": "browser/components/preferences/preferences.xhtml",
+      "sha256": "69d2b05b72981df6371430c989fbcc2b5b2e962f62e52871f4c03793074c9d66"
+    },
+    {
+      "path": "browser/components/preferences/preferences.js",
+      "sha256": "81d1000dfc608daff7bc39e3f9d626863f34ebfe916a06498a791e1c9e3ea995"
+    },
+    {
+      "path": "browser/components/preferences/jar.mn",
+      "sha256": "8459ff7bad59b92539841a1d38bde6e30df1be161199b6c0023e3c4bf2283cf2"
+    },
+    {
+      "path": "browser/components/preferences/tests/browser.toml",
+      "sha256": "550dfe83ac807f78f4cad603a110a60a8ee75bd715f70261ab5e4a02ab82ddf9"
+    },
+    {
+      "path": "build/moz.configure/windows.configure",
+      "sha256": "06358ba998f525469c43c0f2fdd0372c3de99de55fa6e3f45c7b414e50257fa4"
+    }
+  ]
+}

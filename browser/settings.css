@@ -1,0 +1,71 @@
+/* SPDX-License-Identifier: MPL-2.0 */
+#lumen-controls {
+  max-inline-size: 860px;
+  padding-block-end: 32px;
+}
+#lumen-controls[hidden], #lumen-controls [hidden] {
+  display: none !important;
+}
+.lumen-intro, .lumen-note, .lumen-description, .lumen-default {
+  color: var(--text-color-deemphasized, inherit);
+  line-height: 1.5;
+}
+.lumen-toolbar {
+  display: grid;
+  grid-template-columns: max-content minmax(120px, 1fr);
+  align-items: center;
+  gap: 10px 16px;
+  padding-block: 16px;
+}
+.lumen-toolbar input[type="search"], .lumen-toolbar select {
+  min-inline-size: 0;
+  inline-size: 100%;
+}
+.lumen-modified-filter { grid-column: 1 / -1; }
+.lumen-actions, .lumen-tool-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+.lumen-note, .lumen-default { font-size: 0.9em; }
+.lumen-group {
+  margin-block: 24px;
+  border: 1px solid var(--border-color, currentColor);
+  border-radius: 8px;
+  padding: 0 18px;
+}
+.lumen-row {
+  padding-block: 16px;
+  border-block-start: 1px solid var(--border-color, currentColor);
+}
+.lumen-group .lumen-row:first-of-type { border-block-start: 0; }
+.lumen-control-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.lumen-label { flex: 1 1 220px; font-weight: 600; }
+.lumen-control-line select { max-inline-size: 100%; }
+.lumen-description, .lumen-default { margin-block: 8px 0; }
+.lumen-reset { margin-inline-start: auto; }
+#lumen-advanced {
+  margin-block: 24px;
+  padding: 16px;
+  border: 1px solid var(--border-color, currentColor);
+  border-radius: 8px;
+}
+#lumen-advanced > summary { cursor: pointer; font-weight: 600; }
+#lumen-error { color: var(--text-color-error, #b91c1c); }
+.lumen-tools { border-block-start: 1px solid var(--border-color, currentColor); padding-block: 16px; }
+.lumen-tool-links a { padding-block: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  #lumen-controls * { scroll-behavior: auto; }
+}
+@media (forced-colors: active) {
+  .lumen-group, #lumen-advanced, .lumen-row { border-color: CanvasText; }
+}
+@media (width < 520px) {
+  .lumen-toolbar { grid-template-columns: 1fr; }
+  .lumen-reset { margin-inline-start: 0; }
+}

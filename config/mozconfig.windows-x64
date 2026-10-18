@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: MPL-2.0
+# Development only. Use a full source build, not an upstream artifact build.
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-lumen
+ac_add_options --enable-project=browser
+ac_add_options --target=x86_64-pc-windows-msvc
+ac_add_options --disable-official-branding
+ac_add_options --disable-crashreporter
+ac_add_options --disable-maintenance-service
+ac_add_options --disable-update-agent
+ac_add_options --disable-default-browser-agent
+export MOZ_TELEMETRY_REPORTING=
+# Never enable unverified updates. Signing and fork update identity are release gates.

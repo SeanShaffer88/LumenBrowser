@@ -1,0 +1,19 @@
+# Customization and recovery
+
+The patch integrates **Lumen controls** into Firefox's existing settings page at `about:preferences#lumen`. It implements 57 controls across privacy, permissions, search, tabs, appearance, startup, accessibility, media, downloads and resource use. The implementation exists in source; browser execution, keyboard/screen-reader behavior and packaged integration are still unverified.
+
+Use the search field or category filter to find settings. The changed-only filter identifies user overrides. Advanced controls start collapsed; matching searches reveal them. Each control explains its effect and shows its shipped default. Riskier changes require confirmation. Dependent controls stay disabled until the parent feature is enabled, and policy-managed or unavailable settings cannot be changed. Changes requiring restart are identified.
+
+Each Reset button clears that preference's user override. Restore defaults asks for confirmation, affects only this catalog, preserves policy locks, and attempts recovery if a multi-setting reset fails. Imported files are versioned, limited to 1 MiB, and fully validated before changing any preference. The import confirmation previews the change count and privacy/compatibility warnings. Managed/unavailable settings are skipped. Failed application attempts restore previous values and user-branch presence; a failed restoration identifies the affected preferences.
+
+Exports contain only allowlisted settings, with unsupported custom values explicitly listed as omitted. No passwords, bookmarks, history, cookies, profile paths or arbitrary preferences are included. Files stay local unless the user shares them. Unsupported values set through `about:config` are displayed as custom values rather than silently rewritten. Native browser tools remain accessible through local links from the pane.
+
+For a disposable development profile, use upstream Settings > Privacy & Security for HTTPS-only, site permissions, tracking exceptions, and cookie controls. Use Settings > Search for suggestion controls. Treat `about:config` as advanced configuration; changing a user value overrides these defaults. Resetting an individual modified preference returns it to the patched default. Enterprise policy may override that behavior. Tests inspect default branches so test harness/user values cannot falsely demonstrate successful integration.
+
+To change shipped defaults, edit `config/preferences.json`. To adjust the editor catalog, edit `config/customization.json` and the model/UI as necessary. Run Python and Node tests, regenerate the patch, and rebuild from the locked source. Unknown preferences, duplicates, type changes, integer overflow and dependency cycles fail validation. New settings require a trace to their upstream definition and consumer plus a network/security assessment. Do not offer sandbox disabling, signature disabling, certificate bypass, or unverified update controls.
+
+## Profiles and recovery
+
+Use only new disposable profiles during this phase. No migration from Firefox is supported. Before future migration testing, close all browser processes, back up the entire profile to a separate location, verify the backup inventory and hashes, and restore into a new test directory. Do not test with plaintext password exports, production session cookies, or a running profile. Interrupted writes, disk full, locked files, corruption, and profile version mismatch are required test cases before a migration ships.
+
+Browser reset/Refresh can discard extensions and configuration; upstream data-retention semantics must be checked before presenting it as a Lumen recovery action. Downgrading a binary against an upgraded profile is not rollback. Restore the matching profile backup into a separate directory instead.

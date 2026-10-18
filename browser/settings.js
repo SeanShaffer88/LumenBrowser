@@ -1,0 +1,284 @@
+// SPDX-License-Identifier: MPL-2.0
+/* import-globals-from preferences.js */
+"use strict";
+
+var gLumenPane = {
+  init() {
+    const { LumenSettings } = ChromeUtils.importESModule(
+      "chrome://browser/content/preferences/lumen/settings-model.mjs"
+    );
+    const { LUMEN_CATALOG } = ChromeUtils.importESModule(
+      "chrome://browser/content/preferences/lumen/catalog.mjs"
+    );
+    this.catalog = LUMEN_CATALOG;
+    this.rows = new Map();
+    this.groups = [];
+    this.busy = false;
+    const defaults = Services.prefs.getDefaultBranch("");
+    const methods = { bool: "Bool", int: "Int", string: "String" };
+    const types = { 128: "bool", 64: "int", 32: "string" };
+    this.model = new LumenSettings(this.catalog, {
+      type: name => types[defaults.getPrefType(name)],
+      get: (name, type) => Services.prefs[`get${methods[type]}Pref`](name),
+      defaultValue: (name, type) => defaults[`get${methods[type]}Pref`](name),
+      set: (name, type, value) => Services.prefs[`set${methods[type]}Pref`](name, value),
+      clear: name => Services.prefs.clearUserPref(name),
+      locked: name => Services.prefs.prefIsLocked(name),
+      hasUserValue: name => Services.prefs.prefHasUserValue(name),
+    });
+    const categories = [...new Set(this.catalog.map(item => item.category))];
+    for (const category of categories) {
+      const option = this.element("option", `lumen-category-${category}`);
+      option.value = category;
+      this.node("lumen-category").append(option);
+      for (const advanced of [false, true]) {
+        const items = this.catalog.filter(item => item.category === category && !!item.advanced === advanced);
+        if (!items.length) {
+          continue;
+        }
+        const group = this.element("section");
+        group.className = "lumen-group";
+        const heading = this.element("h2", `lumen-category-${category}`);
+        heading.id = `lumen-group-${advanced ? "advanced" : "standard"}-${category}`;
+        group.setAttribute("aria-labelledby", heading.id);
+        group.append(heading);
+        this.node(advanced ? "lumen-advanced-rows" : "lumen-standard").append(group);
+        const rowElements = items.map(item => this.buildRow(item, group));
+        this.groups.push({ group, rows: rowElements });
+      }
+    }
+    for (const item of this.catalog) {
+      Services.prefs.addObserver(item.pref, this);
+    }
+    window.addEventListener("unload", () => this.cleanup(), { once: true });
+    this.node("lumen-filter").addEventListener("input", () => this.filter());
+    this.node("lumen-category").addEventListener("change", () => this.filter());
+    this.node("lumen-modified-only").addEventListener("change", () => this.filter());
+    this.node("lumen-reset-all").addEventListener("click", () => this.action(async () => {
+      const title = await document.l10n.formatValue("lumen-title");
+      const message = await document.l10n.formatValue("lumen-reset-confirm");
+      if (Services.prompt.confirm(window, title, message)) {
+        this.status("lumen-reset-complete", { count: this.model.restoreDefaults() });
+      }
+    }));
+    this.node("lumen-export").addEventListener("click", () => this.action(() => this.exportSettings()));
+    this.node("lumen-import").addEventListener("click", () => this.node("lumen-import-file").click());
+    this.node("lumen-import-file").addEventListener("change", () => this.action(() => this.importSettings()));
+    this.refresh();
+  },
+
+  node(id) {
+    return document.getElementById(id);
+  },
+
+  element(tag, l10nId) {
+    const element = document.createElementNS("http://www.w3.org/1999/xhtml", tag);
+    if (l10nId) {
+      document.l10n.setAttributes(element, l10nId);
+    }
+    return element;
+  },
+
+  buildRow(item, group) {
+    const index = this.catalog.indexOf(item);
+    const prefix = `lumen-setting-${index}`;
+    const row = this.element("article");
+    row.className = "lumen-row";
+    row.dataset.pref = item.pref;
+    const line = this.element("div");
+    line.className = "lumen-control-line";
+    const label = this.element("label", `${prefix}-title`);
+    label.className = "lumen-label";
+    label.htmlFor = `${prefix}-control`;
+    const input = this.element(item.type === "bool" ? "input" : "select");
+    input.id = label.htmlFor;
+    if (item.type === "bool") {
+      input.type = "checkbox";
+    } else {
+      item.options.forEach((option, i) => {
+        const element = this.element("option", `${prefix}-option-${i}`);
+        element.value = JSON.stringify(option.value);
+        input.append(element);
+      });
+    }
+    const description = this.element("p", `${prefix}-description`);
+    description.id = `${prefix}-description`;
+    description.className = "lumen-description";
+    const hint = this.element("p");
+    hint.id = `${prefix}-hint`;
+    hint.className = "lumen-default";
+    input.setAttribute("aria-describedby", `${description.id} ${hint.id}`);
+    const reset = this.element("button", "lumen-reset");
+    reset.className = "lumen-reset";
+    document.l10n.setAttributes(reset, "lumen-reset-setting", { name: item.title });
+    reset.addEventListener("click", () => this.action(() => this.model.reset(item.pref)));
+    input.addEventListener("change", () => {
+      const value = item.type === "bool" ? input.checked : JSON.parse(input.value);
+      this.action(async () => {
+      let confirmed = false;
+      if (this.model.needsConfirmation(item.pref, value)) {
+        const title = await document.l10n.formatValue("lumen-change-confirm");
+        const warning = await document.l10n.formatValue(`${prefix}-warning`);
+        confirmed = Services.prompt.confirm(window, title, warning);
+        if (!confirmed) {
+          return;
+        }
+      }
+      this.model.set(item.pref, value, confirmed);
+      this.status("lumen-saved");
+      });
+    });
+    line.append(label, input, reset);
+    row.append(line, description, hint);
+    if (item.restart) {
+      row.append(this.element("p", "lumen-restart"));
+    }
+    group.append(row);
+    this.rows.set(item.pref, { row, input, hint, reset });
+    return row;
+  },
+
+  refresh() {
+    for (const item of this.catalog) {
+      const state = this.model.state(item.pref);
+      const { row, input, hint, reset } = this.rows.get(item.pref);
+      input.disabled = this.busy || !state.available || state.locked || !state.dependencyMet;
+      reset.disabled = this.busy || !state.available || state.locked || !state.modified;
+      row.dataset.modified = String(state.modified);
+      if (item.type === "bool") {
+        input.checked = !!state.value;
+      } else {
+        input.querySelector("[data-custom]")?.remove();
+        const value = JSON.stringify(state.value);
+        if (state.available && !item.options.some(option => Object.is(option.value, state.value))) {
+          const custom = this.element("option", "lumen-custom-value");
+          custom.value = value;
+          custom.disabled = true;
+          custom.dataset.custom = "true";
+          input.append(custom);
+        }
+        input.value = value ?? "";
+      }
+      if (!state.available) {
+        document.l10n.setAttributes(hint, "lumen-unavailable");
+      } else if (state.locked) {
+        document.l10n.setAttributes(hint, "lumen-managed");
+      } else if (!state.dependencyMet) {
+        const parent = this.model.definition(item.dependsOn.pref);
+        document.l10n.setAttributes(hint, "lumen-dependency", { parent: parent.title });
+      } else if (item.type === "bool") {
+        document.l10n.setAttributes(hint, "lumen-default-boolean", { value: String(state.defaultValue) });
+      } else {
+        const option = item.options.find(entry => Object.is(entry.value, state.defaultValue));
+        document.l10n.setAttributes(hint, "lumen-default-choice", { value: option?.label ?? String(state.defaultValue) });
+      }
+    }
+    for (const id of ["lumen-import", "lumen-export", "lumen-reset-all"]) {
+      this.node(id).disabled = this.busy;
+    }
+    this.filter();
+  },
+
+  filter() {
+    const query = this.node("lumen-filter").value.trim().toLocaleLowerCase();
+    const category = this.node("lumen-category").value;
+    const modifiedOnly = this.node("lumen-modified-only").checked;
+    let count = 0;
+    let advancedMatch = false;
+    for (const item of this.catalog) {
+      const { row } = this.rows.get(item.pref);
+      const text = `${item.title} ${item.description} ${item.pref} ${row.textContent}`.toLocaleLowerCase();
+      row.hidden = !((!query || text.includes(query)) &&
+        (category === "all" || item.category === category) &&
+        (!modifiedOnly || row.dataset.modified === "true"));
+      if (!row.hidden) {
+        count++;
+        advancedMatch ||= !!item.advanced;
+      }
+    }
+    for (const { group, rows } of this.groups) {
+      group.hidden = rows.every(row => row.hidden);
+    }
+    this.node("lumen-advanced").hidden = !advancedMatch;
+    if (query && advancedMatch) {
+      this.node("lumen-advanced").open = true;
+    }
+    this.node("lumen-no-results").hidden = count !== 0;
+  },
+
+  observe() {
+    if (!this.busy) {
+      this.refresh();
+    }
+  },
+
+  status(id, args) {
+    document.l10n.setAttributes(this.node("lumen-status"), id, args);
+  },
+
+  async action(callback) {
+    if (this.busy) {
+      return;
+    }
+    this.busy = true;
+    this.node("lumen-controls").setAttribute("aria-busy", "true");
+    this.node("lumen-error").hidden = true;
+    try {
+      this.refresh();
+      await callback();
+    } catch (error) {
+      this.node("lumen-error").textContent = error.message;
+      this.node("lumen-error").hidden = false;
+    } finally {
+      this.busy = false;
+      this.node("lumen-controls").removeAttribute("aria-busy");
+      this.refresh();
+    }
+  },
+
+  exportSettings() {
+    const text = this.model.exportSettings();
+    if (this.exportUrl) {
+      URL.revokeObjectURL(this.exportUrl);
+    }
+    this.exportUrl = URL.createObjectURL(new Blob([text], { type: "application/json" }));
+    const anchor = this.element("a");
+    anchor.href = this.exportUrl;
+    anchor.download = "lumen-settings.json";
+    document.body.append(anchor);
+    anchor.click();
+    anchor.remove();
+    this.status("lumen-export-complete", { count: JSON.parse(text).omitted.length });
+  },
+
+  async importSettings() {
+    const input = this.node("lumen-import-file");
+    const file = input.files[0];
+    input.value = "";
+    if (!file) {
+      return;
+    }
+    if (file.size > 1024 * 1024) {
+      throw new Error(await document.l10n.formatValue("lumen-file-too-large"));
+    }
+    const text = await file.text();
+    const plan = this.model.planImport(text);
+    const message = await document.l10n.formatValue("lumen-import-confirm", {
+      count: plan.changes.length, skipped: plan.skipped,
+    });
+    const title = await document.l10n.formatValue("lumen-change-confirm");
+    if (Services.prompt.confirm(window, title, [message, ...plan.warnings].join("\n\n"))) {
+      const result = this.model.importSettings(text, true);
+      this.status("lumen-import-complete", { count: result.changed, skipped: result.skipped });
+    }
+  },
+
+  cleanup() {
+    for (const item of this.catalog) {
+      Services.prefs.removeObserver(item.pref, this);
+    }
+    if (this.exportUrl) {
+      URL.revokeObjectURL(this.exportUrl);
+    }
+  },
+};

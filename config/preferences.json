@@ -1,0 +1,188 @@
+[
+  {
+    "name": "datareporting.policy.dataSubmissionEnabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "datareporting.healthreport.uploadEnabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "toolkit.telemetry.unified",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "toolkit.telemetry.archive.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "toolkit.telemetry.shutdownPingSender.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "toolkit.telemetry.firstShutdownPing.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "toolkit.telemetry.newProfilePing.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "toolkit.telemetry.bhrPing.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "app.normandy.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "nimbus.rollouts.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "nimbus.telemetry.targetingContextEnabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "browser.discovery.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "extensions.htmlaboutaddons.recommendations.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "browser.urlbar.quicksuggest.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "browser.urlbar.suggest.searches",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "browser.urlbar.suggest.quicksuggest.sponsored",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "browser.urlbar.suggest.quicksuggest.nonsponsored",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "browser.search.suggest.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "browser.search.suggest.enabled.private",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "browser.newtabpage.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "browser.newtabpage.activity-stream.telemetry.privatePing.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "identity.fxaccounts.telemetry.clientAssociationPing.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "identity.fxaccounts.telemetry.clientInfoPing.enabled",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "messaging-system.askForFeedback",
+    "value": false,
+    "risk": "privacy",
+    "effect": "Disable background collection or promotion; source default only, pending runtime/network verification."
+  },
+  {
+    "name": "toolkit.telemetry.user_characteristics_ping.opt-out",
+    "value": true,
+    "risk": "privacy",
+    "effect": "Opt out of the characteristics ping; does not establish absence of other Glean collection."
+  },
+  {
+    "name": "dom.security.https_only_mode",
+    "value": true,
+    "risk": "compatibility",
+    "effect": "Block HTTP navigation until HTTPS succeeds or the user explicitly grants an exception."
+  },
+  {
+    "name": "dom.security.https_only_mode_pbm",
+    "value": true,
+    "risk": "compatibility",
+    "effect": "Block HTTP navigation until HTTPS succeeds or the user explicitly grants an exception."
+  },
+  {
+    "name": "privacy.trackingprotection.enabled",
+    "value": true,
+    "risk": "compatibility",
+    "effect": "Enable tracking protection; some sites may need a per-site exception in the shield panel."
+  },
+  {
+    "name": "network.cookie.cookieBehavior",
+    "value": 5,
+    "risk": "compatibility",
+    "effect": "Retain upstream partitioning of cross-site cookies; persistent logins remain available."
+  },
+  {
+    "name": "network.cookie.cookieBehavior.pbmode",
+    "value": 5,
+    "risk": "compatibility",
+    "effect": "Retain upstream partitioning of cross-site cookies; persistent logins remain available."
+  },
+  {
+    "name": "network.dns.disablePrefetch",
+    "value": true,
+    "risk": "privacy",
+    "effect": "Avoid speculative DNS lookups; may increase first-navigation latency."
+  }
+]
