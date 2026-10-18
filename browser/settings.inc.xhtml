@@ -4,7 +4,7 @@
   <html:p class="lumen-intro" data-l10n-id="lumen-intro"/>
   <html:div class="lumen-toolbar">
     <html:label for="lumen-filter" data-l10n-id="lumen-search"/>
-    <html:input id="lumen-filter" type="search"/>
+    <html:input id="lumen-filter" type="search" maxlength="200"/>
     <html:label for="lumen-category" data-l10n-id="lumen-category"/>
     <html:select id="lumen-category">
       <html:option value="all" data-l10n-id="lumen-all-categories"/>
@@ -28,6 +28,8 @@
     <html:summary data-l10n-id="lumen-advanced"/>
     <html:p data-l10n-id="lumen-advanced-description"/>
     <html:div id="lumen-advanced-rows"/>
+    <html:a href="about:config" data-l10n-id="lumen-advanced-config"/>
+    <html:p class="lumen-note" data-l10n-id="lumen-advanced-config-warning"/>
   </html:details>
   <html:p id="lumen-no-results" hidden="true" data-l10n-id="lumen-no-results"/>
   <html:section class="lumen-tools">

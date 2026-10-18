@@ -8,6 +8,8 @@ Project repository: [SeanShaffer88/LumenBrowser](https://github.com/SeanShaffer8
 
 [Current build and verification status](docs/BUILD_STATUS.md) distinguishes completed checks from remaining work.
 
+[Performance investigation](PERFORMANCE.md) records measured bottlenecks, test conditions and the limits of the current evidence.
+
 ## Current implementation
 
 - Pinned Mozilla Firefox `160.0a1` development source revision in `upstream.lock.json`; selected source snapshots are hash-verified offline. These snapshots are not a full checkout.
@@ -16,6 +18,7 @@ Project repository: [SeanShaffer88/LumenBrowser](https://github.com/SeanShaffer8
 - Registered upstream browser mochitest checks default-branch preferences without relying on user preference overrides.
 - Integrated Lumen controls in `about:preferences#lumen`: ten categories, search, changed-only filter, advanced disclosure, warnings, dependency checks, policy locks, individual reset, restore defaults, and settings import/export. Browser execution remains pending; model tests run independently.
 - Mach telemetry factory uses the upstream no-op implementation; setup no longer performs employee lookup or opt-in prompts. This source change is tested in isolation; complete build/network behavior still requires verification.
+- Nimbus Labs, rollout and study gates are disabled in the patch so the optional experiment loader cannot remain enabled through the Labs policy alone. General Remote Settings security consumers are retained.
 - Patch generation never edits the supplied Firefox checkout. Output uses atomic replacement. No package dependencies or runtime services are added.
 
 ## Local checks

@@ -79,6 +79,14 @@
     {
       "path": "build/moz.configure/windows.configure",
       "sha256": "06358ba998f525469c43c0f2fdd0372c3de99de55fa6e3f45c7b414e50257fa4"
+    },
+    {
+      "path": "toolkit/components/nimbus/ExperimentAPI.sys.mjs",
+      "sha256": "32e2bd1325483c46662ee176348c010e587a8d2f1104828ae0ca10310d6f5cab"
+    },
+    {
+      "path": "toolkit/components/nimbus/lib/RemoteSettingsExperimentLoader.sys.mjs",
+      "sha256": "630d8870e3316e6420e930e2d1822d37426274a75ca64f131a408d2f768030f2"
     }
   ]
 }

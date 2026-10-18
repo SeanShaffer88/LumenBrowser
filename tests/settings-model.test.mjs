@@ -147,3 +147,34 @@ test("unavailable settings are skipped rather than creating unsupported preferen
   assert.deepEqual(result, { changed: 0, skipped: 1 });
   assert.equal(values.size, 0);
 });
+
+test("silent backend write failures are detected rather than reported as saved", () => {
+  const { model, backend, values } = fixture();
+  backend.set = () => {};
+  assert.throws(() => model.set("feature", true), /Preference write was not applied/);
+  assert.equal(values.size, 0);
+  values.set("feature", true);
+  backend.clear = () => {};
+  assert.throws(() => model.reset("feature"), /Preference write was not applied/);
+  assert.equal(values.get("feature"), true);
+});
+
+test("silent rollback failures cannot produce a false restoration success", () => {
+  const { model, backend, values } = fixture();
+  values.set("feature", false);
+  const original = backend.set;
+  let recovering = false;
+  backend.set = (name, type, value) => {
+    if (recovering) {
+      return;
+    }
+    original(name, type, value);
+    if (name === "choice") {
+      recovering = true;
+      throw new Error("partial write failure");
+    }
+  };
+  assert.throws(() => model.importSettings(documentFor({ feature: true, choice: 2 }), true),
+    /restoration incomplete for: feature/);
+  assert.equal(values.get("feature"), true);
+});

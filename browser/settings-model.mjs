@@ -77,12 +77,12 @@ export class LumenSettings {
     if (this.needsConfirmation(pref, value) && !confirmed) {
       throw new SettingsError("confirmation", this.definition(pref).warning);
     }
-    this.backend.set(pref, this.definition(pref).type, value);
+    this.transaction([{ pref, value }]);
   }
 
   reset(pref) {
     this.assertWritable(pref);
-    this.backend.clear(pref);
+    this.transaction([{ pref }], true);
   }
 
   transaction(changes, clear = false) {
@@ -101,6 +101,11 @@ export class LumenSettings {
         } else {
           this.backend.set(change.pref, this.definition(change.pref).type, change.value);
         }
+        if (clear ? this.backend.hasUserValue(change.pref) : !Object.is(
+          this.backend.get(change.pref, this.definition(change.pref).type), change.value
+        )) {
+          throw new SettingsError("postcondition", `Preference write was not applied: ${change.pref}`);
+        }
       }
     } catch (error) {
       const failed = [];
@@ -110,6 +115,10 @@ export class LumenSettings {
             this.backend.set(old.pref, this.definition(old.pref).type, old.value);
           } else {
             this.backend.clear(old.pref);
+          }
+          if (!Object.is(this.backend.get(old.pref, this.definition(old.pref).type), old.value) ||
+              this.backend.hasUserValue(old.pref) !== old.modified) {
+            throw new SettingsError("recovery", "Previous preference state was not restored");
           }
         } catch (restoreError) {
           failed.push(`${old.pref} (${restoreError.message})`);

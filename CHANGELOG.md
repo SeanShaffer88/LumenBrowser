@@ -7,6 +7,8 @@
 - Add Windows/Linux foundation CI and deterministic source bundles with SHA-256 inventories; CI does not build a browser.
 - Add an integrated 57-control settings pane with search, categories, advanced disclosure, reset, policy/dependency guards, and validated settings import/export with rollback handling.
 - Disable Mach telemetry initialization and setup through the upstream no-op implementation; browser telemetry remains separately unverified.
+- Disable the optional Nimbus Labs/rollout/study gates after tracing an experiment-loader path that remained enabled independently of telemetry preferences.
+- Verify preference write and rollback postconditions so silent failures cannot be reported as successful changes or recovery.
 - Prepare a full pinned source checkout and isolated MozillaBuild/Rust/compiler environment; native build is in progress.
 - Adopt product quality gates and a documented critical path that prioritizes build verification over further discretionary features.
 

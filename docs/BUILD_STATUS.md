@@ -8,10 +8,11 @@ This document records performed work and explicitly separates it from release re
 | Upstream | Full checkout of `4523d65b575546e2b588dfb8b91e3d94ebeec19a`, version `160.0a1` |
 | Snapshot provenance check | Imported audit snapshots compared against bytes in the real pinned checkout |
 | Real patch check | Defaults/configure/Mach telemetry patch checked and applied to the full checkout |
-| Settings patch | Implemented; generated full patch applies/reverses in exact-file fixtures; full-tree application after ongoing build remains pending |
+| Settings/Nimbus patch | Implemented; generated full patch applies/reverses in exact-file fixtures; incremental patch passes read-only application checks against the real full checkout; application waits for the ongoing native build |
 | Tooling tests | 13 Python tests passed locally |
-| Settings model tests | 9 Node tests passed locally; no npm dependencies |
+| Settings model tests | 11 Node tests passed locally; includes explicit write/rollback postconditions and no npm dependencies |
 | Source packaging | Deterministic archive generation, ZIP integrity and complete SHA-256 manifest tested |
+| Published review | Draft PR #1 contains the foundation; initial Windows/Linux foundation CI passed |
 | Development host | Windows 11 Home x64, build 26300; not a Windows 10 test environment |
 | MozillaBuild | 4.2.1, extracted locally from a Mozilla-signed installer; installer not executed |
 | Build Python / Rust | MozillaBuild Python 3.12.10 / isolated Rust 1.99.1 |

@@ -17,7 +17,7 @@ def source_bundle(root=lumen.ROOT):
     paths = set()
     paths.update(root.glob("*.md"))
     paths.update(root / name for name in ("LICENSE", ".gitignore", ".gitattributes", "upstream.lock.json"))
-    for folder in ("config", "tools", "tests", "docs", "browser", ".github"):
+    for folder in ("config", "tools", "tests", "docs", "browser", "benchmarks", ".github"):
         paths.update(p for p in (root / folder).rglob("*")
                      if p.is_file() and "__pycache__" not in p.parts and p.suffix != ".pyc")
     paths.update(root / "audit/upstream" / e["path"] for e in lock["files"])

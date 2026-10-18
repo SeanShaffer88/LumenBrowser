@@ -13,12 +13,16 @@ var gLumenPane = {
     this.catalog = LUMEN_CATALOG;
     this.rows = new Map();
     this.groups = [];
+    this.observed = [];
     this.busy = false;
     const defaults = Services.prefs.getDefaultBranch("");
     const methods = { bool: "Bool", int: "Int", string: "String" };
     const types = { 128: "bool", 64: "int", 32: "string" };
     this.model = new LumenSettings(this.catalog, {
-      type: name => types[defaults.getPrefType(name)],
+      type: name => {
+        const type = defaults.getPrefType(name);
+        return type === Services.prefs.getPrefType(name) ? types[type] : undefined;
+      },
       get: (name, type) => Services.prefs[`get${methods[type]}Pref`](name),
       defaultValue: (name, type) => defaults[`get${methods[type]}Pref`](name),
       set: (name, type, value) => Services.prefs[`set${methods[type]}Pref`](name, value),
@@ -47,10 +51,11 @@ var gLumenPane = {
         this.groups.push({ group, rows: rowElements });
       }
     }
+    window.addEventListener("unload", () => this.cleanup(), { once: true });
     for (const item of this.catalog) {
       Services.prefs.addObserver(item.pref, this);
+      this.observed.push(item.pref);
     }
-    window.addEventListener("unload", () => this.cleanup(), { once: true });
     this.node("lumen-filter").addEventListener("input", () => this.filter());
     this.node("lumen-category").addEventListener("change", () => this.filter());
     this.node("lumen-modified-only").addEventListener("change", () => this.filter());
@@ -111,7 +116,10 @@ var gLumenPane = {
     const reset = this.element("button", "lumen-reset");
     reset.className = "lumen-reset";
     document.l10n.setAttributes(reset, "lumen-reset-setting", { name: item.title });
-    reset.addEventListener("click", () => this.action(() => this.model.reset(item.pref)));
+    reset.addEventListener("click", () => this.action(() => {
+      this.model.reset(item.pref);
+      this.status("lumen-reset-one");
+    }));
     input.addEventListener("change", () => {
       const value = item.type === "bool" ? input.checked : JSON.parse(input.value);
       this.action(async () => {
@@ -200,7 +208,7 @@ var gLumenPane = {
       group.hidden = rows.every(row => row.hidden);
     }
     this.node("lumen-advanced").hidden = !advancedMatch;
-    if (query && advancedMatch) {
+    if ((query || modifiedOnly || category !== "all") && advancedMatch) {
       this.node("lumen-advanced").open = true;
     }
     this.node("lumen-no-results").hidden = count !== 0;
@@ -223,6 +231,8 @@ var gLumenPane = {
     this.busy = true;
     this.node("lumen-controls").setAttribute("aria-busy", "true");
     this.node("lumen-error").hidden = true;
+    this.node("lumen-status").removeAttribute("data-l10n-id");
+    this.node("lumen-status").textContent = "";
     try {
       this.refresh();
       await callback();
@@ -274,9 +284,14 @@ var gLumenPane = {
   },
 
   cleanup() {
-    for (const item of this.catalog) {
-      Services.prefs.removeObserver(item.pref, this);
+    for (const pref of this.observed) {
+      try {
+        Services.prefs.removeObserver(pref, this);
+      } catch (error) {
+        console.error(`Lumen observer cleanup failed for ${pref}`, error);
+      }
     }
+    this.observed.length = 0;
     if (this.exportUrl) {
       URL.revokeObjectURL(this.exportUrl);
     }

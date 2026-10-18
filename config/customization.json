@@ -37,21 +37,24 @@
     "title": "Block social-media trackers",
     "description": "Reduce cross-site tracking from embedded social content.",
     "category": "privacy",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "privacy.trackingprotection.cryptomining.enabled",
     "title": "Block cryptomining scripts",
     "description": "Block known scripts that consume resources to mine cryptocurrency.",
     "category": "privacy",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "privacy.trackingprotection.fingerprinting.enabled",
     "title": "Block known fingerprinters",
     "description": "Block listed fingerprinting scripts while retaining ordinary website features.",
     "category": "privacy",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "privacy.resistFingerprinting",
@@ -247,7 +250,12 @@
     "warning": "Enabling remote suggestions can send partial search queries to your search provider.",
     "warnValues": [
       true
-    ]
+    ],
+    "advanced": true,
+    "dependsOn": {
+      "pref": "browser.search.suggest.enabled",
+      "value": true
+    }
   },
   {
     "pref": "browser.urlbar.suggest.searches",
@@ -258,7 +266,11 @@
     "warning": "Enabling remote suggestions can send partial search queries to your search provider.",
     "warnValues": [
       true
-    ]
+    ],
+    "dependsOn": {
+      "pref": "browser.search.suggest.enabled",
+      "value": true
+    }
   },
   {
     "pref": "browser.urlbar.suggest.history",
@@ -286,14 +298,16 @@
     "title": "Suggest search engines",
     "description": "Offer installed search engines in address-bar results.",
     "category": "search",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "browser.urlbar.autoFill",
     "title": "Complete addresses inline",
     "description": "Complete known addresses from local browsing data.",
     "category": "search",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "browser.tabs.warnOnClose",
@@ -307,14 +321,16 @@
     "title": "Confirm closing other tabs",
     "description": "Ask before closing other tabs from a tab menu.",
     "category": "tabs",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "browser.tabs.warnOnOpen",
     "title": "Warn before opening many tabs",
     "description": "Confirm opening a large group of tabs at once.",
     "category": "tabs",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "browser.tabs.loadInBackground",
@@ -328,14 +344,16 @@
     "title": "Keep related tabs together",
     "description": "Open related tabs next to the current tab.",
     "category": "tabs",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "browser.tabs.closeWindowWithLastTab",
     "title": "Close the window with its last tab",
     "description": "When disabled, closing the last tab keeps the browser window available.",
     "category": "tabs",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "browser.tabs.hoverPreview.enabled",
@@ -353,14 +371,16 @@
     "dependsOn": {
       "pref": "browser.tabs.hoverPreview.enabled",
       "value": true
-    }
+    },
+    "advanced": true
   },
   {
     "pref": "browser.ctrlTab.sortByRecentlyUsed",
     "title": "Switch tabs by recent use",
     "description": "Use Ctrl+Tab to switch through recently used tabs.",
     "category": "tabs",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "browser.tabs.groups.enabled",
@@ -433,7 +453,8 @@
         "value": 0,
         "label": "Use configured fonts"
       }
-    ]
+    ],
+    "advanced": true
   },
   {
     "pref": "layout.css.prefers-color-scheme.content-override",
@@ -507,7 +528,8 @@
     "title": "Warn about automatic refresh",
     "description": "Allow upstream warnings for pages that automatically reload or redirect.",
     "category": "accessibility",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "media.hardwaremediakeys.enabled",
@@ -528,7 +550,8 @@
     "title": "Zoom the whole page",
     "description": "Scale layout and images as well as text.",
     "category": "accessibility",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "accessibility.browsewithcaret",
@@ -600,7 +623,8 @@
     "dependsOn": {
       "pref": "media.videocontrols.picture-in-picture.enabled",
       "value": true
-    }
+    },
+    "advanced": true
   },
   {
     "pref": "media.peerconnection.enabled",
@@ -634,20 +658,23 @@
     "title": "Add downloads to Windows recent files",
     "description": "Allow downloaded items to appear in the operating system recent-document history.",
     "category": "downloads",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "browser.tabs.unloadOnLowMemory",
     "title": "Unload tabs when memory is low",
     "description": "Allow the browser to unload inactive tabs under memory pressure. Returning to a tab may reload it.",
     "category": "performance",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   },
   {
     "pref": "network.dns.disablePrefetch",
     "title": "Avoid speculative DNS requests",
     "description": "Resolve names when needed rather than speculating ahead. This may increase initial navigation latency.",
     "category": "performance",
-    "type": "bool"
+    "type": "bool",
+    "advanced": true
   }
 ]

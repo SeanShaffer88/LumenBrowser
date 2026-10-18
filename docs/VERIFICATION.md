@@ -6,7 +6,7 @@ Python tooling validation and unit tests on Windows. The suite verifies snapshot
 
 JavaScript model tests cover untrusted/oversized/malformed imports, complete validation before mutation, bounded choices, warnings, dependencies, policy locks, import review, partial-write recovery, failed rollback reporting, failed-reset recovery, privacy-limited exports and unavailable settings. These tests use Node's built-in runner and no external packages. The 57-control browser adapter is a separate integration surface.
 
-A full pinned Firefox checkout was fetched; audit snapshots were compared to its bytes and matched. The defaults/configure/Mach telemetry patch passed real `git apply --check` and was applied. The isolated toolchain bootstrap completed; native compilation is in progress. The newer settings integration patch passes fixture application/reversal but still needs application to the full tree after the ongoing core build. No browser test, packaged traffic result or Windows 10 runtime certification is complete.
+A full pinned Firefox checkout was fetched; audit snapshots were compared to its bytes and matched. The defaults/configure/Mach telemetry patch passed real `git apply --check` and was applied. The isolated toolchain bootstrap completed; native compilation is in progress. The newer settings/Nimbus integration patch passes fixture application/reversal and read-only checks against the real tree, but application waits for the ongoing core build. No browser test, packaged traffic result or Windows 10 runtime certification is complete.
 
 ## Browser integration — unverified
 

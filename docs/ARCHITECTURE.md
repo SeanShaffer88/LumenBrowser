@@ -33,6 +33,8 @@ Mach's telemetry factory now returns `NoopTelemetry(False)` directly; telemetry 
 
 The settings adapter runs inside the already-privileged `about:preferences` document. No additional privileged `about:` route or content-to-parent message interface is introduced. Untrusted import data reaches only the validated catalog model; no arbitrary preference names, code, profile paths or external URLs are accepted. Import/reset recovery restores prior preference values and user-branch presence, with an explicit error if rollback itself fails. This is not an on-disk profile migration transaction.
 
+The default pane exposes 33 everyday controls, with 24 less-common or higher-impact controls behind advanced disclosure. No new browser process/service is added. Observer-driven updates run only while the settings document is open, registered observers are tracked for cleanup even after partial initialization, and export object URLs are revoked on replacement or unload. Effective/default preference type disagreement disables a control rather than creating an unsupported value. Write and recovery postconditions are checked before reporting success.
+
 Every release needs independent profile/update identity so Firefox and Lumen cannot update or corrupt each other's installations. Preserve upstream anti-downgrade behavior. Snapshot and recovery validation precede migrations. No high-risk settings will be exposed without documented consequences, validation, dependency controls, and reset behavior.
 
 ## Research

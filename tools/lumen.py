@@ -162,6 +162,18 @@ def render_patch(root=ROOT):
     updated = replace_function(updated, "is_telemetry_enabled", "    return False\n")
     updated = replace_function(updated, "initialize_telemetry_setting", "    return None\n")
     patch += diff(telemetry, original, updated)
+    nimbus = "toolkit/components/nimbus/ExperimentAPI.sys.mjs"
+    original = (snapshot / nimbus).read_text(encoding="utf-8")
+    updated = replace_once(original,
+                           '  get labsEnabled() {\n    return Services.policies.isAllowed("FirefoxLabs");\n  }',
+                           '  get labsEnabled() {\n    return false;\n  }')
+    updated = replace_once(updated,
+                           '  get rolloutsEnabled() {\n    return (\n      this.#prefValues.rolloutsEnabled &&\n'
+                           '      Services.policies.isAllowed("NimbusRollouts")\n    );\n  }',
+                           '  get rolloutsEnabled() {\n    return false;\n  }')
+    updated = replace_once(updated, '  get studiesEnabled() {\n    return this.#studiesEnabled;\n  }',
+                           '  get studiesEnabled() {\n    return false;\n  }')
+    patch += diff(nimbus, original, updated)
     test_name = "browser_lumen_defaults.js"
     manifest = f"{TEST_DIR}/browser.toml"
     original = (snapshot / manifest).read_text(encoding="utf-8")
@@ -175,6 +187,9 @@ def render_patch(root=ROOT):
         kind = {bool: "Bool", int: "Int", str: "String"}[type(item["value"])]
         name, value = json.dumps(item["name"]), json.dumps(item["value"])
         test += f'  Assert.equal(defaults.get{kind}Pref({name}), {value}, {name});\n'
+    test += '  const { ExperimentAPI } = ChromeUtils.importESModule("resource://nimbus/ExperimentAPI.sys.mjs");\n'
+    test += '  Assert.ok(!ExperimentAPI.enabled, "Nimbus remote experiments are disabled");\n'
+    test += '  Assert.ok(!ExperimentAPI.labsEnabled, "Labs cannot keep the remote loader enabled");\n'
     test += "});\n"
     patch += diff(f"{TEST_DIR}/{test_name}", "", test)
     patch += settings_patch(root, snapshot)
